@@ -26,7 +26,7 @@
       }
       
       #message {
-        width: 300px;
+        width: 400px;
         height: 200px;
         margin: auto;
         position: relative;
@@ -158,16 +158,25 @@
       </div><br><br>
       
       <label for="background">Background Image Placement:</label>
-      <input type="radio" id="top" name="background" value="top" checked>
+      
+      <input type="radio" onclick="moveImg('top')" id="top" name="background" value="top" checked>
       <label for="top">Top</label>
-      <input type="radio" id="bottom" name="background" value="bottom">
+      
+      <input type="radio" onclick="moveImg('bottom')" id="bottom" name="background" value="bottom">
       <label for="bottom">Bottom</label>
-      <input type="radio" id="left" name="background" value="left">
+      
+      <input type="radio" onclick="moveImg('left')" id="left" name="background" value="left">
       <label for="left">Left</label>
-      <input type="radio" id="right" name="background" value="right">
+      
+      <input type="radio" onclick="moveImg('right')" id="right" name="background" value="right">
       <label for="right">Right</label>
-      <input type="radio" id="none" name="background" value="none">
+
+      <input type="radio"  onclick="moveImg('full')" id="full" name="background" value="full">
+      <label for="full">Full</label><br>
+      
+      <input type="radio"  onclick="moveImg('none')" id="none" name="background" value="none">
       <label for="none">None</label><br>
+      
       <i>For horizontal photos, use Top or Bottom. For vertical photos, use Left or Right.</i><br><br>
 
       <div class="container">
@@ -316,6 +325,30 @@
       function changeImg(shp) {
         var image = document.getElementById('gram-border');
         image.src = "images/" + shp + ".png";
+      }
+      
+      function moveImg(pos) {
+        var message = document.getElementById('message');
+        
+        if (pos == "top") {
+          message.style.width = "400px";
+          message.style.height = "200px";
+        } else if (pos == "bottom") {
+          message.style.width = "400px";
+          message.style.height = "200px";
+        } else if (pos == "left") {
+          message.style.width = "200px";
+          message.style.height = "400px";
+        } else if (pos == "right") {
+          message.style.width = "200px";
+          message.style.height = "400px";
+        } else if (pos == "full") {
+          message.style.width = "400px";
+          message.style.height = "400px";
+        } else if (pos == "none") {
+          message.style.width = "400px";
+          message.style.height = "400px";
+        }  
       }
     </script>
     
