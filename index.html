@@ -17,8 +17,27 @@
         text-align: center;
       }
       
-      .gram {
+      .container {
         text-align: center;
+        width: 1000px;
+        height: 700px;
+        margin-top: 100px;
+        position: relative;
+      }
+      
+      #message {
+        width: 500px;
+        height: 400px;
+        position: relative;
+        z-index: 10;
+      }
+
+      #gram-border {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
       }
       
       /* HIDE RADIO */
@@ -138,9 +157,13 @@
       <input type="radio" id="none" name="background" value="none">
       <label for="none">None</label><br>
       <i>For horizontal photos, use Top or Bottom. For vertical photos, use Left or Right.</i><br><br>
-      
-      <div class = "gram">
+
+      <div class="container">
         <img id="gram-border" src="images/rectangle.png">
+
+        <div id="message">
+          <input type="text" id="message-box" name="message-box" value = "Write Your Message Here">
+        </div>
       </div>
       
       <br><br>
