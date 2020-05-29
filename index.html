@@ -342,37 +342,63 @@
       
       function moveImg(pos) {
         var message_box = document.getElementById('message-box');
+        var uploaded = document.getElementById('uploaded');
         
         if (pos == "top") {
           message_box.style.width = "400px";
           message_box.style.height = "200px";
           message_box.style.marginTop = "250px";
           message_box.style.marginLeft = "0px";
+          uploaded.style.width = "400px";
+          uploaded.style.height = "200px";
+          uploaded.style.marginTop = "50px";
+          uploaded.style.marginLeft = "0px";
         } else if (pos == "bottom") {
           message_box.style.width = "400px";
           message_box.style.height = "200px";
           message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
+          uploaded.style.display = "inline";
+          uploaded.style.width = "400px";
+          uploaded.style.height = "200px";
+          uploaded.style.marginTop = "250px";
+          uploaded.style.marginLeft = "0px";
         } else if (pos == "left") {
           message_box.style.width = "200px";
           message_box.style.height = "400px";
           message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "250px";
+          uploaded.style.display = "inline";
+          uploaded.style.width = "200px";
+          uploaded.style.height = "400px";
+          uploaded.style.marginTop = "50px";
+          uploaded.style.marginLeft = "0px";
         } else if (pos == "right") {
           message_box.style.width = "200px";
           message_box.style.height = "400px";
           message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
+          uploaded.style.display = "inline";
+          uploaded.style.width = "200px";
+          uploaded.style.height = "400px";
+          uploaded.style.marginTop = "50px";
+          uploaded.style.marginLeft = "250px";
         } else if (pos == "full") {
           message_box.style.width = "400px";
           message_box.style.height = "400px";
           message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
+          uploaded.style.display = "inline";
+          uploaded.style.width = "400px";
+          uploaded.style.height = "400px";
+          uploaded.style.marginTop = "50px";
+          uploaded.style.marginLeft = "0px";
         } else if (pos == "none") {
           message_box.style.width = "400px";
           message_box.style.height = "400px";
           message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
+          uploaded.style.display = "none";
         }  
       }
 
