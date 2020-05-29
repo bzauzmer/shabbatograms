@@ -17,6 +17,10 @@
         text-align: center;
       }
       
+      .gram {
+        text-align: center;
+      }
+      
       /* HIDE RADIO */
       .picradio { 
         position: absolute;
@@ -107,17 +111,17 @@
       
       <div class="shape">
         <label>
-          <input type="radio" name="shape" class = "picradio" value="rectangle" checked>
+          <input type="radio" onclick="changeImg('rectangle')" name="shape" class = "picradio" value="rectangle" checked>
           <img src="images/rectangle.png">
         </label>
 
         <label>
-          <input type="radio" name="shape" class = "picradio" value="oval">
+          <input type="radio" onclick="changeImg('oval')" name="shape" class = "picradio" value="oval">
           <img src="images/oval.png">
         </label>
 
         <label>
-          <input type="radio" name="shape" class = "picradio" value="heart">
+          <input type="radio" onclick="changeImg('heart')" name="shape" class = "picradio" value="heart">
           <img src="images/heart.png">
         </label>
       </div><br><br>
@@ -135,7 +139,11 @@
       <label for="none">None</label><br>
       <i>For horizontal photos, use Top or Bottom. For vertical photos, use Left or Right.</i><br><br>
       
-      <img src="images/rectangle.png">
+      <div class = "gram">
+        <img id="gram-border" src="images/rectangle.png">
+      </div>
+      
+      <br><br>
 
       <label for="music">Youtube Link for Background Music <i>(optional)</i>:</label>
       <input type="url" id="music" name="music" style="width:600px;"><br><br>
@@ -269,6 +277,11 @@
 
       /*initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values:*/
       autocomplete(document.getElementById("camp"), camps);
+
+      function changeImg(shp) {
+        var image = document.getElementById('border-image');
+        image.src = "images/" + shp + ".png";
+      }
     </script>
     
   </body>
