@@ -99,12 +99,6 @@
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
-    Additional Shape options: Puzzle piece, Balloon, Jewish star, Torah, Sun, Ice cream cone<br><br>
-    Background options: Full background, partial at top, partial at bottom<br><br>
-    Optional music upload<br><br>
-    
-    Message in layout<br><br>
-    
     <form autocomplete="off">
       
       <label>
@@ -127,13 +121,16 @@
       <label for="top">Top</label>
       <input type="radio" id="bottom" name="background" value="bottom">
       <label for="bottom">Bottom</label>
-      <input type="radio" id="left" name="background" value="left" checked>
+      <input type="radio" id="left" name="background" value="left">
       <label for="left">Left</label>
       <input type="radio" id="right" name="background" value="right">
       <label for="right">Right</label>
       <input type="radio" id="none" name="background" value="none">
       <label for="none">None</label><br>
       <i>For horizontal photos, use Top or Bottom. For vertical photos, use Left or Right.</i><br><br>
+
+      <label for="music">Youtube Link for Background Music <i>(optional)</i>:</label>
+      <input type="url" id="music" name="music" style="width:600px;"><br><br>
       
       <label for="your-name">Your Name:</label>
       <input type="text" id="your-name" name="your-name" style="width:300px;"><br><br>
