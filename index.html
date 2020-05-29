@@ -9,8 +9,26 @@
         text-align: center;
       }
       
-      h2 {
+      h3 {
         text-align: center;
+      }
+      
+      /* HIDE RADIO */
+      .picradio { 
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      /* IMAGE STYLES */
+      .picradio + img {
+        cursor: pointer;
+      }
+
+      /* CHECKED STYLES */
+      .picradio:checked + img {
+        outline: 2px solid #f00;
       }
       
       * {
@@ -79,7 +97,7 @@
   
   <body>
     <h1>SHABBAT-O-GRAMS</h1>
-    <h2><i>Preserving camp connections in a summer without camp.</i></h2>
+    <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
     Shape options: Rectangle, Square, Circle, Oval, Heart, Puzzle piece, Balloon, Jewish star, Torah, Sun, Ice cream cone<br><br>
     Background options: Full background, partial at top, partial at bottom<br><br>
@@ -88,6 +106,17 @@
     Message in layout<br><br>
     
     <form autocomplete="off">
+      
+      <label>
+        <input type="radio" name="shape" class = "picradio" value="rectangle" checked>
+        <img src="http://placehold.it/40x60/0bf/fff&text=A">
+      </label>
+
+      <label>
+        <input type="radio" name="shape" class = "picradio" value="square">
+        <img src="http://placehold.it/40x60/b0f/fff&text=B">
+      </label>
+      
       <label for="your-name">Your Name:</label>
       <input type="text" id="your-name" name="your-name" style="width:300px;"><br>
       
