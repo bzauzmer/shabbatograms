@@ -191,7 +191,7 @@
       <label for="file">Upload Background Image:</label>
       <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
       
-      <div class="container">
+      <div id="container" class="container">
         <img id="gram-border" src="images/rectangle.png">
         
         <div id="message">
@@ -353,65 +353,97 @@
           image.style.height = "850px";
           container.style.height = "850px";
         }
+
+        var radios = document.getElementsByName('background');
+
+        for (var i = 0, length = radios.length; i < length; i++) {
+          if (radios[i].checked) {
+            moveImg(radios[i].value);
+            // only one radio can be logically checked, don't check the rest
+            break;
+          }
+        }
       }
       
       function moveImg(pos) {
+        
+        var radios = document.getElementsByName('shape');
+
+        for (var i = 0, length = radios.length; i < length; i++) {
+          if (radios[i].checked) {
+            var shape_val = radios[i].value;
+            // only one radio can be logically checked, don't check the rest
+            break;
+          }
+        }
+        
         var message_box = document.getElementById('message-box');
         var uploaded = document.getElementById('uploaded');
+        
+        if (shape_val == "rectangle") {
+          var high_margin = "50px";
+          var low_margin = "250px";
+        } else if (shape_val == "oval") {
+          var high_margin = "125px";
+          var low_margin = "325px";
+        } else if (shape_val == "heart") {
+          var high_margin = "125px";
+          var low_margin = "325px";
+        }
         
         if (pos == "top") {
           message_box.style.width = "400px";
           message_box.style.height = "200px";
-          message_box.style.marginTop = "250px";
+          message_box.style.marginTop = low_margin;
           message_box.style.marginLeft = "0px";
           uploaded.style.width = "400px";
           uploaded.style.height = "200px";
-          uploaded.style.marginTop = "50px";
+          uploaded.style.marginTop = high_margin;
           uploaded.style.marginLeft = "0px";
         } else if (pos == "bottom") {
           message_box.style.width = "400px";
           message_box.style.height = "200px";
-          message_box.style.marginTop = "50px";
+          message_box.style.marginTop = high_margin;
           message_box.style.marginLeft = "0px";
           uploaded.style.display = "inline";
           uploaded.style.width = "400px";
           uploaded.style.height = "200px";
-          uploaded.style.marginTop = "250px";
+          uploaded.style.marginTop = low_margin;
           uploaded.style.marginLeft = "0px";
         } else if (pos == "left") {
           message_box.style.width = "200px";
           message_box.style.height = "400px";
-          message_box.style.marginTop = "50px";
+          message_box.style.marginTop = high_margin;
           message_box.style.marginLeft = "200px";
           uploaded.style.display = "inline";
           uploaded.style.width = "200px";
           uploaded.style.height = "400px";
-          uploaded.style.marginTop = "50px";
+          uploaded.style.marginTop = high_margin;
           uploaded.style.marginLeft = "0px";
         } else if (pos == "right") {
           message_box.style.width = "200px";
           message_box.style.height = "400px";
-          message_box.style.marginTop = "50px";
+          message_box.style.marginTop = high_margin;
           message_box.style.marginLeft = "0px";
           uploaded.style.display = "inline";
           uploaded.style.width = "200px";
           uploaded.style.height = "400px";
-          uploaded.style.marginTop = "50px";
+          uploaded.style.marginTop = high_margin;
           uploaded.style.marginLeft = "200px";
         } else if (pos == "full") {
           message_box.style.width = "400px";
           message_box.style.height = "400px";
-          message_box.style.marginTop = "50px";
+          message_box.style.marginTop = high_margin;
           message_box.style.marginLeft = "0px";
           uploaded.style.display = "inline";
           uploaded.style.width = "400px";
           uploaded.style.height = "400px";
-          uploaded.style.marginTop = "50px";
+          uploaded.style.marginTop = high_margin;
           uploaded.style.marginLeft = "0px";
         } else if (pos == "none") {
           message_box.style.width = "400px";
           message_box.style.height = "400px";
-          message_box.style.marginTop = "50px";
+          message_box.style.marginTop = high_margin;
           message_box.style.marginLeft = "0px";
           uploaded.style.display = "none";
         }  
