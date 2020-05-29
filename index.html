@@ -336,8 +336,23 @@
       autocomplete(document.getElementById("camp"), camps);
 
       function changeImg(shp) {
+        var container = document.getElementById('container');
         var image = document.getElementById('gram-border');
         image.src = "images/" + shp + ".png";
+        
+        if (shp == "rectangle") {
+          image.style.width = "500px";
+          image.style.height = "500px";
+          container.style.height = "500px";
+        } else if (shp == "oval") {
+          image.style.width = "650px";
+          image.style.height = "650px";
+          container.style.height = "650px";
+        } else if (shp == "heart") {
+          image.style.width = "850px";
+          image.style.height = "850px";
+          container.style.height = "850px";
+        }
       }
       
       function moveImg(pos) {
