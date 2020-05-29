@@ -27,7 +27,7 @@
       
       #message {
         width: 400px;
-        height: 200px;
+        height: 400px;
         margin: auto;
         position: relative;
         z-index: 10;
@@ -328,38 +328,38 @@
       }
       
       function moveImg(pos) {
-        var message = document.getElementById('message');
+        var message_box = document.getElementById('message-box');
         
         if (pos == "top") {
-          message.style.width = "400px";
-          message.style.height = "200px";
-          message.style.marginTop = "250px";
-          message.style.marginLeft = "50px";
+          message_box.style.width = "400px";
+          message_box.style.height = "200px";
+          message_box.style.marginTop = "250px";
+          message_box.style.marginLeft = "50px";
         } else if (pos == "bottom") {
-          message.style.width = "400px";
-          message.style.height = "200px";
-          message.style.marginTop = "50px";
-          message.style.marginLeft = "50px";
+          message_box.style.width = "400px";
+          message_box.style.height = "200px";
+          message_box.style.marginTop = "50px";
+          message_box.style.marginLeft = "50px";
         } else if (pos == "left") {
-          message.style.width = "200px";
-          message.style.height = "400px";
-          message.style.marginTop = "50px";
-          message.style.marginLeft = "250px";
+          message_box.style.width = "200px";
+          message_box.style.height = "400px";
+          message_box.style.marginTop = "50px";
+          message_box.style.marginLeft = "250px";
         } else if (pos == "right") {
-          message.style.width = "200px";
-          message.style.height = "400px";
-          message.style.marginTop = "50px";
-          message.style.marginLeft = "50px";
+          message_box.style.width = "200px";
+          message_box.style.height = "400px";
+          message_box.style.marginTop = "50px";
+          message_box.style.marginLeft = "50px";
         } else if (pos == "full") {
-          message.style.width = "400px";
-          message.style.height = "400px";
-          message.style.marginTop = "50px";
-          message.style.marginLeft = "50px";
+          message_box.style.width = "400px";
+          message_box.style.height = "400px";
+          message_box.style.marginTop = "50px";
+          message_box.style.marginLeft = "50px";
         } else if (pos == "none") {
-          message.style.width = "400px";
-          message.style.height = "400px";
-          message.style.marginTop = "50px";
-          message.style.marginLeft = "50px";
+          message_box.style.width = "400px";
+          message_box.style.height = "400px";
+          message_box.style.marginTop = "50px";
+          message_box.style.marginLeft = "50px";
         }  
       }
     </script>
