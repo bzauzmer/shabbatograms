@@ -13,6 +13,10 @@
         text-align: center;
       }
       
+      .shape {
+        text-align: center;
+      }
+      
       /* HIDE RADIO */
       .picradio { 
         position: absolute;
@@ -101,20 +105,22 @@
     
     <form autocomplete="off">
       
-      <label>
-        <input type="radio" name="shape" class = "picradio" value="rectangle" checked>
-        <img src="images/rectangle.png">
-      </label>
-      
-      <label>
-        <input type="radio" name="shape" class = "picradio" value="oval">
-        <img src="images/oval.png">
-      </label>
-      
-      <label>
-        <input type="radio" name="shape" class = "picradio" value="heart">
-        <img src="images/heart.png">
-      </label><br><br>
+      <div class="shape">
+        <label>
+          <input type="radio" name="shape" class = "picradio" value="rectangle" checked>
+          <img src="images/rectangle.png">
+        </label>
+
+        <label>
+          <input type="radio" name="shape" class = "picradio" value="oval">
+          <img src="images/oval.png">
+        </label>
+
+        <label>
+          <input type="radio" name="shape" class = "picradio" value="heart">
+          <img src="images/heart.png">
+        </label>
+      </div><br><br>
       
       <label for="background">Background Image Placement:</label>
       <input type="radio" id="top" name="background" value="top" checked>
@@ -128,6 +134,8 @@
       <input type="radio" id="none" name="background" value="none">
       <label for="none">None</label><br>
       <i>For horizontal photos, use Top or Bottom. For vertical photos, use Left or Right.</i><br><br>
+      
+      <img src="images/rectangle.png">
 
       <label for="music">Youtube Link for Background Music <i>(optional)</i>:</label>
       <input type="url" id="music" name="music" style="width:600px;"><br><br>
