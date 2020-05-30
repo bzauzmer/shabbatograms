@@ -102,6 +102,10 @@
         outline: 2px solid #1C86EE;
       }
       
+      .red {
+        color: red;
+      }
+      
       * {
         box-sizing: border-box;
       }
@@ -132,6 +136,7 @@
         background-color: DodgerBlue;
         color: #fff;
         cursor: pointer;
+        height: 30px;
       }
 
       .autocomplete-items {
@@ -189,27 +194,27 @@
         </label>
       </div><br><br>
       
-      <label for="background">Background Image Placement:</label>
+      <label for="background"><b>Background Image Placement</b></label><br>
       
       <input type="radio" onclick="moveImg('top')" id="top" name="background" value="top" checked>
-      <label for="top">Top</label>
+      <label for="top">Top</label><br>
       
       <input type="radio" onclick="moveImg('bottom')" id="bottom" name="background" value="bottom">
-      <label for="bottom">Bottom</label>
+      <label for="bottom">Bottom</label><br>
       
       <input type="radio" onclick="moveImg('left')" id="left" name="background" value="left">
-      <label for="left">Left</label>
+      <label for="left">Left</label><br>
       
       <input type="radio" onclick="moveImg('right')" id="right" name="background" value="right">
-      <label for="right">Right</label>
+      <label for="right">Right</label><br>
 
       <input type="radio"  onclick="moveImg('full')" id="full" name="background" value="full">
-      <label for="full">Full</label>
+      <label for="full">Full</label><br>
       
       <input type="radio"  onclick="moveImg('none')" id="none" name="background" value="none">
       <label for="none">None</label><br><br>
 
-      <label for="file">Upload Background Image:</label>
+      <label for="file"><b>Upload Background Image</b></label><br>
       <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
       
       <div id="container" class="container">
@@ -223,29 +228,29 @@
       
       <br><br>
 
-      <label for="music">Youtube Link for Background Music <i>(optional)</i>:</label>
+      <label for="music"><b>Youtube Link for Background Music</b></label>
       <input type="url" id="music" name="music" style="width:600px;"><br><br>
       
-      <label for="your-name">Your Name:</label>
-      <input type="text" id="your-name" name="your-name" style="width:300px;" required><br><br>
+      <label for="your-name"><b>Your Name <span class="red">*</span></b></label><br>
+      <input type="text" id="your-name" name="your-name" style="width:600px;" required><br><br>
       
-      <label for="your-email">Your Email:</label>
-      <input type="email" id="your-email" name="your-email" style="width:300px;" required><br><br>
+      <label for="your-email"><b>Your Email <span class="red">*</span></b></label><br>
+      <input type="email" id="your-email" name="your-email" style="width:600px;" required><br><br>
       
-      <label for="recipient-name">Recipient Name:</label>
-      <input type="text" id="recipient-name" name="recipient-name" style="width:300px;" required><br><br>
+      <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label><br>
+      <input type="text" id="recipient-name" name="recipient-name" style="width:600px;" required><br><br>
       
-      <label for="recipient-email">Recipient Email:</label>
-      <input type="email" id="recipient-email" name="recipient-email" style="width:300px;" required><br><br>
+      <label for="recipient-email"><b>Recipient Email <span class="red">*</span></b></label><br>
+      <input type="email" id="recipient-email" name="recipient-email" style="width:600px;" required><br><br>
 
-      <label for="delivery-time">Delivery Time:</label>
+      <label for="delivery-time"><b>Delivery Time</b></label><br>
       <input type="radio" id="now" name="delivery-time" value="now" checked>
-      <label for="now">Now</label>
+      <label for="now">Now</label><br>
       <input type="radio" id="friday" name="delivery-time" value="friday">
       <label for="friday">Friday before Shabbat (4:00 p.m. ET)</label><br><br>
 
-      <label for="camp">Your Camp <i>(optional)</i>:</label>
-      <div class="autocomplete" style="width:300px;">
+      <label for="camp"><b>Your Camp</b></label>
+      <div class="autocomplete" style="width:600px;">
         <input id="camp" type="text" name="camp" placeholder="Camp">
       </div><br><br>
       
