@@ -62,6 +62,10 @@
         margin: auto;
       }
       
+      #post-submit {
+        display: none;
+      }
+      
       /* HIDE RADIO */
       .picradio { 
         position: absolute;
@@ -148,7 +152,7 @@
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
-    <form id="gram-form" autocomplete="off" method="post" action="form_submit.py" enctype="multipart/form-data" onsubmit="return false">
+    <form id="gram-form" autocomplete="off">
       
       <div class="shape">
         <label>
@@ -229,6 +233,13 @@
       
       <button onclick="submit()">"Send Shabbat-o-gram!"</button>
     </form>
+
+    <div id="post-submit">
+      If Now: Success! Your Shabbat-o-gram has been delivered!
+      If Friday before Shabbat: Success! Your Shabbat-o-gram will be delivered on Friday at _____.
+      Click here if you’d like to make a donation to [insert camp name] during this difficult time.
+      Even though we can’t be together at camp, thank you for keeping the Shabbat-o-gram spirit alive.
+    </div>
     
     <script>
       function autocomplete(inp, arr) {
@@ -456,6 +467,9 @@
       function submit() {
         var form = document.getElementbyId('gram-form');
         form.style.display = "none";
+        
+        var post_submit = document.getElementbyId('post-submit');
+        post_submit.style.display = "inline";
       }
     
     </script>
