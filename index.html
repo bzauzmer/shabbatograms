@@ -205,16 +205,16 @@
       <input type="url" id="music" name="music" style="width:600px;"><br><br>
       
       <label for="your-name">Your Name:</label>
-      <input type="text" id="your-name" name="your-name" style="width:300px;"><br><br>
+      <input type="text" id="your-name" name="your-name" style="width:300px;" required><br><br>
       
       <label for="your-email">Your Email:</label>
-      <input type="email" id="your-email" name="your-email" style="width:300px;"><br><br>
+      <input type="email" id="your-email" name="your-email" style="width:300px;" required><br><br>
       
       <label for="recipient-name">Recipient Name:</label>
-      <input type="text" id="recipient-name" name="recipient-name" style="width:300px;"><br><br>
+      <input type="text" id="recipient-name" name="recipient-name" style="width:300px;" required><br><br>
       
       <label for="recipient-email">Recipient Email:</label>
-      <input type="email" id="recipient-email" name="recipient-email" style="width:300px;"><br><br>
+      <input type="email" id="recipient-email" name="recipient-email" style="width:300px;" required><br><br>
 
       <label for="delivery-time">Delivery Time:</label>
       <input type="radio" id="now" name="delivery-time" value="now" checked>
@@ -227,7 +227,7 @@
         <input id="camp" type="text" name="camp" placeholder="Camp">
       </div><br><br>
       
-      <button onclick="submit()">Send Shabbat-o-gram!</button>
+      <input type="submit" value="Send Shabbat-o-gram!" onclick="submit()">
     </form>
     
     <script>
@@ -454,6 +454,7 @@
       }
 
       function submit() {
+        console.log("Test message")
       }
     
     </script>
