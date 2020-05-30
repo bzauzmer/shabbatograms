@@ -74,6 +74,10 @@
         display: none;
       }
       
+      #donation {
+        display: none;
+      }
+      
       /* HIDE RADIO */
       .picradio { 
         position: absolute;
@@ -244,9 +248,13 @@
 
     <div id="post-submit">
       <p id="confirm-now">Success! Your Shabbat-o-gram has been delivered!</p>
+      
       <p id="confirm-friday">Success! Your Shabbat-o-gram will be delivered on Friday at 4:00 p.m. ET.</p>
-      <p>Click here to send another Shabbat-o-gram!</p>
-      <p>Click here if you’d like to make a donation to [insert camp name] during this difficult time.</p>
+      
+      <p><a href="index.html">Click here to send another Shabbat-o-gram!</a></p>
+      
+      <p id="donation"><a id="camp-link">Click here if you’d like to make a donation to <div id="camp-name"></div> during this difficult time.</p>
+      
       <p>Even though we can’t be together at camp, thank you for keeping the Shabbat-o-gram spirit alive.</p>
     </div>
     
@@ -493,8 +501,17 @@
         
         var confirm = document.getElementById('confirm-' + delivery);
         confirm.style.display = "inline";
+        
+        var camp = document.getElementById('camp').value;
+        
+        if (camp != "") {        
+          var donation = document.getElementById('donation');
+          donation.style.display = "inline";
+          
+          var camp_name = document.getElementById('camp-name');
+          camp_name.innerHTML = camp;
+        }
       }
-    
     </script>
   </body>
 </html>
