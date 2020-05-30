@@ -160,7 +160,7 @@
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
-    <form id="gram-form" autocomplete="off">
+    <form id="gram-form" autocomplete="off" method="post" action="">
       
       <div class="shape">
         <label>
@@ -239,7 +239,7 @@
         <input id="camp" type="text" name="camp" placeholder="Camp">
       </div><br><br>
       
-      <button type="button" onclick="submit(); return false;">Send Shabbat-o-gram!</button>
+      <button type="button" onclick="submitForm(); return false;">Send Shabbat-o-gram!</button>
     </form>
 
     <div id="post-submit">
@@ -473,7 +473,7 @@
         image.src = URL.createObjectURL(event.target.files[0]);
       }
 
-      function submit() {
+      function submitForm() {
         
         var radios = document.getElementsByName('delivery-time');
 
