@@ -66,6 +66,14 @@
         display: none;
       }
       
+      #confirm-now {
+        display: none;
+      }
+
+      #confirm-friday {
+        display: none;
+      }
+      
       /* HIDE RADIO */
       .picradio { 
         position: absolute;
@@ -235,10 +243,11 @@
     </form>
 
     <div id="post-submit">
-      If Now: Success! Your Shabbat-o-gram has been delivered!
-      If Friday before Shabbat: Success! Your Shabbat-o-gram will be delivered on Friday at _____.
-      Click here if you’d like to make a donation to [insert camp name] during this difficult time.
-      Even though we can’t be together at camp, thank you for keeping the Shabbat-o-gram spirit alive.
+      <p id="confirm-now">Success! Your Shabbat-o-gram has been delivered!</p>
+      <p id="confirm-friday">Success! Your Shabbat-o-gram will be delivered on Friday at 4:00 p.m. ET.</p>
+      <p>Click here to send another Shabbat-o-gram!</p>
+      <p>Click here if you’d like to make a donation to [insert camp name] during this difficult time.</p>
+      <p>Even though we can’t be together at camp, thank you for keeping the Shabbat-o-gram spirit alive.</p>
     </div>
     
     <script>
@@ -465,11 +474,25 @@
       }
 
       function submit() {
+        
+        var radios = document.getElementsByName('delivery-time');
+
+        for (var i = 0, length = radios.length; i < length; i++) {
+          if (radios[i].checked) {
+            var delivery = radios[i].value;
+            // only one radio can be logically checked, don't check the rest
+            break;
+          }
+        }
+        
         var form = document.getElementbyId('gram-form');
         form.style.display = "none";
         
         var post_submit = document.getElementbyId('post-submit');
         post_submit.style.display = "inline";
+        
+        var confim = document.getElementbyId('confirm-' + delivery);
+        confirm.style.display = "inline";
       }
     
     </script>
