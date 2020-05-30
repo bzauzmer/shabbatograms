@@ -148,7 +148,7 @@
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
-    <form autocomplete="off" onsubmit="submit(); return false;">
+    <form autocomplete="off" onsubmit="return false">
       
       <div class="shape">
         <label>
@@ -227,7 +227,7 @@
         <input id="camp" type="text" name="camp" placeholder="Camp">
       </div><br><br>
       
-      <input type="submit" value="Send Shabbat-o-gram!">
+      <input type="submit" value="Send Shabbat-o-gram!" onclick="submit()">
     </form>
     
     <script>
