@@ -57,17 +57,14 @@
         var id = params["id"];
         
         d3.csv("grams.csv", function(data) {
-          var grams = data;
-        });
-        
-        for (var i = 0; i < grams.length; i++) {
-          if (grams[i]["id"] == id) {
-            var selections = grams[i];
-            break;
+          for (var i = 0; i < data.length; i++) {
+            if (data[i]["id"] == id) {
+              var selections = data[i];
+              break;
+            }
           }
-        }
-        
-        console.log(selections);
+          console.log(selections);
+        });
       }
     </script>
   </body>
