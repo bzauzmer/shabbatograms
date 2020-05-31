@@ -29,6 +29,7 @@
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
+    <script src="https://d3js.org/d3-dsv.v1.min.js"></script>
     <script>
       var camp_dict = {"Camp Harlam":"https://campharlam.org/give/",
                        "Ramah Poconos":"https://www.ramahpoconos.org/giving/",
@@ -53,8 +54,13 @@
       function load() {
         
         var params = getParams(window.location.href);
+        var id = params["id"];
         
-        console.log(params["camp"]);
+        d3.csv("grams.csv", function(data) {
+          var grams = data;
+        });
+        
+        console.log(grams);
       }
     </script>
   </body>
