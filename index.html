@@ -383,11 +383,11 @@
         image.src = "images/" + shp + ".png";
         
         if (shp == "rectangle") {
-          image.style.clipPath = inset(30px 10px 30px 10px);
+          image.style.clipPath = "inset(30px 10px 30px 10px)";
         } else if (shp == "oval") {
-          image.style.clipPath = circle(75px at 50% 50%);
+          image.style.clipPath = "circle(75px at 50% 50%)";
         } else if (shp == "heart") {
-          image.style.clipPath = circle(75px at 50% 50%);
+          image.style.clipPath = "circle(75px at 50% 50%)";
         }
       }
       
