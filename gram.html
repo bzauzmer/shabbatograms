@@ -29,6 +29,8 @@
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
+    <p id='donation'></p>
+    
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
       var camp_dict = {"Camp Harlam":"https://campharlam.org/give/",
@@ -63,7 +65,9 @@
               break;
             }
           }
-          console.log(selections);
+          
+          var donation = document.getElementById('donation');
+          donation.innerHTML = selections["your-name"] + "sent you this Shabbat-o-gram in honor of" + selections["camp"] + ". Click here if you'd like to make a donation.";
         });
       }
     </script>
