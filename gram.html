@@ -28,8 +28,6 @@
   <body onload="load()">
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
-     
-    Hello my name is Shayna is this code?
     
     <script>
       var camp_dict = {"Camp Harlam":"https://campharlam.org/give/",
@@ -54,7 +52,9 @@
       
       function load() {
         
-        getParams();
+        var params = getParams(window.location.href);
+        
+        console.log(params["camp"]);
       }
     </script>
   </body>
