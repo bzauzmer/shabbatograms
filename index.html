@@ -67,8 +67,8 @@
         right: 0;
         bottom: 0;
         position: absolute;
-        width: 500px;
-        height: 500px;
+        max-width: 100%;
+        max-height: 100%;
         margin: auto;
       }
       
@@ -196,25 +196,22 @@
         </label>
       </div><br><br>
       
-      <label for="background"><b>Background Image Placement:</b></label>
+      <label for="placement"><b>Text Placement:</b></label>
       
-      <input type="radio" onclick="moveImg('top')" id="top" name="background" value="top" checked>
+      <input type="radio" onclick="moveMessage('top')" id="top" name="placement" value="top" checked>
       <label for="top">Top</label>
       
-      <input type="radio" onclick="moveImg('bottom')" id="bottom" name="background" value="bottom">
+      <input type="radio" onclick="moveMessage('bottom')" id="bottom" name="placement" value="bottom">
       <label for="bottom">Bottom</label>
       
-      <input type="radio" onclick="moveImg('left')" id="left" name="background" value="left">
+      <input type="radio" onclick="moveMessage('left')" id="left" name="placement" value="left">
       <label for="left">Left</label>
       
-      <input type="radio" onclick="moveImg('right')" id="right" name="background" value="right">
+      <input type="radio" onclick="moveMessage('right')" id="right" name="placement" value="right">
       <label for="right">Right</label>
 
-      <input type="radio"  onclick="moveImg('full')" id="full" name="background" value="full">
-      <label for="full">Full</label>
-      
-      <input type="radio"  onclick="moveImg('none')" id="none" name="background" value="none">
-      <label for="none">None</label><br><br>
+      <input type="radio"  onclick="moveMessage('full')" id="full" name="placement" value="full">
+      <label for="full">Full</label><br><br>
 
       <label for="file"><b>Upload Background Image:</b></label>
       <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
@@ -386,31 +383,15 @@
         image.src = "images/" + shp + ".png";
         
         if (shp == "rectangle") {
-          image.style.width = "500px";
-          image.style.height = "500px";
-          container.style.height = "500px";
+          image.style.clipPath = inset(30px 10px 30px 10px);
         } else if (shp == "oval") {
-          image.style.width = "650px";
-          image.style.height = "650px";
-          container.style.height = "650px";
+          image.style.clipPath = circle(75px at 50% 50%);
         } else if (shp == "heart") {
-          image.style.width = "850px";
-          image.style.height = "850px";
-          container.style.height = "850px";
-        }
-
-        var radios = document.getElementsByName('background');
-
-        for (var i = 0, length = radios.length; i < length; i++) {
-          if (radios[i].checked) {
-            moveImg(radios[i].value);
-            // only one radio can be logically checked, don't check the rest
-            break;
-          }
+          image.style.clipPath = circle(75px at 50% 50%);
         }
       }
       
-      function moveImg(pos) {
+      function moveMessage(pos) {
         
         var radios = document.getElementsByName('shape');
 
@@ -423,75 +404,32 @@
         }
         
         var message_box = document.getElementById('message-box');
-        var uploaded = document.getElementById('uploaded');
         
-        if (shape_val == "rectangle") {
-          var high_margin = "50px";
-          var low_margin = "250px";
-        } else if (shape_val == "oval") {
-          var high_margin = "125px";
-          var low_margin = "325px";
-        } else if (shape_val == "heart") {
-          var high_margin = "225px";
-          var low_margin = "425px";
-        }
-        
-        if (pos == "top") {
+        if (pos == "bottom") {
           message_box.style.width = "400px";
           message_box.style.height = "200px";
-          message_box.style.marginTop = low_margin;
+          message_box.style.marginTop = "250px";
           message_box.style.marginLeft = "0px";
-          uploaded.style.width = "400px";
-          uploaded.style.height = "200px";
-          uploaded.style.marginTop = high_margin;
-          uploaded.style.marginLeft = "0px";
-        } else if (pos == "bottom") {
+        } else if (pos == "top") {
           message_box.style.width = "400px";
           message_box.style.height = "200px";
-          message_box.style.marginTop = high_margin;
+          message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
-          uploaded.style.display = "inline";
-          uploaded.style.width = "400px";
-          uploaded.style.height = "200px";
-          uploaded.style.marginTop = low_margin;
-          uploaded.style.marginLeft = "0px";
-        } else if (pos == "left") {
-          message_box.style.width = "200px";
-          message_box.style.height = "400px";
-          message_box.style.marginTop = high_margin;
-          message_box.style.marginLeft = "200px";
-          uploaded.style.display = "inline";
-          uploaded.style.width = "200px";
-          uploaded.style.height = "400px";
-          uploaded.style.marginTop = high_margin;
-          uploaded.style.marginLeft = "0px";
         } else if (pos == "right") {
           message_box.style.width = "200px";
           message_box.style.height = "400px";
-          message_box.style.marginTop = high_margin;
+          message_box.style.marginTop = "50px";
+          message_box.style.marginLeft = "200px";
+        } else if (pos == "left") {
+          message_box.style.width = "200px";
+          message_box.style.height = "400px";
+          message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
-          uploaded.style.display = "inline";
-          uploaded.style.width = "200px";
-          uploaded.style.height = "400px";
-          uploaded.style.marginTop = high_margin;
-          uploaded.style.marginLeft = "200px";
         } else if (pos == "full") {
           message_box.style.width = "400px";
           message_box.style.height = "400px";
-          message_box.style.marginTop = high_margin;
+          message_box.style.marginTop = "50px";
           message_box.style.marginLeft = "0px";
-          uploaded.style.display = "inline";
-          uploaded.style.width = "400px";
-          uploaded.style.height = "400px";
-          uploaded.style.marginTop = high_margin;
-          uploaded.style.marginLeft = "0px";
-        } else if (pos == "none") {
-          message_box.style.width = "400px";
-          message_box.style.height = "400px";
-          message_box.style.marginTop = high_margin;
-          message_box.style.marginLeft = "0px";
-          uploaded.style.display = "none";
-        }  
       }
 
       function loadFile(event) {
