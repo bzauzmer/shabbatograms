@@ -410,9 +410,6 @@
           }
         }
         
-        console.log(placement);
-        console.log(shp);
-        
         if (shp == "rectangle") {
           color.style.clipPath = "none";
           image.style.clipPath = "none";
@@ -463,26 +460,66 @@
           message_box.style.height = "300px";
           message_box.style.marginTop = "0px";
           message_box.style.marginLeft = "0px";
+          
+          if (shape_val == "retangle") {
+            message_box.style.clipPath = "none";
+          } else if (shape_val == "oval") {
+            message_box.style.clipPath = "circle(300px at 50% 100%)";
+          } else if (shape_val == "heart") {
+            message_box.style.clipPath = "none";
+          }
         } else if (pos == "bottom") {
           message_box.style.width = "600px";
           message_box.style.height = "300px";
           message_box.style.marginTop = "300px";
           message_box.style.marginLeft = "0px";
+          
+          if (shape_val == "retangle") {
+            message_box.style.clipPath = "none";
+          } else if (shape_val == "oval") {
+            message_box.style.clipPath = "circle(300px at 50% 0%)";
+          } else if (shape_val == "heart") {
+            message_box.style.clipPath = "none";
+          }
         } else if (pos == "left") {
           message_box.style.width = "300px";
           message_box.style.height = "600px";
           message_box.style.marginTop = "0px";
           message_box.style.marginLeft = "0px";
+          
+          if (shape_val == "retangle") {
+            message_box.style.clipPath = "none";
+          } else if (shape_val == "oval") {
+            message_box.style.clipPath = "circle(300px at 100% 50%)";
+          } else if (shape_val == "heart") {
+            message_box.style.clipPath = "none";
+          }
         } else if (pos == "right") {
           message_box.style.width = "300px";
           message_box.style.height = "600px";
           message_box.style.marginTop = "0px";
           message_box.style.marginLeft = "300px";
+          
+          if (shape_val == "retangle") {
+            message_box.style.clipPath = "none";
+          } else if (shape_val == "oval") {
+            message_box.style.clipPath = "circle(300px at 0% 50%)";
+          } else if (shape_val == "heart") {
+            message_box.style.clipPath = "none";
+          }
         } else if (pos == "full") {
           message_box.style.width = "600px";
           message_box.style.height = "600px";
           message_box.style.marginTop = "0px";
           message_box.style.marginLeft = "0px";
+          
+          if (shape_val == "retangle") {
+            message_box.style.clipPath = "none";
+          } else if (shape_val == "oval") {
+            message_box.style.clipPath = "circle(300px at 50% 50%)";
+          } else if (shape_val == "heart") {
+            message_box.style.clipPath = "none";
+          }
         }
       }
 
