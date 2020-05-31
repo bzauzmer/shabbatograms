@@ -35,14 +35,6 @@
         display: inline-block;
       }
       
-      #message {
-        width: 600px;
-        height: 600px;
-        margin: auto;
-        position: relative;
-        z-index: 10;
-      }
-      
       #message-box {
         margin-left: auto;
         margin-right: auto;
@@ -65,8 +57,8 @@
         right: 0;
         bottom: 0;
         position: absolute;
-        max-width: 600px;
-        max-height: 600px;
+        width: 600px;
+        height: 600px;
         margin: auto;
       }
       
@@ -249,10 +241,9 @@
       <div id="container" class="container">
         <img id="gram-border" src="images/white.png">
         
-        <div id="message">
-          <img id="uploaded" src="">       
-          <input type="text" id="message-box" name="message-box" value = "Write Your Message Here">
-        </div>
+        <img id="uploaded" src="">
+        
+        <input type="text" id="message-box" name="message-box" value = "Write Your Message Here">
       </div>
       
       <br><br>
