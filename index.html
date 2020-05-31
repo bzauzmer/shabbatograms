@@ -225,21 +225,23 @@
 
       <input type="radio"  onclick="moveMessage('full')" id="full" name="placement" value="full">
       <label for="full">Full</label><br><br>
+      
+      <label for="color"><b>Background Color:</b></label>
 
       <div class="color">
         <label>
           <input type="radio" onclick="changeColor('white')" name="color" class = "colorradio" value="white" checked>
-          <img src="images/white.png">
+          <img src="images/white.png" style="width: 100px; height: 100px;">
         </label>
 
         <label>
-          <input type="radio" onclick="changeImg('red')" name="color" class = "colorradio" value="red">
-          <img src="images/red.png">
+          <input type="radio" onclick="changeColor('red')" name="color" class = "colorradio" value="red">
+          <img src="images/red.png" style="width: 100px; height: 100px;">
         </label>
 
         <label>
-          <input type="radio" onclick="changeImg('green')" name="color" class = "colorradio" value="green">
-          <img src="images/green.png">
+          <input type="radio" onclick="changeColor('green')" name="color" class = "colorradio" value="green">
+          <img src="images/green.png" style="width: 100px; height: 100px;">
         </label>
       </div><br><br>
       
@@ -247,7 +249,7 @@
       <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
       
       <div id="container" class="container">
-        <img id="gram-border" src="images/rectangle.png">
+        <img id="gram-border" src="images/white.png">
         
         <div id="message">
           <img id="uploaded" src="">       
