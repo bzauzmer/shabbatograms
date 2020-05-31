@@ -398,14 +398,22 @@
       autocomplete(document.getElementById("camp"), camps);
 
       function changeImg(shp) {
-        var image = document.getElementById('gram-border');
+        var color = document.getElementById('gram-border');
+        var image = document.getElementById('uploaded');
+        var msg = document.getElementById('message-box');
         
         if (shp == "rectangle") {
-          image.style.clipPath = "inset(30px 10px 30px 10px)";
+          color.style.clipPath = "none";
+          image.style.clipPath = "none";
+          msg.style.clipPath = "none";
         } else if (shp == "oval") {
-          image.style.clipPath = "circle(75px at 50% 50%)";
+          color.style.clipPath = "circle(300px at 50% 50%)";
+          image.style.clipPath = "circle(300px at 50% 50%)";
+          msg.style.clipPath = "circle(300px at 50% 50%)";
         } else if (shp == "heart") {
-          image.style.clipPath = "circle(75px at 50% 50%)";
+          color.style.clipPath = "none";
+          image.style.clipPath = "none";
+          msg.style.clipPath = "none";
         }
       }
       
