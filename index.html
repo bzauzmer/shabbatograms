@@ -458,8 +458,28 @@
       }
 
       function loadFile(event) {
+        
         var image = document.getElementById('uploaded');
+        var img = new Image();
         image.src = URL.createObjectURL(event.target.files[0]);
+        img.src = URL.createObjectURL(event.target.files[0]);
+
+        img.onload = function() {
+          var width = img.naturalWidth,
+              height = img.naturalHeight;
+          
+          if (width > height) {
+            image.style.width = "600px";
+            image.style.height = (600 * height / width) + 'px';
+            image.style.marginTop = (300 * (1 - height / width)) + 'px';
+            image.style.marginLeft = "0px";
+          } else {
+            image.style.width = (600 * width / height) + 'px';
+            image.style.height = "600px";
+            image.style.marginTop = "0px";
+            image.style.marginLeft = (300 * (1 - width / height)) + 'px';
+          }
+        }
       }
 
       function submitForm() {
