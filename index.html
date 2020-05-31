@@ -401,6 +401,14 @@
         var color = document.getElementById('gram-border');
         var image = document.getElementById('uploaded');
         var msg = document.getElementById('message-box');
+        var radios = document.getElementsByName('placement');
+        
+        for (var i = 0, length = radios.length; i < length; i++) {
+          if (radios[i].checked) {
+            var placement = radios[i].value;
+            break;
+          }
+        }
         
         if (shp == "rectangle") {
           color.style.clipPath = "none";
@@ -409,7 +417,18 @@
         } else if (shp == "oval") {
           color.style.clipPath = "circle(300px at 50% 50%)";
           image.style.clipPath = "circle(300px at 50% 50%)";
-          msg.style.clipPath = "circle(300px at 50% 50%)";
+          
+          if (placement == "top") {
+            msg.style.clipPath = "circle(300px at 50% 100%)";
+          } else if (placement == "bottom") {
+            msg.style.clipPath = "circle(300px at 50% 0%)";
+          } else if (placement == "left") {
+            msg.style.clipPath = "circle(300px at 100% 50%)";
+          } else if (placement == "right") {
+            msg.style.clipPath = "circle(300px at 0% 50%)";
+          } else if (placement == "full") {
+            msg.style.clipPath = "circle(300px at 50% 50%)";
+          }
         } else if (shp == "heart") {
           color.style.clipPath = "none";
           image.style.clipPath = "none";
