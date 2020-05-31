@@ -1,2 +1,2 @@
-id,shape,background,image,message-box,music,your-name,recipient-name
-test,rectangle,top,,Hello,,Sender Smith,Receiver Robinson
+id,shape,background,image,message-box,music,your-name,recipient-name,camp
+test,rectangle,top,,Hello,,Sender Smith,Receiver Robinson,Camp Harlam
