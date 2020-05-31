@@ -60,7 +60,14 @@
           var grams = data;
         });
         
-        console.log(grams);
+        for (var i = 0; i < grams.length; i++) {
+          if (grams[i]["id"] == id) {
+            var selections = grams[i];
+            break;
+          }
+        }
+        
+        console.log(selections);
       }
     </script>
   </body>
