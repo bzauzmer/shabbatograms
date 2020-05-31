@@ -51,7 +51,7 @@
         margin: auto;
         position: absolute;
         max-width: 100%;
-        max-height: 100;
+        max-height: 100%;
       }
 
       #gram-border {
@@ -398,7 +398,6 @@
       autocomplete(document.getElementById("camp"), camps);
 
       function changeImg(shp) {
-        var container = document.getElementById('container');
         var image = document.getElementById('gram-border');
         image.src = "images/" + shp + ".png";
         
