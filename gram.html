@@ -25,10 +25,12 @@
     </style>
   </head>
   
-  <body>
+  <body onload="load()">
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
-        
+     
+    Hello my name is Shayna is this code?
+    
     <script>
       var camp_dict = {"Camp Harlam":"https://campharlam.org/give/",
                        "Ramah Poconos":"https://www.ramahpoconos.org/giving/",
@@ -36,6 +38,24 @@
 
       /*An array containing all the camp names:*/
       var camps = Object.keys(camp_dict)
+      
+      function getParams(url) {
+        var params = {};
+        var parser = document.createElement('a');
+        parser.href = url;
+        var query = parser.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split('=');
+          params[pair[0]] = decodeURIComponent(pair[1]);
+        }
+        return params;
+      };
+      
+      function load() {
+        
+        getParams();
+      }
     </script>
   </body>
 </html>
