@@ -99,14 +99,29 @@
         width: 0;
         height: 0;
       }
+      
+      .colorradio { 
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
 
       /* IMAGE STYLES */
       .picradio + img {
         cursor: pointer;
       }
+      
+      .colorradio + img {
+        cursor: pointer;
+      }
 
       /* CHECKED STYLES */
       .picradio:checked + img {
+        outline: 2px solid #1C86EE;
+      }
+      
+      .colorradio:checked + img {
         outline: 2px solid #1C86EE;
       }
       
@@ -211,6 +226,23 @@
       <input type="radio"  onclick="moveMessage('full')" id="full" name="placement" value="full">
       <label for="full">Full</label><br><br>
 
+      <div class="color">
+        <label>
+          <input type="radio" onclick="changeColor('white')" name="color" class = "colorradio" value="white" checked>
+          <img src="images/white.png">
+        </label>
+
+        <label>
+          <input type="radio" onclick="changeImg('red')" name="color" class = "colorradio" value="red">
+          <img src="images/red.png">
+        </label>
+
+        <label>
+          <input type="radio" onclick="changeImg('green')" name="color" class = "colorradio" value="green">
+          <img src="images/green.png">
+        </label>
+      </div><br><br>
+      
       <label for="file"><b>Upload Background Image:</b></label>
       <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
       
@@ -218,7 +250,7 @@
         <img id="gram-border" src="images/rectangle.png">
         
         <div id="message">
-          <img id="uploaded" src="images/blank.png">        
+          <img id="uploaded" src="">       
           <input type="text" id="message-box" name="message-box" value = "Write Your Message Here">
         </div>
       </div>
@@ -387,6 +419,11 @@
         } else if (shp == "heart") {
           image.style.clipPath = "circle(75px at 50% 50%)";
         }
+      }
+      
+      function changeColor(color) {
+        var image = document.getElementById('gram-border');
+        image.src = "images/" + color + ".png";
       }
       
       function moveMessage(pos) {
