@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.14.6/firebase-app.js"></script>
+    <script src="/__/firebase/7.14.6/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Load the Firebase library before loading the body. -->
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+    <!-- Load the jQuery library, which we'll use to manipulate HTML elements with Javascript. -->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Page-specific CSS -->
+	<link rel="stylesheet" href="index.css">
+  </head>
+  
+  <body>
+  	<!-- Page-specific Javascript -->
+  	<script src="index.js"></script>
+
+  	<!-- Header and sub-header -->
+    <h1>SHABBAT-O-GRAMS</h1>
+    <h3><i>Preserving camp connections in a summer without camp.</i></h3>
+    
+    <!-- Begin form -->
+    <form id="gram-form" autocomplete="off" method="post" action="">
+      
+      <!-- Radio options for shapes -->
+      <div class="shape">
+        <label>
+          <input type="radio" onclick="changeImg('rectangle')" name="shape" class = "picradio" value="rectangle" checked>
+          <img src="images/rectangle.png">
+        </label>
+
+        <label>
+          <input type="radio" onclick="changeImg('oval')" name="shape" class = "picradio" value="oval">
+          <img src="images/oval.png">
+        </label>
+
+        <label>
+          <input type="radio" onclick="changeImg('heart')" name="shape" class = "picradio" value="heart">
+          <img src="images/heart.png">
+        </label>
+      </div><br><br>
+      
+      <!-- Radio options for text placement -->
+      <label for="placement"><b>Text Placement:</b></label>
+      
+      <input type="radio" onclick="moveMessage('top')" id="top" name="placement" value="top" checked>
+      <label for="top">Top</label>
+      
+      <input type="radio" onclick="moveMessage('bottom')" id="bottom" name="placement" value="bottom">
+      <label for="bottom">Bottom</label>
+      
+      <input type="radio" onclick="moveMessage('left')" id="left" name="placement" value="left">
+      <label for="left">Left</label>
+      
+      <input type="radio" onclick="moveMessage('right')" id="right" name="placement" value="right">
+      <label for="right">Right</label>
+
+      <input type="radio"  onclick="moveMessage('full')" id="full" name="placement" value="full">
+      <label for="full">Full</label><br><br>
+      
+      <!-- Radio options for background color -->
+      <label for="color"><b>Background Color:</b></label>
+
+      <label>
+        <input type="radio" onclick="changeColor('white')" name="color" class = "colorradio" value="white" checked>
+        <img src="images/white.png" style="width: 30px; height: 30px;">
+      </label>
+
+      <label>
+        <input type="radio" onclick="changeColor('red')" name="color" class = "colorradio" value="red">
+        <img src="images/red.png" style="width: 30px; height: 30px;">
+      </label>
+
+      <label>
+        <input type="radio" onclick="changeColor('green')" name="color" class = "colorradio" value="green">
+        <img src="images/green.png" style="width: 30px; height: 30px;">
+      </label><br><br>
+      
+      <!-- Background image uploading -->
+      <label for="file"><b>Upload Background Image:</b></label>
+      <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
+      
+      <!-- Container for Shabbat-o-gram preview -->
+      <div id="container" class="container">
+        <img id="gram-border" src="images/white.png">
+        
+        <img id="uploaded" src="">
+        
+        <input type="text" id="message-box" name="message-box" value = "Write Your Message Here">
+      </div>
+      
+      <br><br>
+
+      <!-- Text inputs -->
+      <label for="music"><b>Youtube Link for Background Music</b></label><br>
+      <input type="url" id="music" name="music" style="width:600px;"><br><br>
+      
+      <label for="your-name"><b>Your Name <span class="red">*</span></b></label><br>
+      <input type="text" id="your-name" name="your-name" style="width:600px;" required><br><br>
+      
+      <label for="your-email"><b>Your Email <span class="red">*</span></b></label><br>
+      <input type="email" id="your-email" name="your-email" style="width:600px;" required><br><br>
+      
+      <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label><br>
+      <input type="text" id="recipient-name" name="recipient-name" style="width:600px;" required><br><br>
+      
+      <label for="recipient-email"><b>Recipient Email <span class="red">*</span></b></label><br>
+      <input type="email" id="recipient-email" name="recipient-email" style="width:600px;" required><br><br>
+
+      <label for="delivery-time"><b>Delivery Time</b></label><br>
+      <input type="radio" id="now" name="delivery-time" value="now" checked>
+      <label for="now">Now</label><br>
+      <input type="radio" id="friday" name="delivery-time" value="friday">
+      <label for="friday">Friday before Shabbat (4:00 p.m. ET)</label><br><br>
+
+      <label for="camp"><b>Your Camp</b></label><br>
+      <div class="autocomplete" style="width:600px;">
+        <input id="camp" type="text" name="camp" placeholder="Camp">
+      </div><br><br>
+      
+      <!-- Submit button to upload data and change page display to confirmation box -->
+      <button type="button" onclick="submitForm(); return false;">Send Shabbat-o-gram!</button>
+    </form>
+
+    <!-- Div to show after submission -->
+    <div id="post-submit">
+      <p id="confirm-now">Success! Your Shabbat-o-gram has been delivered!</p>
+      
+      <p id="confirm-friday">Success! Your Shabbat-o-gram will be delivered on Friday at 4:00 p.m. ET.</p>
+      
+      <p><a href="index.html">Click here to send another Shabbat-o-gram!</a></p>
+      
+      <p id="donation"><a id="camp-link" target="_blank">Click here if you'd like to make a donation to
+        <span id="camp-name"></span> during this difficult time.</a></p>
+      
+      <p>Even though we can’t be together at camp, thank you for keeping the Shabbat-o-gram spirit alive.</p>
+    </div>
+  </body>
+</html>
