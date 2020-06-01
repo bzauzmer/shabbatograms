@@ -1,20 +1,3 @@
-// Confirguation information for submitting form to Firebase
-var config = {
-  apiKey: "AIzaSyCsVANHYhX6PL4hpBb_tUWyNhXeaZe9m8s",
-  authDomain: "shabbatograms.firebaseapp.com",
-  databaseURL: "https://shabbatograms.firebaseio.com",
-  storageBucket: "shabbatograms.appspot.com",
-};
-
-// Dictionary mapping camp names to donation links
-var camp_dict = {"Camp Harlam":"https://campharlam.org/give/",
-                 "Ramah Poconos":"https://www.ramahpoconos.org/giving/",
-                 "Ramah Ojai":"https://ramah.org/donate/give/make-a-donation-2/"};
-
-// An array containing all the camp names
-var camps = Object.keys(camp_dict);
-
-
 // Initialize Firebase app
 firebase.initializeApp(config);
 
@@ -350,4 +333,62 @@ $(window).load(function () {
 
   // Initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values
   autocomplete(document.getElementById("camp"), camps);
+});
+
+
+'use strict';
+
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const nodemailer = require('nodemailer');
+
+//to make it work you need gmail account
+const gmailEmail = functions.config().gmail.email;
+const gmailPassword = functions.config().gmail.password;
+
+admin.initializeApp();
+
+//creating function for sending emails
+var goMail = function (cd) {
+
+  //transporter is a way to send your emails
+  const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: gmailEmail,
+          pass: gmailPassword
+      }
+  });
+
+  // setup email data with unicode symbols
+  //this is how your email are going to look like
+  const mailOptions = {
+      from: gmailEmail, // sender address
+      to: cd["recipient-email"], // list of receivers
+      subject: 'Shabbat-o-gram', // Subject line
+      text: '!You\'ve received a Shabbat-o-gram! The color is ' + cd["color"], // plain text body
+      html: '!You\'ve received a Shabbat-o-gram! The color is ' + cd["color"] // html body
+  };
+
+  //this is callback function to return status to firebase console
+  const getDeliveryStatus = function (error, info) {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  };
+
+  //call of this function send an email, and return status
+  transporter.sendMail(mailOptions, getDeliveryStatus);
+};
+
+//.onDataAdded is watches for changes in database
+exports.onDataAdded = grams.onCreate(function (snap, context) {
+
+    //here we catch a new data, added to firebase database, it stored in a snap variable
+    const createdData = snap.val();
+
+    //here we send new data using function for sending emails
+    goMail(createdData);
 });

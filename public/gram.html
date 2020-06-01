@@ -3,77 +3,43 @@
 
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <style>
-      * {
-        box-sizing: border-box;
-      }
 
-      body {
-        font: 16px Arial;
-        background-color: aliceblue;
-        margin: 30px;
-      }
-      
-      h1 {
-        text-align: center;
-      }
-      
-      h3 {
-        text-align: center;
-      }      
-    </style>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.14.6/firebase-app.js"></script>
+    <script src="/__/firebase/7.14.6/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Load the Firebase library before loading the body. -->
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
+
+    <!-- Load the jQuery library, which we'll use to manipulate HTML elements with Javascript. -->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="gram.css">
   </head>
   
   <body onload="load()">
+
+    <!-- Firebase and camp dict constants -->
+    <script src="globals.js"></script>
+
+    <!-- Page-specific Javascript -->
+    <script src="gram.js"></script>
+
+    <!-- Header -->
     <h1>SHABBAT-O-GRAMS</h1>
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
     
+    <!-- Paragraph to return to index -->
     <p><a href="index.html">Click here to send your own Shabbat-o-gram!</a></p>
     
-    <p id='donation'></p>
-    
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script>
-      var camp_dict = {"Camp Harlam":"https://campharlam.org/give/",
-                       "Ramah Poconos":"https://www.ramahpoconos.org/giving/",
-                       "Ramah Ojai":"https://ramah.org/donate/give/make-a-donation-2/"};
-
-      /*An array containing all the camp names:*/
-      var camps = Object.keys(camp_dict)
-      
-      function getParams(url) {
-        var params = {};
-        var parser = document.createElement('a');
-        parser.href = url;
-        var query = parser.search.substring(1);
-        var vars = query.split('&');
-        for (var i = 0; i < vars.length; i++) {
-          var pair = vars[i].split('=');
-          params[pair[0]] = decodeURIComponent(pair[1]);
-        }
-        return params;
-      };
-      
-      function load() {
-        
-        var params = getParams(window.location.href);
-        var id = params["id"];
-        
-        d3.csv("grams.csv", function(data) {
-          for (var i = 0; i < data.length; i++) {
-            if (data[i]["id"] == id) {
-              var selections = data[i];
-              break;
-            }
-          }
-          
-          if (selections["camp"] != "") {
-            var donation = document.getElementById('donation');
-            donation.innerHTML = "<a href='" + camp_dict[selections["camp"]] + "' target='_blank'>" + selections["your-name"] + " sent you this Shabbat-o-gram in honor of " + selections["camp"] + ". Click here if you'd like to make a donation.</a>";
-          }
-        });
-      }
-    </script>
+    <!-- Empty paragraph to be filled with donation information if camp was selected -->
+    <p id='donation'></p>    
   </body>
 </html>

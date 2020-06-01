@@ -1,0 +1,19 @@
+/* Page-wide formatting */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px Arial;
+  background-color: aliceblue;
+  margin: 30px;
+}
+
+/* Header and sub-header */
+h1 {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}      
