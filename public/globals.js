@@ -3,6 +3,7 @@ var config = {
   apiKey: "AIzaSyCsVANHYhX6PL4hpBb_tUWyNhXeaZe9m8s",
   authDomain: "shabbatograms.firebaseapp.com",
   databaseURL: "https://shabbatograms.firebaseio.com",
+  projectId: "shabbatograms",
   storageBucket: "shabbatograms.appspot.com",
 };
 

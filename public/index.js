@@ -1,3 +1,5 @@
+'use strict';
+
 // Initialize Firebase app
 firebase.initializeApp(config);
 
@@ -18,20 +20,23 @@ var submitForm = function () {
   var your_email = $("#your-email").val();
   var recipient_name = $("#recipient-name").val();
   var recipient_email = $("#recipient-email").val();
+  var delivery_time = $("input[name='delivery-time']:checked").val();
   var camp = $("#camp").val();
 
   // Push a new form to the database using those values
-  grams.push({
-    "id": id,
-    "shape": shape,
-    "placement": placement,
-    "color": color,
-    "message_box": message_box,
-    "music": music,
-    "your_name": your_name,
-    "your_email": your_email,
-    "recipient_name": recipient_name,
-    "camp": camp
+  grams.push().set({
+    id: id,
+    shape: shape,
+    placement: placement,
+    color: color,
+    message_box: message_box,
+    music: music,
+    your_name: your_name,
+    your_email: your_email,
+    recipient_name: recipient_name,
+    recipient_email: recipient_email,
+    delivery_time: delivery_time,
+    camp: camp
   });
 
   // Hide form  
@@ -43,12 +48,8 @@ var submitForm = function () {
   post_submit.style.display = "block";
   
   // Show message based on whether user wanted delivery time now or later
-  var delivery = $("input[name='delivery-time']:check").val()
-  var confirm = document.getElementById('confirm-' + delivery);
+  var confirm = document.getElementById('confirm-' + delivery_time);
   confirm.style.display = "inline";
-  
-  // Get camp name
-  var camp = document.getElementById('camp').value;
   
   // Check if user entered camp name
   if (camp != "") {
@@ -333,62 +334,4 @@ $(window).load(function () {
 
   // Initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values
   autocomplete(document.getElementById("camp"), camps);
-});
-
-
-'use strict';
-
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const nodemailer = require('nodemailer');
-
-//to make it work you need gmail account
-const gmailEmail = functions.config().gmail.email;
-const gmailPassword = functions.config().gmail.password;
-
-admin.initializeApp();
-
-//creating function for sending emails
-var goMail = function (cd) {
-
-  //transporter is a way to send your emails
-  const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-          user: gmailEmail,
-          pass: gmailPassword
-      }
-  });
-
-  // setup email data with unicode symbols
-  //this is how your email are going to look like
-  const mailOptions = {
-      from: gmailEmail, // sender address
-      to: cd["recipient-email"], // list of receivers
-      subject: 'Shabbat-o-gram', // Subject line
-      text: '!You\'ve received a Shabbat-o-gram! The color is ' + cd["color"], // plain text body
-      html: '!You\'ve received a Shabbat-o-gram! The color is ' + cd["color"] // html body
-  };
-
-  //this is callback function to return status to firebase console
-  const getDeliveryStatus = function (error, info) {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message sent: %s', info.messageId);
-      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-  };
-
-  //call of this function send an email, and return status
-  transporter.sendMail(mailOptions, getDeliveryStatus);
-};
-
-//.onDataAdded is watches for changes in database
-exports.onDataAdded = grams.onCreate(function (snap, context) {
-
-    //here we catch a new data, added to firebase database, it stored in a snap variable
-    const createdData = snap.val();
-
-    //here we send new data using function for sending emails
-    goMail(createdData);
 });
