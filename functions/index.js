@@ -22,7 +22,7 @@ var goMail = function (cd) {
           pass: gmailPassword
       }
   });
-  
+
   // Set up email data
   const mailOptions = {
       from: "Shabbat-o-grams <" + gmailEmail + ">",
@@ -56,4 +56,32 @@ exports.onDataAdded = functions.database.ref("/shabbatograms/{sessionId}").onCre
 
     // Run function to send mail based on newly added data
     goMail(createdData);
+});
+
+// Scheduled function for pre-Shabbat deliveries
+exports.scheduledFunction = functions.pubsub.schedule('0 13 * * 5').timeZone('America/Los_Angeles').onRun((context) => {
+    
+    // Pull data from Firebase
+    admin.database().ref("shabbatograms").on("value", function(snapshot) {
+
+        // Store data
+        var data = snapshot.val();
+
+        // Loop through keys
+        Object.keys(data).forEach(function(key) {
+
+            // Find unsent entries 
+            if (data[key]["sent"] == 0) {
+
+                // Send email
+                goMail(data[key]);
+
+                // Update sent field in entry
+                var updates = {sent: 1};
+
+                // Push update to Firebase
+                admin.database().ref("/shabbatograms/" + key).update(updates);
+            }
+        });
+    });
 });

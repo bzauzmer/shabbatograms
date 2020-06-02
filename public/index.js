@@ -10,7 +10,7 @@ var grams = firebase.database().ref("shabbatograms");
 var submitForm = function () {
 
   // Get input values from each of the form elements
-  var id = Math.random().toFixed(10).substring(2,11);
+  var id = Math.random().toFixed(10).substring(2,12);
   var shape = $("input[name='shape']:checked").val();
   var placement = $("input[name='placement']:checked").val();
   var color = $("input[name='color']:checked").val();
@@ -22,6 +22,13 @@ var submitForm = function () {
   var recipient_email = $("#recipient-email").val();
   var delivery_time = $("input[name='delivery-time']:checked").val();
   var camp = $("#camp").val();
+
+  // Binary variable indicating whether Friday deliveries still need to be sent
+  if (delivery_time == "now") {
+    var sent = 1;
+  } else {
+    var sent = 0;
+  }
 
   // Push a new form to the database using those values
   grams.push().set({
@@ -36,6 +43,7 @@ var submitForm = function () {
     recipient_name: recipient_name,
     recipient_email: recipient_email,
     delivery_time: delivery_time,
+    sent: sent,
     camp: camp
   });
 
