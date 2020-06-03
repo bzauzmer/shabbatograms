@@ -26,7 +26,7 @@ var goMail = function (cd) {
   // Set up email data
   const mailOptions = {
       from: "Shabbat-o-grams <" + gmailEmail + ">",
-      to: cd["recipient_email"],
+      to: cd["recipient_email"].split(",").map(el => el.trim()),
       subject: 'You\'ve received a Shabbat-o-gram!',
       text: "Dear " + cd["recipient_name"] + ",\r\n\r\n" + cd["your_name"] +
         " has sent you a Shabbat-o-gram! Copy and paste the following link to view it: https://shabbatograms.web.app/gram.html?id=" + cd["id"] +

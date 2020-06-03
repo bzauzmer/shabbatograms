@@ -53,7 +53,9 @@ var submitForm = function () {
   });
 
   // Push image to Firebase
-  storageRef.child('images/' + id).put(blob);
+  if (blob !== undefined) {
+    storageRef.child('images/' + id).put(blob);
+  }
 
   // Hide form  
   var form = document.getElementById('gram-form');
