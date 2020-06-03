@@ -17,3 +17,9 @@ h1 {
 h3 {
   text-align: center;
 }      
+
+/* Image formatting */
+#image {
+	width: 500px;
+	height: 500px;
+}

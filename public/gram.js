@@ -3,6 +3,7 @@ firebase.initializeApp(config);
 
 // Reference to the shabbatograms object in Firebase database
 var grams = firebase.database().ref("shabbatograms");
+var storageRef = firebase.storage().ref();
 
 // Function to extract parameters from URL
 function getParams(url) {
@@ -29,6 +30,14 @@ function load() {
     Object.keys(data).forEach(function(key) {
       if (data[key]["id"] == id) {
         var selections = data[key];
+
+        // Pull image from Firebase
+        storageRef.child('images/' + id).getDownloadURL().then(function(url) {
+
+          // Put URL into image
+          var image = document.getElementById('image');
+          image.src = url;
+        });        
 
         if (selections["camp"] != "") {
           var donation = document.getElementById('donation');

@@ -3,8 +3,12 @@
 // Initialize Firebase app
 firebase.initializeApp(config);
 
-// Reference to the shabbatograms object in Firebase database
+// Reference to the shabbatograms objects in Firebase database
 var grams = firebase.database().ref("shabbatograms");
+var storageRef = firebase.storage().ref();
+
+// Global variable to store uploaded image
+var blob;
 
 // Save a new submission to the database, using the input in the form
 var submitForm = function () {
@@ -14,6 +18,7 @@ var submitForm = function () {
   var shape = $("input[name='shape']:checked").val();
   var placement = $("input[name='placement']:checked").val();
   var color = $("input[name='color']:checked").val();
+  var image = $("#uploaded");
   var message_box = $("#message-box").val();
   var music = $("#music").val();
   var your_name = $("#your-name").val();
@@ -46,6 +51,9 @@ var submitForm = function () {
     sent: sent,
     camp: camp
   });
+
+  // Push image to Firebase
+  storageRef.child('images/' + id).put(blob);
 
   // Hide form  
   var form = document.getElementById('gram-form');
@@ -311,10 +319,14 @@ function moveMessage(pos) {
 // Function to upload image and display it on client side
 function loadFile(event) {
   
+  // Define image variables
   var image = document.getElementById('uploaded');
   var img = new Image();
-  image.src = URL.createObjectURL(event.target.files[0]);
-  img.src = URL.createObjectURL(event.target.files[0]);
+
+  // Upload image and display on site
+  blob = event.target.files[0];
+  image.src = URL.createObjectURL(blob);
+  img.src = URL.createObjectURL(blob);
 
   img.onload = function() {
     var width = img.naturalWidth,
