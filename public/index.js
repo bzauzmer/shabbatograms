@@ -7,8 +7,33 @@ firebase.initializeApp(config);
 var grams = firebase.database().ref("shabbatograms");
 var storageRef = firebase.storage().ref();
 
-// Global variable to store uploaded image
-var blob;
+// Global variable to store canvas
+var lc;
+
+// Convert data URI to blob
+function dataURItoBlob(dataURI) {
+  // convert base64 to raw binary data held in a string
+  // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+  var byteString = atob(dataURI.split(',')[1]);
+
+  // separate out the mime component
+  var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+  // write the bytes of the string to an ArrayBuffer
+  var ab = new ArrayBuffer(byteString.length);
+
+  // create a view into the buffer
+  var ia = new Uint8Array(ab);
+
+  // set the bytes of the buffer to the correct values
+  for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+  }
+
+  // write the ArrayBuffer to a blob, and you're done
+  var blob = new Blob([ab], {type: mimeString});
+  return blob;
+}
 
 // Save a new submission to the database, using the input in the form
 var submitForm = function () {
@@ -47,11 +72,9 @@ var submitForm = function () {
   });
 
   // Push image to Firebase
-  if (blob !== undefined) {
-    storageRef.child('images/' + id).put(blob);
-  }
+  storageRef.child('images/' + id).put(dataURItoBlob(lc.getImage().toDataURL()));
 
-  // Hide form  
+  // Hide form
   var form = document.getElementById('gram-form');
   form.style.display = "none";
   
@@ -185,39 +208,20 @@ function changeImg(shp) {
 
 // Function to upload image and display it on client side
 function loadFile(event) {
-  
-  // Define image variables
-  var image = document.getElementById('uploaded');
-  var img = new Image();
 
-  // Upload image and display on site
-  blob = event.target.files[0];
-  image.src = URL.createObjectURL(blob);
-  img.src = URL.createObjectURL(blob);
+  var newImage = new Image()
+  newImage.src = URL.createObjectURL(event.target.files[0]);
+  lc.saveShape(LC.createShape('Image', {x: 10, y: 10, image: newImage}));
 
-  img.onload = function() {
-    var width = img.naturalWidth,
-        height = img.naturalHeight;
-    
-    if (width > height) {
-      image.style.width = "600px";
-      image.style.height = (600 * height / width) + 'px';
-      image.style.marginTop = (300 * (1 - height / width)) + 'px';
-      image.style.marginLeft = "0px";
-    } else {
-      image.style.width = (600 * width / height) + 'px';
-      image.style.height = "600px";
-      image.style.marginTop = "0px";
-      image.style.marginLeft = (300 * (1 - width / height)) + 'px';
-    }
-  }
+  // Show the word another above file input
+  $("#another").show();
 }
 
 // When the window is fully loaded, call this function.
 $(window).load(function () {
 
   // Initiate Literally Canvas
-  LC.init(
+  lc = LC.init(
     document.getElementsByClassName('my-drawing')[0],
     {imageURLPrefix: '/static/img'}
   );

@@ -10,8 +10,10 @@ body {
 }
 
 /* Header and sub-header */
-h1 {
-  text-align: center;
+#header {
+  display: block;
+  margin: auto;
+  max-width: 1200px;
 }
 
 h3 {
