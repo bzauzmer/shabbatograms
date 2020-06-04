@@ -16,10 +16,7 @@ var submitForm = function () {
   // Get input values from each of the form elements
   var id = Math.random().toFixed(10).substring(2,12);
   var shape = $("input[name='shape']:checked").val();
-  var placement = $("input[name='placement']:checked").val();
-  var color = $("input[name='color']:checked").val();
   var image = $("#uploaded");
-  var message_box = $("#message-box").val();
   var music = $("#music").val();
   var your_name = $("#your-name").val();
   var your_email = $("#your-email").val();
@@ -39,9 +36,6 @@ var submitForm = function () {
   grams.push().set({
     id: id,
     shape: shape,
-    placement: placement,
-    color: color,
-    message_box: message_box,
     music: music,
     your_name: your_name,
     your_email: your_email,
@@ -186,136 +180,7 @@ function autocomplete(inp, arr) {
 
 // Function to adjust gram display when shape is changed
 function changeImg(shp) {
-  var color = document.getElementById('gram-border');
-  var image = document.getElementById('uploaded');
-  var msg = document.getElementById('message-box');
-  var placement = $("input[name='placement']:checked").val();
-  
-  if (shp == "rectangle") {
-    color.style.clipPath = "none";
-    image.style.clipPath = "none";
-    msg.style.clipPath = "none";
-  } else if (shp == "oval") {
-    color.style.clipPath = "circle(300px at 50% 50%)";
-    image.style.clipPath = "circle(300px at 50% 50%)";
-    
-    if (placement == "top") {
-      msg.style.clipPath = "circle(300px at 50% 100%)";
-    } else if (placement == "bottom") {
-      msg.style.clipPath = "circle(300px at 50% 0%)";
-    } else if (placement == "left") {
-      msg.style.clipPath = "circle(300px at 100% 50%)";
-    } else if (placement == "right") {
-      msg.style.clipPath = "circle(300px at 0% 50%)";
-    } else if (placement == "full") {
-      msg.style.clipPath = "circle(300px at 50% 50%)";
-    }
-  } else if (shp == "heart") {
-    color.style.clipPath = "polygon(50% 100%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%)";
-    image.style.clipPath = "polygon(50% 100%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%)";
-    
-    if (placement == "top") {
-      msg.style.clipPath = "polygon(16.67% 50%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%, 83.33% 50%)";
-    } else if (placement == "bottom") {
-      msg.style.clipPath = "polygon(50% 100%, 16.67% 50%, 83.33% 50%)";
-    } else if (placement == "left") {
-      msg.style.clipPath = "polygon(50% 100%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%)";
-    } else if (placement == "right") {
-      msg.style.clipPath = "polygon(50% 100%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%)";
-    } else if (placement == "full") {
-      msg.style.clipPath = "polygon(50% 100%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%)";
-    }
-  }
-}
-
-// Function to adjust background of gram when new color is selection
-function changeColor(color) {
-  var image = document.getElementById('gram-border');
-  image.src = "images/" + color + ".png";
-}
-
-// Function to move message box based on gram shape and selected location
-function moveMessage(pos) {
-
-  var shape_val = $("input[name='shape']:checked").val();  
-  var message_box = document.getElementById('message-box');
-
-  if (shape_val == "heart") {
-    
-    message_box.style.width = "600px";
-    message_box.style.height = "600px";
-    message_box.style.marginTop = "0px";
-    message_box.style.marginLeft = "0px";
-
-    if (pos == "top") {
-      message_box.style.clipPath = "polygon(16.67% 50%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%, 83.33% 50%)";
-    } else if (pos == "bottom") {
-      message_box.style.clipPath = "polygon(50% 100%, 16.67% 50%, 83.33% 50%)";
-    } else if (pos == "left") {
-      message_box.style.clipPath = "polygon(50% 100%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%)";
-    } else if (pos == "right") {
-      message_box.style.clipPath = "polygon(50% 100%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%)";
-    } else if (pos == "full") {
-      message_box.style.clipPath = "polygon(50% 100%, 0% 25%, 1% 18%, 2% 15%, 3% 13%, 4% 11%, 5% 10%, 6% 9%, 7% 8%, 8% 7%, 9% 6%, 10% 5%, 16% 2%, 21% 0%, 22% 0%, 23% 0%, 24% 0%, 25% 0%, 26% 0%, 27% 0%, 28% 0%, 29% 0%, 35% 2%, 40% 5%, 41% 6%, 42% 7%, 43% 8%, 44% 9%, 45% 10%, 46% 11%, 47% 13%, 48% 15%, 49% 18%, 50% 25%, 51% 18%, 52% 15%, 53% 13%, 54% 11%, 55% 10%, 56% 9%, 57% 8%, 58% 7%, 59% 6%, 60% 5%, 65% 2%, 71% 0%, 72% 0%, 73% 0%, 74% 0%, 75% 0%, 76% 0%, 77% 0%, 78% 0%, 79% 0%, 85% 2%, 90% 5%, 91% 6%, 92% 7%, 93% 8%, 94% 9%, 95% 10%, 96% 11%, 97% 13%, 98% 15%, 99% 18%, 100% 25%)";
-    }
-  } else {
-    if (pos == "top") {
-      message_box.style.width = "600px";
-      message_box.style.height = "300px";
-      message_box.style.marginTop = "0px";
-      message_box.style.marginLeft = "0px";
-
-      if (shape_val == "retangle") {
-        message_box.style.clipPath = "none";
-      } else if (shape_val == "oval") {
-        message_box.style.clipPath = "circle(300px at 50% 100%)";
-      }
-    } else if (pos == "bottom") {
-      message_box.style.width = "600px";
-      message_box.style.height = "300px";
-      message_box.style.marginTop = "300px";
-      message_box.style.marginLeft = "0px";
-
-      if (shape_val == "retangle") {
-        message_box.style.clipPath = "none";
-      } else if (shape_val == "oval") {
-        message_box.style.clipPath = "circle(300px at 50% 0%)";
-      }
-    } else if (pos == "left") {
-      message_box.style.width = "300px";
-      message_box.style.height = "600px";
-      message_box.style.marginTop = "0px";
-      message_box.style.marginLeft = "0px";
-
-      if (shape_val == "retangle") {
-        message_box.style.clipPath = "none";
-      } else if (shape_val == "oval") {
-        message_box.style.clipPath = "circle(300px at 100% 50%)";
-      }
-    } else if (pos == "right") {
-      message_box.style.width = "300px";
-      message_box.style.height = "600px";
-      message_box.style.marginTop = "0px";
-      message_box.style.marginLeft = "300px";
-
-      if (shape_val == "retangle") {
-        message_box.style.clipPath = "none";
-      } else if (shape_val == "oval") {
-        message_box.style.clipPath = "circle(300px at 0% 50%)";
-      }
-    } else if (pos == "full") {
-      message_box.style.width = "600px";
-      message_box.style.height = "600px";
-      message_box.style.marginTop = "0px";
-      message_box.style.marginLeft = "0px";
-
-      if (shape_val == "retangle") {
-        message_box.style.clipPath = "none";
-      } else if (shape_val == "oval") {
-        message_box.style.clipPath = "circle(300px at 50% 50%)";
-      }
-    }
-  }
+  return true;
 }
 
 // Function to upload image and display it on client side
@@ -350,6 +215,12 @@ function loadFile(event) {
 
 // When the window is fully loaded, call this function.
 $(window).load(function () {
+
+  // Initiate Literally Canvas
+  LC.init(
+    document.getElementsByClassName('my-drawing')[0],
+    {imageURLPrefix: '/static/img'}
+  );
 
   // Find the HTML element with the id gram-form, and when the submit event is triggered on that element, call submitForm.
   $("#gram-form").submit(submitForm);

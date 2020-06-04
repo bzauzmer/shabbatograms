@@ -20,6 +20,16 @@
     <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+    <!-- Literally Canvas stylesheet -->
+    <link href="/static/css/literallycanvas.css" rel="stylesheet">
+
+    <!-- dependency: React.js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-with-addons.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+
+    <!-- Literally Canvas Javascript -->
+    <script src="/static/js/literallycanvas.js"></script>
+
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="index.css">
   </head>
@@ -56,57 +66,13 @@
           <img src="images/heart.png">
         </label>
       </div><br><br>
-      
-      <!-- Radio options for text placement -->
-      <label for="placement"><b>Text Placement:</b></label>
-      
-      <input type="radio" onclick="moveMessage('top')" id="top" name="placement" value="top" checked>
-      <label for="top">Top</label>
-      
-      <input type="radio" onclick="moveMessage('bottom')" id="bottom" name="placement" value="bottom">
-      <label for="bottom">Bottom</label>
-      
-      <input type="radio" onclick="moveMessage('left')" id="left" name="placement" value="left">
-      <label for="left">Left</label>
-      
-      <input type="radio" onclick="moveMessage('right')" id="right" name="placement" value="right">
-      <label for="right">Right</label>
 
-      <input type="radio"  onclick="moveMessage('full')" id="full" name="placement" value="full">
-      <label for="full">Full</label><br><br>
-      
-      <!-- Radio options for background color -->
-      <label for="color"><b>Background Color:</b></label>
-
-      <label>
-        <input type="radio" onclick="changeColor('white')" name="color" class = "colorradio" value="white" checked>
-        <img src="images/white.png" style="width: 30px; height: 30px;">
-      </label>
-
-      <label>
-        <input type="radio" onclick="changeColor('red')" name="color" class = "colorradio" value="red">
-        <img src="images/red.png" style="width: 30px; height: 30px;">
-      </label>
-
-      <label>
-        <input type="radio" onclick="changeColor('green')" name="color" class = "colorradio" value="green">
-        <img src="images/green.png" style="width: 30px; height: 30px;">
-      </label><br><br>
-      
       <!-- Background image uploading -->
       <label for="file"><b>Upload Background Image:</b></label>
       <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
-      
-      <!-- Container for Shabbat-o-gram preview -->
-      <div id="container" class="container">
-        <img id="gram-border" src="images/white.png">
-        
-        <img id="uploaded" src="">
-        
-        <input type="text" id="message-box" name="message-box" value = "Write Your Message Here">
-      </div>
-      
-      <br><br>
+       
+      <!-- Canvas -->     
+      <div class="my-drawing"></div><br><br>
 
       <!-- Text inputs -->
       <label for="music"><b>Youtube Link for Background Music</b></label><br>
