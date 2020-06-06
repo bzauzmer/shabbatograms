@@ -30,6 +30,10 @@
     <!-- Literally Canvas Javascript -->
     <script src="/static/js/literallycanvas.js"></script>
 
+    <!-- Image handling -->
+    <script src="/imageHandler/js/component.js"></script>
+    <link rel="stylesheet" href="/imageHandler/css/component.css">
+
     <!-- Page-specific CSS -->
     <link rel="stylesheet" href="index.css">
 
@@ -56,25 +60,20 @@
   	<!-- Header and sub-header -->
     <img id="header" src="images/header.png">
     <h3><i>Preserving camp connections in a summer without camp.</i></h3>
-    
+
     <!-- Begin form -->
     <form id="gram-form" autocomplete="off" method="post" action="">
       
       <!-- Radio options for shapes -->
       <div class="shape">
         <label>
-          <input type="radio" onclick="changeImg('rectangle')" name="shape" class = "picradio" value="rectangle" checked>
-          <img src="images/rectangle.png">
+          <input type="radio" onclick="changeImg('vertical')" name="shape" class = "picradio" value="vertical" checked>
+          <img src="images/vertical.png">
         </label>
 
         <label>
-          <input type="radio" onclick="changeImg('oval')" name="shape" class = "picradio" value="oval">
-          <img src="images/oval.png">
-        </label>
-
-        <label>
-          <input type="radio" onclick="changeImg('heart')" name="shape" class = "picradio" value="heart">
-          <img src="images/heart.png">
+          <input type="radio" onclick="changeImg('horizontal')" name="shape" class = "picradio" value="horizontal">
+          <img src="images/horizontal.png">
         </label>
       </div><br><br>
 

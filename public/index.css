@@ -25,6 +25,17 @@ h3 {
   text-align: center;
 }
 
+/* Canvas */
+.my-drawing {
+  width: 500px;
+  height: 600px;
+  margin: auto;
+}
+
+.literally {
+  min-height: 600px;
+}
+
 /* Div to display after submit button has been clicked */
 #post-submit {
   display: none;

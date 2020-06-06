@@ -8,7 +8,7 @@ var grams = firebase.database().ref("shabbatograms");
 var storageRef = firebase.storage().ref();
 
 // Global variable to store canvas
-var lc;
+var lc, canvas_left, canvas_top, canvas_width, canvas_height, image_loaded;
 
 // Convert data URI to blob
 function dataURItoBlob(dataURI) {
@@ -124,12 +124,13 @@ function autocomplete(inp, arr) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        if (arr[i].toLowerCase().includes(val.toLowerCase())) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
+          b.innerHTML = arr[i].substr(0, arr[i].toLowerCase().indexOf(val.toLowerCase()));
+          b.innerHTML += "<strong>" + arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()) + val.length);
           /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
@@ -203,18 +204,66 @@ function autocomplete(inp, arr) {
 
 // Function to adjust gram display when shape is changed
 function changeImg(shp) {
-  return true;
+
+  if (shp == 'vertical') {
+    $(".my-drawing").width(500);
+    $(".my-drawing").height(600);
+    $(".literally").css('min-height', 600);
+    lc.setImageSize(500, 600);
+  } else if (shp == 'horizontal') {
+    $(".my-drawing").width(650);
+    $(".my-drawing").height(450);
+    $(".literally").css('min-height', 450);
+    lc.setImageSize(650, 450);
+  }
+
+  lc.respondToSizeChange();
+
+  // Get canvas dimensions
+  canvasDims()  
 }
 
 // Function to upload image and display it on client side
 function loadFile(event) {
 
-  var newImage = new Image()
-  newImage.src = URL.createObjectURL(event.target.files[0]);
-  lc.saveShape(LC.createShape('Image', {x: 10, y: 10, image: newImage}));
+  // Initialize image with class
+  var img = new Image();
+  img.setAttribute('class', 'resize-image');
+  
+  // New image is loaded
+  image_loaded = false;
+
+  // Run once image has loaded
+  img.onload = function() {
+
+    // Check if image has already been loaded
+    if (!image_loaded) {
+
+      // Add uploaded image to div containing canvas    
+      $(".my-drawing").append(img);
+
+      // Enable resizing and moving
+      resizeableImage($('.resize-image'), this.width, this.height);
+
+      // Don't load image again
+      image_loaded = true;
+    }
+  }
+
+  // Image source is user file
+  img.src = URL.createObjectURL(event.target.files[0]);
 
   // Show the word another above file input
   $("#another").show();
+}
+
+//Function to get canvas dimensions
+function canvasDims() {
+
+  canvas_left = $(".lc-drawing").offset().left
+  canvas_top = $(".lc-drawing").offset().top
+  canvas_width = $(".lc-drawing").width()
+  canvas_height = $(".lc-drawing").height()
 }
 
 // When the window is fully loaded, call this function.
@@ -223,8 +272,13 @@ $(window).load(function () {
   // Initiate Literally Canvas
   lc = LC.init(
     document.getElementsByClassName('my-drawing')[0],
-    {imageURLPrefix: '/static/img'}
+    {imageURLPrefix: '/static/img', imageSize: {width: 500, height: 700}}
   );
+
+  lc.respondToSizeChange();
+
+  // Get canvas dimensions
+  canvasDims()
 
   // Find the HTML element with the id gram-form, and when the submit event is triggered on that element, call submitForm.
   $("#gram-form").submit(submitForm);
