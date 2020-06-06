@@ -205,18 +205,18 @@ function autocomplete(inp, arr) {
 // Function to adjust gram display when shape is changed
 function changeImg(shp) {
 
+  // Set shape as percentage of page width
   if (shp == 'vertical') {
-    $(".my-drawing").width(500);
-    $(".my-drawing").height(600);
-    $(".literally").css('min-height', 600);
-    lc.setImageSize(500, 600);
+    $(".my-drawing").width("80%");
+    $(".my-drawing").height(1.2 * $(".my-drawing").width());
   } else if (shp == 'horizontal') {
-    $(".my-drawing").width(650);
-    $(".my-drawing").height(450);
-    $(".literally").css('min-height', 450);
-    lc.setImageSize(650, 450);
+    $(".my-drawing").width("100%");
+    $(".my-drawing").height(0.7 * $(".my-drawing").width());
   }
 
+  // Change canvas shape
+  $(".literally").css('min-height', $(".my-drawing").height());
+  lc.setImageSize($(".my-drawing").width(), $(".my-drawing").height());
   lc.respondToSizeChange();
 
   // Get canvas dimensions
@@ -275,6 +275,7 @@ $(window).load(function () {
     {imageURLPrefix: '/static/img', imageSize: {width: 500, height: 700}}
   );
 
+  changeImg('vertical');
   lc.respondToSizeChange();
 
   // Get canvas dimensions
@@ -285,4 +286,32 @@ $(window).load(function () {
 
   // Initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values
   autocomplete(document.getElementById("camp"), camps);
+});
+
+// Listen for click outside of canvas
+$(":not(.my-drawing):not(.my-drawing *)").mousedown(function(e) {
+
+  console.log($(e.target).attr('class'));
+
+  // Check if there is currently a resizable image
+  if ($(".resize-container")[0]) {
+    
+    // Create copy of image and save it to canvas in current location
+    var newImage = new Image();
+    newImage.src = $(".resize-image").attr("src");
+    lc.saveShape(LC.createShape('Image', {
+      x: $(".resize-container").offset().left - canvas_left,
+      y: $(".resize-container").offset().top - canvas_top,
+      image: newImage
+    }));
+
+    // Delete resizable image
+    $(".resize-container").remove();
+  }
+});
+
+//Show name of uploaded image
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="/__/firebase/7.14.6/firebase-app.js"></script>
@@ -16,9 +17,11 @@
 
     <!-- Load the jQuery library, which we'll use to manipulate HTML elements with Javascript. -->
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Literally Canvas stylesheet -->
     <link href="/static/css/literallycanvas.css" rel="stylesheet">
@@ -47,6 +50,8 @@
     <meta name="msapplication-TileColor" content="#f0f8ff">
     <meta name="msapplication-config" content="images/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+
+    <title>Shabbat-O-Grams</title>
   </head>
   
   <body>
@@ -58,11 +63,16 @@
   	<script src="index.js"></script>
 
   	<!-- Header and sub-header -->
-    <img id="header" src="images/header.png">
-    <h3><i>Preserving camp connections in a summer without camp.</i></h3>
+    <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 m-1 m-md-auto">
+      <img src="images/header.png" class="img-fluid" />
+    </div><br>
+
+    <div class="container col-xs-10 col-sm-10 col-md-8 col-lg-8 m-1 m-md-auto">
+      <img src="images/subheader.png" class="img-fluid" />
+    </div><br>
 
     <!-- Begin form -->
-    <form id="gram-form" autocomplete="off" method="post" action="">
+    <form id="gram-form" autocomplete="off" method="post" action="" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 m-1 m-md-auto">
       
       <!-- Radio options for shapes -->
       <div class="shape">
@@ -78,42 +88,60 @@
       </div><br><br>
 
       <!-- Background image uploading -->
-      <label for="file"><b>Upload <span id="another" style="display: none">Another</span> Background Image:</b></label>
-      <input type="file"  accept="image/*" name="image" id="file" onchange="loadFile(event)"><br><br>
+      <div class="custom-file">
+        <label for="file" class="custom-file-label"><b>(Optional) Add <span id="another" style="display: none">Another </span>Image:</b></label>
+        <input type="file"  class="custom-file-input" accept="image/*" name="image" id="file" onchange="loadFile(event)">
+      </div><br><br>
        
       <!-- Canvas -->     
       <div class="my-drawing"></div><br><br>
 
       <!-- Text inputs -->
-      <label for="music"><b>Youtube Link for Background Music</b></label><br>
-      <input type="url" id="music" name="music" style="width:600px;"><br><br>
+      <div class="form-group">
+        <label for="music"><b>Youtube Link for Background Music</b></label>
+        <input type="url" id="music" name="music" class="form-control" placeholder="Youtube Link">
+      </div><br>
       
-      <label for="your-name"><b>Your Name <span class="red">*</span></b></label><br>
-      <input type="text" id="your-name" name="your-name" style="width:600px;" required><br><br>
+      <div class="form-group">
+        <label for="your-name"><b>Your Name <span class="red">*</span></b></label>
+        <input type="text" id="your-name" name="your-name" class="form-control" placeholder="Your Name" required>
+      </div><br>
       
-      <label for="your-email"><b>Your Email <span class="red">*</span></b></label><br>
-      <input type="email" id="your-email" name="your-email" style="width:600px;" required><br><br>
+      <div class="form-group">
+        <label for="your-email"><b>Your Email <span class="red">*</span></b></label>
+        <input type="email" id="your-email" name="your-email" class="form-control" placeholder="Your Email" required>
+      </div><br>
       
-      <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label><br>
-      <input type="text" id="recipient-name" name="recipient-name" style="width:600px;" required><br><br>
+      <div class="form-group">
+        <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label>
+        <input type="text" id="recipient-name" name="recipient-name" class="form-control" placeholder="Recipient Name" required>
+      </div><br>
       
-      <label for="recipient-email"><b>Recipient Email <span class="red">*</span></b><br>
-        <i>For multiple recipients, enter email addresses separated by commas</i></label><br>
-      <input type="text" id="recipient-email" name="recipient-email" style="width:600px;" required><br><br>
+      <div class="form-group">
+        <label for="recipient-email"><b>Recipient Email(s) <span class="red">*</span></b></label>
+        <small class="form-text"><i>For multiple recipients, enter email addresses separated by commas</i></small>
+        <input type="text" id="recipient-email" name="recipient-email" class="form-control" placeholder="Recipient Email(s)" required>
+      </div><br>
 
-      <label for="delivery-time"><b>Delivery Time</b></label><br>
-      <input type="radio" id="now" name="delivery-time" value="now" checked>
-      <label for="now">Now</label><br>
-      <input type="radio" id="friday" name="delivery-time" value="friday">
-      <label for="friday">Friday before Shabbat (4:00 p.m. ET)</label><br><br>
+      <div class="form-group">
+        <label for="delivery-time"><b>Delivery Time</b></label><br>
+        <div class="radio">
+          <label><input type="radio" id="now" name="delivery-time" value="now" checked> Now</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" id="friday" name="delivery-time" value="friday"> Friday before Shabbat (4:00 p.m. ET)</label>
+        </div>
+      </div><br>
 
-      <label for="camp"><b>Your Camp</b></label><br>
-      <div class="autocomplete" style="width:600px;">
-        <input id="camp" type="text" name="camp" placeholder="Camp">
-      </div><br><br>
+      <div class="form-group">
+        <label for="camp"><b>Your Camp</b></label><br>
+        <div class="autocomplete">
+          <input id="camp" type="text" name="camp" class="form-control" placeholder="Your Camp">
+        </div>
+      </div><br>
       
       <!-- Submit button to upload data and change page display to confirmation box -->
-      <button type="button" onclick="submitForm(); return false;">Send Shabbat-o-gram!</button>
+      <button type="button" class="btn btn-primary btn-lg" onclick="submitForm(); return false;">Send Shabbat-o-gram!</button>
     </form>
 
     <!-- Div to show after submission -->

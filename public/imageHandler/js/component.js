@@ -13,7 +13,7 @@ var resizeableImage = function(image_target, orig_w, orig_h) {
   init = function() {
 
     // When resizing, we will always use this copy of the original as the base
-    orig_src.src=image_target.src;
+    orig_src.src = image_target.src;
 
     // Center image in canvas
     if (orig_w > orig_h) {
