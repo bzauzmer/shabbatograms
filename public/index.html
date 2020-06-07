@@ -23,6 +23,9 @@
     <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- Google font -->
+    <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+
     <!-- Literally Canvas stylesheet -->
     <link href="/static/css/literallycanvas.css" rel="stylesheet">
 
@@ -51,7 +54,7 @@
     <meta name="msapplication-config" content="images/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Shabbat-O-Grams</title>
+    <title>Shabbat-o-Grams</title>
   </head>
   
   <body>
@@ -63,19 +66,23 @@
   	<script src="index.js"></script>
 
   	<!-- Header and sub-header -->
-    <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 m-1 m-md-auto">
-      <img src="images/header.png" class="img-fluid" />
-    </div><br>
+    <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 p-0">
+      <div class="row">
+        <a href="index.html">
+          <img src="images/header.png" class="img-fluid" />
+        </a>
+      </div>
+    </div>  
 
-    <div class="container col-xs-10 col-sm-10 col-md-8 col-lg-8 m-1 m-md-auto">
-      <img src="images/subheader.png" class="img-fluid" />
+    <div class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
+      <p>Celebrating Shabbat at camp is so special to us all. Even when we can’t be together, you can bring the spirit of a camp Shabbat to your friends, counselors, and campers by sending them a Shabbat-o-Gram. Start designing here!</p>
     </div><br>
 
     <!-- Begin form -->
-    <form id="gram-form" autocomplete="off" method="post" action="" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 m-1 m-md-auto">
+    <form id="gram-form" autocomplete="off" method="post" action="" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
       
       <!-- Radio options for shapes -->
-      <div class="shape">
+      <div class="shape d-none d-md-block">
         <label>
           <input type="radio" onclick="changeImg('vertical')" name="shape" class = "picradio" value="vertical" checked>
           <img src="images/vertical.png">
@@ -85,7 +92,8 @@
           <input type="radio" onclick="changeImg('horizontal')" name="shape" class = "picradio" value="horizontal">
           <img src="images/horizontal.png">
         </label>
-      </div><br><br>
+        <br><br>
+      </div>
 
       <!-- Background image uploading -->
       <div class="custom-file">
@@ -97,11 +105,6 @@
       <div class="my-drawing"></div><br><br>
 
       <!-- Text inputs -->
-      <div class="form-group">
-        <label for="music"><b>Youtube Link for Background Music</b></label>
-        <input type="url" id="music" name="music" class="form-control" placeholder="Youtube Link">
-      </div><br>
-      
       <div class="form-group">
         <label for="your-name"><b>Your Name <span class="red">*</span></b></label>
         <input type="text" id="your-name" name="your-name" class="form-control" placeholder="Your Name" required>
@@ -141,21 +144,86 @@
       </div><br>
       
       <!-- Submit button to upload data and change page display to confirmation box -->
-      <button type="button" class="btn btn-primary btn-lg" onclick="submitForm(); return false;">Send Shabbat-o-gram!</button>
+      <div id="submit-container">
+        <button id="form-submit" type="button" class="btn btn-primary btn-lg col-xs-12 col-sm-12 col-md-5 col-lg-5" onclick="submitForm(); return false;">
+          Send Shabbat-o-Gram!
+        </button>
+      </div>
     </form>
 
     <!-- Div to show after submission -->
-    <div id="post-submit">
-      <p id="confirm-now">Success! Your Shabbat-o-gram has been delivered!</p>
+    <div id="post-submit" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
+      <p id="confirm-now">Success! Your Shabbat-o-Gram has been delivered!</p>
       
-      <p id="confirm-friday">Success! Your Shabbat-o-gram will be delivered on Friday at 4:00 p.m. ET.</p>
+      <p id="confirm-friday">Success! Your Shabbat-o-Gram will be delivered on Friday at 4:00 p.m. ET.</p>
       
-      <p><a href="index.html">Click here to send another Shabbat-o-gram!</a></p>
+      <p><a href="index.html">Click here to send another Shabbat-o-Gram!</a></p>
       
       <p id="donation"><a id="camp-link" target="_blank">Click here if you'd like to make a donation to
         <span id="camp-name"></span> during this difficult time.</a></p>
       
-      <p>Even though we can’t be together at camp, thank you for keeping the Shabbat-o-gram spirit alive.</p>
+      <p>Even though we can’t be together at camp, thank you for keeping the Shabbat-o-Gram spirit alive.</p>
+    </div>
+
+    <br><br><br>
+    <hr />
+    <br>
+
+    <!-- Contact button -->
+    <div id="contact" class="container col-xs-12 col-sm-12 col-md-4 col-lg-4 p-0">
+      <div class="row">
+        <div class="col">
+          <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">
+            <img id="instagram" src="images/instagram.png" class="img-fluid" />
+          </a>
+        </div>
+        <div class="col my-auto">
+          <button type="button" id="contact-button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Contact Us</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Contact Us</h4>
+            <button type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+        
+          <div class="modal-body">
+            <form id="contact-form" role="form" method="post" action="">
+              <p>Send your message in the form below and we will get back to you as soon as possible.</p>
+
+              <div class="form-group">
+                <label for="contact-name">Name:</label>
+                <input type="text" class="form-control" id="contact-name" name="contact-name" required maxlength="50">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email">Email:</label>
+                <input type="email" class="form-control" id="contact-email" name="contact-email" required maxlength="50">
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message">Message:</label>
+                <textarea class="form-control" type="textarea" name="contact-message" id="contact-message"
+                  placeholder="Your Message Here" maxlength="6000" rows="7">
+                </textarea>
+              </div>
+
+              <button type="button" class="btn btn-lg btn-success btn-block" id="btnContactUs" onclick="contactForm(); return false;">Submit</button>
+            </form>
+
+            <div id="success-message" style="width:100%; height:100%; display:none;">
+              <h5>Thank you for your message. If you requested a response, we will get back to you shortly.</h5>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

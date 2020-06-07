@@ -3,6 +3,7 @@ firebase.initializeApp(config);
 
 // Reference to the shabbatograms object in Firebase database
 var grams = firebase.database().ref("shabbatograms");
+var contacts = firebase.database().ref("contacts");
 var storageRef = firebase.storage().ref();
 
 // Function to extract parameters from URL
@@ -17,6 +18,26 @@ function getParams(url) {
     params[pair[0]] = decodeURIComponent(pair[1]);
   }
   return params;
+};
+
+// Save a new contact submission to the database, using the input in the form
+var contactForm = function () {
+
+  // Get input values from each of the form elements
+  var contact_name = $("#contact-name").val();
+  var contact_email = $("#contact-email").val();
+  var contact_message = $("#contact-message").val();
+
+  // Push a new form to the database using those values
+  contacts.push().set({
+    contact_name: contact_name,
+    contact_email: contact_email,
+    contact_message: contact_message
+  });
+
+  // Show post-submit message
+  $("#contact-form").hide();
+  $("#success-message").show();
 };
 
 // Function to add page elements on load based on ID
@@ -37,13 +58,25 @@ function load() {
         storageRef.child('images/' + id).getDownloadURL().then(function(url) {
 
           // Put URL into image
-          var image = document.getElementById('image');
-          image.src = url;
-        });
+          $('#image').attr('src', url);
 
-        // Put message on page
-        var message = document.getElementById('message');
-        message.innerHTML = selections["message_box"];
+          // Wait for image to load
+          $("#image").bind('load', function() {
+
+            // Get image dimensions
+            var width = $('#image').width();
+            var height = $('#image').height();
+
+            // Keep image dimensions ratio
+            if (width > height || $('#message').width() < 500) {
+              $('#image').width("100%");
+              $('#image').height($('#image').width() * height / width);
+            } else {
+              $('#image').width("60%");
+              $('#image').height($('#image').width() * height / width);
+            }
+          });
+        });
 
         // If user chose camp, put donation link on page
         if (selections["camp"] != "") {

@@ -4,9 +4,14 @@
 }
 
 body {
-  font: 16px Arial;
+  font-size: 18px;
+  font-family: 'Itim';
   background-color: aliceblue;
   margin: 30px;
+}
+
+p {
+  margin-top: 1rem;
 }
 
 /* Shape radio buttons */
@@ -20,21 +25,25 @@ input[type="file"] {
 }
 
 .my-drawing {
-  width: 70%;
   margin: auto;
 }
 
-.literally {
-  min-height: 600px;
+.color-well label {
+  margin-top: 7px;
+  margin-bottom: 0px;
+}
+
+/* Form submission */
+#submit-container {
+  text-align: center;
 }
 
 /* Div to display after submit button has been clicked */
 #post-submit {
   display: none;
-  background-color: cornsilk;
-  width: 800px;
-  border: 3px solid DodgerBlue;
-  padding: 20px;
+  background-color: #bff1a6;
+  width: 100%;
+  border: 3px solid #685f5b;
   margin: auto;
   text-align: center;
 }
@@ -64,7 +73,7 @@ input[type="file"] {
 }
 
 .picradio:checked + img {
-  outline: 2px solid #1C86EE;
+  outline: 2px solid #3fbab3;
 }
 
 /* Red asterisks for required fields */
@@ -98,4 +107,32 @@ input[type="file"] {
 .autocomplete-active {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
+}
+
+/* Submit button */
+#form-submit {
+  background-color: #3fbab3;
+  border: none;
+}
+
+/* Contact form */
+#instagram {
+  max-width: 30%;
+}
+
+#contact {
+  text-align: center;
+}
+
+#contact-button {
+  background-color: #3fbab3;
+  border: none;
+}
+
+#btnContactUs {
+  background-color: #3fbab3;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, .9);
 }

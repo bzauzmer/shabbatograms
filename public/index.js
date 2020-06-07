@@ -5,6 +5,7 @@ firebase.initializeApp(config);
 
 // Reference to the shabbatograms objects in Firebase database
 var grams = firebase.database().ref("shabbatograms");
+var contacts = firebase.database().ref("contacts");
 var storageRef = firebase.storage().ref();
 
 // Global variable to store canvas
@@ -40,9 +41,6 @@ var submitForm = function () {
 
   // Get input values from each of the form elements
   var id = Math.random().toFixed(10).substring(2,12);
-  var shape = $("input[name='shape']:checked").val();
-  var image = $("#uploaded");
-  var music = $("#music").val();
   var your_name = $("#your-name").val();
   var your_email = $("#your-email").val();
   var recipient_name = $("#recipient-name").val();
@@ -60,8 +58,6 @@ var submitForm = function () {
   // Push a new form to the database using those values
   grams.push().set({
     id: id,
-    shape: shape,
-    music: music,
     your_name: your_name,
     your_email: your_email,
     recipient_name: recipient_name,
@@ -101,6 +97,26 @@ var submitForm = function () {
     var camp_link = document.getElementById('camp-link');
     camp_link.href = camp_dict[camp];
   }
+};
+
+// Save a new contact submission to the database, using the input in the form
+var contactForm = function () {
+
+  // Get input values from each of the form elements
+  var contact_name = $("#contact-name").val();
+  var contact_email = $("#contact-email").val();
+  var contact_message = $("#contact-message").val();
+
+  // Push a new form to the database using those values
+  contacts.push().set({
+    contact_name: contact_name,
+    contact_email: contact_email,
+    contact_message: contact_message
+  });
+
+  // Show post-submit message
+  $("#contact-form").hide();
+  $("#success-message").show();
 };
 
 // Handle autocomplete functionality for camp input
@@ -205,13 +221,21 @@ function autocomplete(inp, arr) {
 // Function to adjust gram display when shape is changed
 function changeImg(shp) {
 
-  // Set shape as percentage of page width
-  if (shp == 'vertical') {
-    $(".my-drawing").width("80%");
-    $(".my-drawing").height(1.2 * $(".my-drawing").width());
+  // Set shape as percentage of form width
+  if ($('#gram-form').width() < 500) {
+    
+    $(".my-drawing").width($('#gram-form').width());
+    $(".my-drawing").height(1.4 * $('.my-drawing').width());
+
+  } else if (shp == 'vertical') {
+    
+    $(".my-drawing").width(0.6 * $('#gram-form').width());
+    $(".my-drawing").height(0.66 * $('#gram-form').width());
+
   } else if (shp == 'horizontal') {
-    $(".my-drawing").width("100%");
-    $(".my-drawing").height(0.7 * $(".my-drawing").width());
+
+    $(".my-drawing").width(0.73 * $('#gram-form').width());
+    $(".my-drawing").height(0.55 * $('#gram-form').width());
   }
 
   // Change canvas shape
@@ -272,7 +296,10 @@ $(window).load(function () {
   // Initiate Literally Canvas
   lc = LC.init(
     document.getElementsByClassName('my-drawing')[0],
-    {imageURLPrefix: '/static/img', imageSize: {width: 500, height: 700}}
+    {imageURLPrefix: '/static/img',
+    imageSize: {width: $(window).width(), height: 700},
+    strokeWidths: [1, 2, 5, 10, 20],
+    backgroundColor: "#ffffff"}
   );
 
   changeImg('vertical');
@@ -290,8 +317,6 @@ $(window).load(function () {
 
 // Listen for click outside of canvas
 $(":not(.my-drawing):not(.my-drawing *)").mousedown(function(e) {
-
-  console.log($(e.target).attr('class'));
 
   // Check if there is currently a resizable image
   if ($(".resize-container")[0]) {

@@ -4804,15 +4804,15 @@ ColorPickers = React.createFactory(React.createClass({
     }, ColorWell({
       lc: lc,
       colorName: 'primary',
-      label: _('stroke')
+      label: _('Stroke')
     }), ColorWell({
       lc: lc,
       colorName: 'secondary',
-      label: _('fill')
+      label: _('Fill')
     }), ColorWell({
       lc: lc,
       colorName: 'background',
-      label: _('bg')
+      label: _('Background')
     }));
   }
 }));

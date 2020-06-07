@@ -4,22 +4,48 @@
 }
 
 body {
-  font: 16px Arial;
+  font-size: 18px;
+  font-family: 'Itim';
   background-color: aliceblue;
   margin: 30px;
 }
 
-/* Header and sub-header */
-h1 {
+p {
+	margin-top: 1rem;
+}
+
+/* Image container */
+#image-container {
+	text-align: center;
+}
+
+/* Div below image */
+#message {
+  background-color: #bff1a6;
+  width: 100%;
+  border: 3px solid #685f5b;
+  margin: auto;
   text-align: center;
 }
 
-h3 {
-  text-align: center;
-}      
+/* Contact form */
+#instagram {
+  max-width: 30%;
+}
 
-/* Image formatting */
-#image {
-	width: 500px;
-	height: 500px;
+#contact {
+  text-align: center;
+}
+
+#contact-button {
+  background-color: #3fbab3;
+  border: none;
+}
+
+#btnContactUs {
+  background-color: #3fbab3;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, .9);
 }

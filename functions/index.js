@@ -4,12 +4,19 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 admin.initializeApp();
 
 // Read Gmail credentials from config file
 const gmailEmail = functions.config().gmail.email;
 const gmailPassword = functions.config().gmail.password;
+
+// Read email credentials from config file
+const emailHost = functions.config().email.host;
+const emailPort = functions.config().email.port;
+const emailAddress = functions.config().email.address;
+const emailPassword = functions.config().email.password;
 
 // Function to send email
 var goMail = function (cd) {
@@ -25,15 +32,52 @@ var goMail = function (cd) {
 
   // Set up email data
   const mailOptions = {
-      from: "Shabbat-o-grams <" + gmailEmail + ">",
+      from: "Shabbat-o-Grams <" + gmailEmail + ">",
       to: cd["recipient_email"].split(",").map(el => el.trim()),
-      subject: 'You\'ve received a Shabbat-o-gram!',
+      subject: 'You\'ve received a Shabbat-o-Gram!',
       text: "Dear " + cd["recipient_name"] + ",\r\n\r\n" + cd["your_name"] +
-        " has sent you a Shabbat-o-gram! Copy and paste the following link to view it: https://shabbatograms.web.app/gram.html?id=" + cd["id"] +
-        "\r\n\r\nShabbat shalom,\r\nThe Shabbat-o-gram Team\r\n",
+        " has sent you a Shabbat-o-Gram! Copy and paste the following link to view it: https://shabbatograms.web.app/gram.html?id=" + cd["id"] +
+        "\r\n\r\nShabbat shalom,\r\nThe Shabbat-o-Gram Team\r\n",
       html: 'Dear ' + cd["recipient_name"] + ',<br><br>' + cd["your_name"] +
-        ' has sent you a Shabbat-o-gram! <a href=\"https://shabbatograms.web.app/gram.html?id=' + cd["id"] + '\">Click here</a> to view it.' + 
-        '<br><br>Shabbat shalom,<br>The Shabbat-o-gram Team<br>'
+        ' has sent you a Shabbat-o-Gram! <a href=\"https://shabbatograms.web.app/gram.html?id=' + cd["id"] + '\">Click here</a> to view it.' + 
+        '<br><br>Shabbat shalom,<br>The Shabbat-o-Gram Team<br>'
+  };
+
+  // Error handling function
+  const getDeliveryStatus = function (error, info) {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+  };
+
+  // Call function to send mail and return delivery status
+  transporter.sendMail(mailOptions, getDeliveryStatus);
+};
+
+// Function to send email
+var goContact = function (cd) {
+
+  // Transporter defines email account
+  const transporter = nodemailer.createTransport(smtpTransport({
+    host: emailHost,
+    port: emailPort,
+    secureConnection: false,
+    auth: {
+      user: emailAddress,
+      pass: emailPassword
+    }
+  }));
+
+  // Set up email data
+  const mailOptions = {
+      from: "Shabbat-o-Grams <" + emailAddress + ">",
+      to: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
+      subject: 'Shabbat-o-Grams Contact Submission',
+      text: 'You have a new Shabbat-o-Grams contact submission from ' + cd["contact_name"] + ' (' +
+        cd["contact_email"] + '):\r\n\r\n' + cd["contact_message"] + '\r\n',
+      html: 'You have a new Shabbat-o-Grams contact submission from ' + cd["contact_name"] + ' (<a href=\"mailto:' +
+        cd["contact_email"] + '\">' + cd["contact_email"] + '</a>):<br><br>' + cd["contact_message"] + '<br>'
   };
 
   // Error handling function
@@ -56,6 +100,16 @@ exports.onDataAdded = functions.database.ref("/shabbatograms/{sessionId}").onCre
 
     // Run function to send mail based on newly added data
     goMail(createdData);
+});
+
+// Watch for change in contact database
+exports.onDataAdded = functions.database.ref("/contacts/{sessionId}").onCreate(function (snap, context) {
+
+    // Get new data added to database
+    const createdData = snap.val();
+
+    // Run function to send mail based on newly added data
+    goContact(createdData);
 });
 
 // Scheduled function for pre-Shabbat deliveries
