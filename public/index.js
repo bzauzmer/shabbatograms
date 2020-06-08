@@ -44,7 +44,9 @@ var submitForm = function () {
   var your_name = $("#your-name").val();
   var your_email = $("#your-email").val();
   var recipient_name = $("#recipient-name").val();
+  var delivery_method = $("input[name='delivery-method']:checked").val();
   var recipient_email = $("#recipient-email").val();
+  var recipient_phone = $("#recipient-phone").val();
   var delivery_time = $("input[name='delivery-time']:checked").val();
   var camp = $("#camp").val();
 
@@ -61,14 +63,16 @@ var submitForm = function () {
     your_name: your_name,
     your_email: your_email,
     recipient_name: recipient_name,
+    delivery_method: delivery_method,
     recipient_email: recipient_email,
+    recipient_phone: recipient_phone,
     delivery_time: delivery_time,
     sent: sent,
     camp: camp
   });
 
   // Push image to Firebase
-  storageRef.child('images/' + id).put(dataURItoBlob(lc.getImage().toDataURL()));
+  //storageRef.child('images/' + id).put(dataURItoBlob(lc.getImage().toDataURL()));
 
   // Hide form
   var form = document.getElementById('gram-form');
@@ -118,6 +122,17 @@ var contactForm = function () {
   $("#contact-form").hide();
   $("#success-message").show();
 };
+
+function deliveryMethod(method) {
+
+  if (method == "email") {
+    $("#recipient-email-input").show();
+    $("#recipient-phone-input").hide();
+  } else if (method == "text") {
+    $("#recipient-phone-input").show();
+    $("#recipient-email-input").hide();
+  }
+}
 
 // Handle autocomplete functionality for camp input
 function autocomplete(inp, arr) {

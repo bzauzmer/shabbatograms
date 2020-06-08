@@ -119,12 +119,30 @@
         <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label>
         <input type="text" id="recipient-name" name="recipient-name" class="form-control" placeholder="Recipient Name" required>
       </div><br>
-      
+
       <div class="form-group">
+        <label for="delivery-method"><b>Delivery Method</b></label><br>
+        <div class="radio">
+          <label><input type="radio" id="delivery-email" name="delivery-method" value="email" onclick="deliveryMethod('email')" checked> Email</label>
+        </div>
+        <div class="radio">
+          <label><input type="radio" id="delivery-text" name="delivery-method" value="text" onclick="deliveryMethod('text')"> Text</label>
+        </div>
+      </div><br>
+      
+      <div id="recipient-email-input" class="form-group">
         <label for="recipient-email"><b>Recipient Email(s) <span class="red">*</span></b></label>
         <small class="form-text"><i>For multiple recipients, enter email addresses separated by commas</i></small>
-        <input type="text" id="recipient-email" name="recipient-email" class="form-control" placeholder="Recipient Email(s)" required>
-      </div><br>
+        <input type="text" id="recipient-email" name="recipient-email" class="form-control" placeholder="Recipient Email(s)">
+        <br>
+      </div>
+
+      <div id="recipient-phone-input" class="form-group">
+        <label for="recipient-phone"><b>Recipient Phone Number(s) <span class="red">*</span></b></label>
+        <small class="form-text"><i>For multiple recipients, enter phone numbers separated by commas</i></small>
+        <input type="text" id="recipient-phone" name="recipient-phone" class="form-control" placeholder="Recipient Phone Number(s)">
+        <br>
+      </div>
 
       <div class="form-group">
         <label for="delivery-time"><b>Delivery Time</b></label><br>
@@ -153,6 +171,7 @@
 
     <!-- Div to show after submission -->
     <div id="post-submit" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
+      <br>
       <p id="confirm-now">Success! Your Shabbat-o-Gram has been delivered!</p>
       
       <p id="confirm-friday">Success! Your Shabbat-o-Gram will be delivered on Friday at 4:00 p.m. ET.</p>
