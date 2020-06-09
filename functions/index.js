@@ -133,7 +133,7 @@ exports.onDataAdded = functions.database.ref("/shabbatograms/{sessionId}").onCre
     const createdData = snap.val();
 
     // Check if user wants to send email now
-    if (createdData["delivery_time"] == "now") {
+    if (createdData["delivery_time"] == "now" & createdData["recipient_type"] == "person") {
 
       if (createdData["delivery_method"] == "email") {
 

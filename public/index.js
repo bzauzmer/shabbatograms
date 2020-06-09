@@ -11,6 +11,9 @@ var storageRef = firebase.storage().ref();
 // Global variable to store canvas
 var lc, canvas_left, canvas_top, canvas_width, canvas_height, image_loaded;
 
+// Global variable for recipient type
+var recipient_type = 'person';
+
 // Convert data URI to blob
 function dataURItoBlob(dataURI) {
   // convert base64 to raw binary data held in a string
@@ -36,70 +39,151 @@ function dataURItoBlob(dataURI) {
   return blob;
 }
 
+function ValidateEmail(mail) {
+  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+    return (true)
+  }
+  alert("You have entered an invalid email address.")
+  return (false)
+}
+
+function ValidatePhone(num) {
+   if (/^\d{10}$/.test(num)) {
+    return (true)
+  }
+  alert("You have entered an invalid phone number.")
+  return (false) 
+}
+
 // Save a new submission to the database, using the input in the form
 var submitForm = function () {
 
-  // Get input values from each of the form elements
-  var id = Math.random().toFixed(10).substring(2,12);
+  // Remove borders from previous validation
+  $("#your-name-input").css({"border-width":"0px"});
+  $("#your-email-input").css({"border-width":"0px"});
+  $("#recipient-name-input > div").css({"border-width":"0px"});
+  $("#recipient-email-input > div").css({"border-width":"0px"});
+  $("#recipient-phone-input > div").css({"border-width":"0px"});
+  $("#camp-input").css({"border-width":"0px"});
+
+  // Validate form
+  var ready = true;
   var your_name = $("#your-name").val();
   var your_email = $("#your-email").val();
   var recipient_name = $("#recipient-name").val();
   var delivery_method = $("input[name='delivery-method']:checked").val();
   var recipient_email = $("#recipient-email").val();
   var recipient_phone = $("#recipient-phone").val();
-  var delivery_time = $("input[name='delivery-time']:checked").val();
   var camp = $("#camp").val();
 
-  // Binary variable indicating whether Friday deliveries still need to be sent
-  if (delivery_time == "now") {
-    var sent = 1;
-  } else {
-    var sent = 0;
+  if (your_name == "") {
+    $("#your-name-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+    alert("Please enter your name before submitting.")
+    ready = false;
   }
 
-  // Push a new form to the database using those values
-  grams.push().set({
-    id: id,
-    your_name: your_name,
-    your_email: your_email,
-    recipient_name: recipient_name,
-    delivery_method: delivery_method,
-    recipient_email: recipient_email,
-    recipient_phone: recipient_phone,
-    delivery_time: delivery_time,
-    sent: sent,
-    camp: camp
-  });
+  if (!ValidateEmail(your_email)) {
+    $("#your-email-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+    ready = false;
+  }
 
-  // Push image to Firebase
-  //storageRef.child('images/' + id).put(dataURItoBlob(lc.getImage().toDataURL()));
+  if (recipient_type == "person") {
 
-  // Hide form
-  var form = document.getElementById('gram-form');
-  form.style.display = "none";
-  
-  // Show post-submit box
-  var post_submit = document.getElementById('post-submit');
-  post_submit.style.display = "block";
-  
-  // Show message based on whether user wanted delivery time now or later
-  var confirm = document.getElementById('confirm-' + delivery_time);
-  confirm.style.display = "inline";
-  
-  // Check if user entered camp name
-  if (camp != "") {
+    if (recipient_name == "") {
+      $("#recipient-name-input > div").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+      alert("Please enter a recipient name before submitting.")
+      ready = false;
+    }
 
-    // Show donation paragraph
-    var donation = document.getElementById('donation');
-    donation.style.display = "inline";
+    if (delivery_method == "email") {
+
+      if (!recipient_email.split(",").every(el => ValidateEmail(el.trim()))) {
+        $("#recipient-email-input > div").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+        ready = false;
+      }
+    } else if (delivery_method == "text") {
+
+      if (!recipient_phone.split(",").every(el => ValidatePhone(el.trim()))) {
+        $("#recipient-phone-input > div").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+        ready = false;
+      }
+    }
+  } else if (recipient_type == "camp") {
+
+    if (!camps.includes(camp)) {
+      $("#camp-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+      alert("Please select a camp from the dropdown.")
+      ready = false;
+    }
+  }
+
+  // Check if form is ready to be sent
+  if (ready) {
+
+    // Commit text element to canvas
+    lc.setTool(new LC.tools.Pencil(lc));
+
+    // Get input values from each of the form elements
+    var id = Math.random().toFixed(10).substring(2,12);
+    var delivery_time = $("input[name='delivery-time']:checked").val();
+    var your_instagram = $("#your-instagram").val();
+
+    // Binary variable indicating whether Friday deliveries still need to be sent
+    if (delivery_time == "now" | recipient_type == "camp") {
+      var sent = 1;
+    } else {
+      var sent = 0;
+    }
+
+    // Push a new form to the database using those values
+    grams.push().set({
+      id: id,
+      recipient_type: recipient_type,
+      your_name: your_name,
+      your_email: your_email,
+      recipient_name: recipient_name,
+      delivery_method: delivery_method,
+      recipient_email: recipient_email,
+      recipient_phone: recipient_phone,
+      delivery_time: delivery_time,
+      sent: sent,
+      your_instagram: your_instagram,
+      camp: camp
+    });
+
+    // Push image to Firebase
+    storageRef.child('images/' + id).put(dataURItoBlob(lc.getImage().toDataURL()));
+
+    // Hide everything before post-submit
+    $("#intro").hide();
+    $("#gram-form").hide();
     
-    // Input camp name
-    var camp_name = document.getElementById('camp-name');
-    camp_name.innerHTML = camp;
+    // Show post-submit box
+    var post_submit = document.getElementById('post-submit');
+    post_submit.style.display = "block";
     
-    // Input camp donation link
-    var camp_link = document.getElementById('camp-link');
-    camp_link.href = camp_dict[camp];
+    // Show message based on delivery time and recipient type
+    if (recipient_type == "person") {
+      $('#confirm-' + delivery_time).show();
+    } else if (recipient_type == "camp") {
+      $('#confirm-camp').show();
+    }
+    
+    // Check if user entered camp name
+    if (camp != "") {
+
+      // Show donation paragraph
+      var donation = document.getElementById('donation');
+      donation.style.display = "inline";
+      
+      // Input camp name
+      var camp_name = document.getElementById('camp-name');
+      camp_name.innerHTML = camp;
+      
+      // Input camp donation link
+      var camp_link = document.getElementById('camp-link');
+      camp_link.href = camp_dict[camp];
+    }
   }
 };
 
@@ -145,6 +229,7 @@ function autocomplete(inp, arr) {
       /*close any already open lists of autocompleted values*/
       closeAllLists();
       if (!val) { return false;}
+      var words = val.toLowerCase().split(" ").map(function(w) {return w.toLowerCase(); }).filter(Boolean);
       currentFocus = -1;
       /*create a DIV element that will contain the items (values):*/
       a = document.createElement("DIV");
@@ -154,14 +239,19 @@ function autocomplete(inp, arr) {
       this.parentNode.appendChild(a);
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].toLowerCase().includes(val.toLowerCase())) {
+        /*check if the item contains all words in the text field value:*/
+        if (words.every(function(w) { return arr[i].toLowerCase().includes(w); })) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
+          var prev_index = 0;
           /*make the matching letters bold:*/
-          b.innerHTML = arr[i].substr(0, arr[i].toLowerCase().indexOf(val.toLowerCase()));
-          b.innerHTML += "<strong>" + arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()), val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(arr[i].toLowerCase().indexOf(val.toLowerCase()) + val.length);
+          b.innerHTML = "";
+          for (var w = 0; w < words.length; w++) {
+            b.innerHTML += arr[i].substr(prev_index, arr[i].toLowerCase().indexOf(words[w].toLowerCase()) - prev_index);
+            b.innerHTML += "<strong>" + arr[i].substr(arr[i].toLowerCase().indexOf(words[w].toLowerCase()), words[w].length) + "</strong>";
+            prev_index = arr[i].toLowerCase().indexOf(words[w].toLowerCase()) + words[w].length;
+          }
+          b.innerHTML += arr[i].substr(prev_index);
           /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
@@ -231,6 +321,48 @@ function autocomplete(inp, arr) {
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
+}
+
+// Function to toggle whether person or camp page is shown
+function toggleCamp(type) {
+  
+  if (type == 'person') {
+
+    // Change recipient type for storage
+    recipient_type = 'person';
+
+    // Show person inputs
+    $("#person-intro").show();
+    $("#person-toggle").show();
+    $("#recipient-name-input").show();
+    $("#delivery-method-input").show();
+    $("#recipient-contact-input").show();
+    $("#delivery-time-input").show();
+
+    // Hide camp text
+    $("#camp-intro").hide();
+    $("#camp-toggle").hide();
+    $("#your-instagram-input").hide();
+    $("#camp-required").hide();
+  } else if (type == 'camp') {
+
+    // Change recipient type for storage
+    recipient_type = 'camp';
+
+    // Hide person inputs
+    $("#person-intro").hide();
+    $("#person-toggle").hide();
+    $("#recipient-name-input").hide();
+    $("#delivery-method-input").hide();
+    $("#recipient-contact-input").hide();
+    $("#delivery-time-input").hide();
+
+    // Show camp text
+    $("#camp-intro").show();
+    $("#camp-toggle").show();
+    $("#your-instagram-input").show();
+    $("#camp-required").show();
+  }
 }
 
 // Function to adjust gram display when shape is changed
@@ -305,6 +437,24 @@ function canvasDims() {
   canvas_height = $(".lc-drawing").height()
 }
 
+//Function to adjust delivery time radio based on day of week
+function deliveryTime() {
+
+  // Get weekday and hour in LA
+  var day_of_week = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getDay();
+  var hour_of_day = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getHours();
+
+  // Check if Friday/Saturday after weekly delivery
+  if ((day_of_week == 5 & hour_of_day >= 13) | (day_of_week == 6)) {
+
+    // Change radio labels and order
+    $("#now-label").text(" Now");
+    $("#friday-label").text(" Next Friday before Shabbat (4:00 p.m. ET)");
+    $("#now-container").insertBefore("#friday-container");
+    $("#now").prop("checked", true);
+  }
+}
+
 // When the window is fully loaded, call this function.
 $(window).load(function () {
 
@@ -328,6 +478,8 @@ $(window).load(function () {
 
   // Initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values
   autocomplete(document.getElementById("camp"), camps);
+
+  deliveryTime();
 });
 
 // Listen for click outside of canvas

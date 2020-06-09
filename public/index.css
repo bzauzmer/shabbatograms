@@ -10,11 +10,31 @@ body {
   margin: 30px;
 }
 
+a {
+  text-decoration: underline;
+}
+
 p {
   margin-top: 1rem;
 }
 
-/* Shape radio buttons */
+/* Header radio buttons */
+#camp-intro {
+  display: none;
+}
+
+#camp-toggle {
+  display: none;
+}
+
+#your-instagram-input {
+  display: none;
+}
+
+#camp-required {
+  display: none;
+}
+
 .shape {
   text-align: center;
 }
@@ -60,6 +80,10 @@ input[type="file"] {
   display: none;
 }
 
+#confirm-camp {
+  display: none;
+}
+
 #donation {
   display: none;
 }
@@ -87,7 +111,6 @@ input[type="file"] {
 
 /* Camp autofill input formatting */
 .autocomplete-items {
-  position: absolute;
   border: 1px solid #d4d4d4;
   border-bottom: none;
   border-top: none;
@@ -122,6 +145,10 @@ input[type="file"] {
 /* Contact form */
 #instagram {
   max-width: 30%;
+}
+
+.modal-header {
+  padding-bottom: 0px;
 }
 
 #contact {

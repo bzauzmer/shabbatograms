@@ -10,6 +10,10 @@ body {
   margin: 30px;
 }
 
+a {
+  text-decoration: underline;
+}
+
 p {
 	margin-top: 1rem;
 }
@@ -31,6 +35,10 @@ p {
 /* Contact form */
 #instagram {
   max-width: 30%;
+}
+
+.modal-header {
+  padding-bottom: 0px;
 }
 
 #contact {

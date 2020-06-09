@@ -74,8 +74,19 @@
       </div>
     </div>  
 
-    <div class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-      <p>Celebrating Shabbat at camp is so special to us all. Even when we can’t be together, you can bring the spirit of a camp Shabbat to your friends, counselors, and campers by sending them a Shabbat-o-Gram. Start designing here!</p>
+    <!-- Intro paragraphs and camp toggles -->
+    <div id="intro" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
+      <p id="person-intro">Celebrating Shabbat at camp is so special to us all. Even when we can't be together, you can bring the spirit of a camp Shabbat to your friends, counselors, and campers by sending them a Shabbat-o-Gram. Start designing here!</p>
+      
+      <a id="person-toggle" href="#" onclick="toggleCamp('camp')">
+        <p>... Or design a Shabbat-o-Gram for your whole camp that will be posted on Instagram on Friday afternoon before Shabbat!</p>
+      </a>
+
+      <p id="camp-intro">Celebrating Shabbat at camp is so special to us all. Even when we can't be together, you can keep up the spirit of a camp Shabbat by sending a Shabbat-o-Gram to your whole camp community. It will be posted on <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">Instagram</a> on Friday afternoon before Shabbat. Start designing here!</p>
+      
+      <a id="camp-toggle" href="#" onclick="toggleCamp('person')">
+        <p>... Or send a personalized Shabbat-o-Gram to your friends, counselors, and campers!</p>
+      </a>
     </div><br>
 
     <!-- Begin form -->
@@ -105,57 +116,75 @@
       <div class="my-drawing"></div><br><br>
 
       <!-- Text inputs -->
-      <div class="form-group">
+      <div id="your-name-input" class="form-group">
         <label for="your-name"><b>Your Name <span class="red">*</span></b></label>
         <input type="text" id="your-name" name="your-name" class="form-control" placeholder="Your Name" required>
       </div><br>
       
-      <div class="form-group">
+      <div id="your-email-input" class="form-group">
         <label for="your-email"><b>Your Email <span class="red">*</span></b></label>
         <input type="email" id="your-email" name="your-email" class="form-control" placeholder="Your Email" required>
       </div><br>
       
-      <div class="form-group">
-        <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label>
-        <input type="text" id="recipient-name" name="recipient-name" class="form-control" placeholder="Recipient Name" required>
-      </div><br>
+      <div id="recipient-name-input" class="form-group">
+        <div>
+          <label for="recipient-name"><b>Recipient Name <span class="red">*</span></b></label>
+          <input type="text" id="recipient-name" name="recipient-name" class="form-control" placeholder="Recipient Name">
+        </div>
+        <br>
+      </div>
 
-      <div class="form-group">
-        <label for="delivery-method"><b>Delivery Method</b></label><br>
+      <div id="delivery-method-input" class="form-group">
+        <label for="delivery-method"><b>Delivery Method <span class="red">*</span></b></label><br>
         <div class="radio">
           <label><input type="radio" id="delivery-email" name="delivery-method" value="email" onclick="deliveryMethod('email')" checked> Email</label>
         </div>
         <div class="radio">
           <label><input type="radio" id="delivery-text" name="delivery-method" value="text" onclick="deliveryMethod('text')"> Text</label>
         </div>
-      </div><br>
+      </div>
       
-      <div id="recipient-email-input" class="form-group">
-        <label for="recipient-email"><b>Recipient Email(s) <span class="red">*</span></b></label>
-        <small class="form-text"><i>For multiple recipients, enter email addresses separated by commas</i></small>
-        <input type="text" id="recipient-email" name="recipient-email" class="form-control" placeholder="Recipient Email(s)">
+      <div id="recipient-contact-input">
+        <div id="recipient-email-input" class="form-group">
+          <div>
+            <label for="recipient-email"><b>Recipient Email(s) <span class="red">*</span></b></label>
+            <small class="form-text"><i>For multiple recipients, enter email addresses separated by commas.</i></small>
+            <input type="text" id="recipient-email" name="recipient-email" class="form-control" placeholder="Recipient Email(s)">
+          </div>
+          <br>
+        </div>
+
+        <div id="recipient-phone-input" class="form-group">
+          <div>
+            <label for="recipient-phone"><b>Recipient Phone Number(s) <span class="red">*</span></b></label>
+            <small class="form-text"><i>Only numbers, no hyphens or parentheses. For multiple recipients, enter phone numbers separated by commas.</i></small>
+            <input type="text" id="recipient-phone" name="recipient-phone" class="form-control" placeholder="Recipient Phone Number(s)">
+          </div>
+          <br>
+        </div>
+      </div>
+
+      <div id="delivery-time-input" class="form-group">
+        <label for="delivery-time"><b>Delivery Time <span class="red">*</span></b></label><br>
+        <div id="friday-container" class="radio">
+          <input type="radio" id="friday" name="delivery-time" value="friday" checked>
+          <label id="friday-label"> Friday before Shabbat (4:00 p.m. ET)</label>
+        </div>
+        <div id="now-container" class="radio">
+          <input type="radio" id="now" name="delivery-time" value="now">
+          <label id="now-label"> Now ... if you can't wait!</label>
+        </div>
         <br>
       </div>
 
-      <div id="recipient-phone-input" class="form-group">
-        <label for="recipient-phone"><b>Recipient Phone Number(s) <span class="red">*</span></b></label>
-        <small class="form-text"><i>For multiple recipients, enter phone numbers separated by commas</i></small>
-        <input type="text" id="recipient-phone" name="recipient-phone" class="form-control" placeholder="Recipient Phone Number(s)">
+      <div id="your-instagram-input" class="form-group">
+        <label for="your-instagram"><b>Your Instagram Username</b></label>
+        <input type="text" id="your-instagram" name="your-instagram" class="form-control" placeholder="Your Instagram">
         <br>
       </div>
 
-      <div class="form-group">
-        <label for="delivery-time"><b>Delivery Time</b></label><br>
-        <div class="radio">
-          <label><input type="radio" id="now" name="delivery-time" value="now" checked> Now</label>
-        </div>
-        <div class="radio">
-          <label><input type="radio" id="friday" name="delivery-time" value="friday"> Friday before Shabbat (4:00 p.m. ET)</label>
-        </div>
-      </div><br>
-
-      <div class="form-group">
-        <label for="camp"><b>Your Camp</b></label><br>
+      <div id="camp-input" class="form-group">
+        <label for="camp"><b>Your Camp<span id="camp-required" class="red"> *</span></b></label><br>
         <div class="autocomplete">
           <input id="camp" type="text" name="camp" class="form-control" placeholder="Your Camp">
         </div>
@@ -171,10 +200,11 @@
 
     <!-- Div to show after submission -->
     <div id="post-submit" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-      <br>
       <p id="confirm-now">Success! Your Shabbat-o-Gram has been delivered!</p>
       
       <p id="confirm-friday">Success! Your Shabbat-o-Gram will be delivered on Friday at 4:00 p.m. ET.</p>
+
+      <p id="confirm-camp">Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram on Friday before Shabbat.</p>
       
       <p><a href="index.html">Click here to send another Shabbat-o-Gram!</a></p>
       
@@ -229,16 +259,14 @@
 
               <div class="form-group">
                 <label for="contact-message">Message:</label>
-                <textarea class="form-control" type="textarea" name="contact-message" id="contact-message"
-                  placeholder="Your Message Here" maxlength="6000" rows="7">
-                </textarea>
+                <textarea class="form-control" type="textarea" name="contact-message" id="contact-message" placeholder="Your Message Here" maxlength="6000" rows="7" required></textarea>
               </div>
 
               <button type="button" class="btn btn-lg btn-success btn-block" id="btnContactUs" onclick="contactForm(); return false;">Submit</button>
             </form>
 
             <div id="success-message" style="width:100%; height:100%; display:none;">
-              <h5>Thank you for your message. If you requested a response, we will get back to you shortly.</h5>
+              <h5>Thank you for your message. We will get back to you shortly.</h5>
             </div>
           </div>
         </div>
