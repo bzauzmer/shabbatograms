@@ -63,3 +63,11 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# iPython checkpoints
+.ipynb_checkpoints/
+
+# Camp emails
+Camp Emails.docx
+Camp Emails.ipynb
+camp_emails.csv

@@ -106,7 +106,9 @@ var camp_dict = {"B\'Nai Brith Camp Oregon": "https://bbcamp.org/donate-now/",
   "Goldman Union Camp Institute": "https://guci.org/give/",
   "Henry S. Jacobs Camp": "https://jacobscamp.org/give/",
   "Olin-Sang-Ruby Union Institute (OSRUI)": "https://osrui.org/give/",
-  "Camp Morasha": "https://campmorasha.com/the-morasha-experience/giving-back"};
+  "Camp Morasha": "https://campmorasha.com/the-morasha-experience/giving-back",
+  "Perlman Camp": "https://www.perlmancamp.org/donate/",
+  "Camp Tel Yehuda": "https://www.telyehudah.org/give/"};
 
 // An array containing all the camp names
 var camps = Object.keys(camp_dict);

@@ -27,6 +27,10 @@ p {
   display: none;
 }
 
+#camp-timing {
+  display: none;
+}
+
 #your-instagram-input {
   display: none;
 }
@@ -72,15 +76,11 @@ input[type="file"] {
   text-align: center;
 }
 
-#confirm-now {
-  display: none;
-}
-
-#confirm-friday {
-  display: none;
-}
-
 #confirm-camp {
+  display: none;
+}
+
+.next {
   display: none;
 }
 
@@ -137,6 +137,10 @@ input[type="file"] {
 }
 
 /* Submit button */
+#terms {
+  text-align: center;
+}
+
 #form-submit {
   background-color: #3fbab3;
   border: none;

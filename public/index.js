@@ -11,6 +11,9 @@ var storageRef = firebase.storage().ref();
 // Global variable to store canvas
 var lc, canvas_left, canvas_top, canvas_width, canvas_height, image_loaded;
 
+// Global variable for canvas shape
+var canvas_shape = 'vertical';
+
 // Global variable for recipient type
 var recipient_type = 'person';
 
@@ -59,6 +62,7 @@ function ValidatePhone(num) {
 var submitForm = function () {
 
   // Remove borders from previous validation
+  $(".my-drawing").css({"border-width":"0px"});
   $("#your-name-input").css({"border-width":"0px"});
   $("#your-email-input").css({"border-width":"0px"});
   $("#recipient-name-input > div").css({"border-width":"0px"});
@@ -67,7 +71,7 @@ var submitForm = function () {
   $("#camp-input").css({"border-width":"0px"});
 
   // Validate form
-  var ready = true;
+  var form_ready = true;
   var your_name = $("#your-name").val();
   var your_email = $("#your-email").val();
   var recipient_name = $("#recipient-name").val();
@@ -76,15 +80,21 @@ var submitForm = function () {
   var recipient_phone = $("#recipient-phone").val();
   var camp = $("#camp").val();
 
+  if ($(".lc-undo").hasClass("disabled")) {
+    $(".my-drawing").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+    alert("Please draw a Shabbat-o-Gram in the canvas before submitting.")
+    form_ready = false;
+  }
+
   if (your_name == "") {
     $("#your-name-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
     alert("Please enter your name before submitting.")
-    ready = false;
+    form_ready = false;
   }
 
   if (!ValidateEmail(your_email)) {
     $("#your-email-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
-    ready = false;
+    form_ready = false;
   }
 
   if (recipient_type == "person") {
@@ -92,20 +102,20 @@ var submitForm = function () {
     if (recipient_name == "") {
       $("#recipient-name-input > div").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
       alert("Please enter a recipient name before submitting.")
-      ready = false;
+      form_ready = false;
     }
 
     if (delivery_method == "email") {
 
       if (!recipient_email.split(",").every(el => ValidateEmail(el.trim()))) {
         $("#recipient-email-input > div").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
-        ready = false;
+        form_ready = false;
       }
     } else if (delivery_method == "text") {
 
       if (!recipient_phone.split(",").every(el => ValidatePhone(el.trim()))) {
         $("#recipient-phone-input > div").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
-        ready = false;
+        form_ready = false;
       }
     }
   } else if (recipient_type == "camp") {
@@ -113,25 +123,37 @@ var submitForm = function () {
     if (!camps.includes(camp)) {
       $("#camp-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
       alert("Please select a camp from the dropdown.")
-      ready = false;
+      form_ready = false;
     }
   }
 
   // Check if form is ready to be sent
-  if (ready) {
+  if (form_ready) {
 
     // Commit text element to canvas
     lc.setTool(new LC.tools.Pencil(lc));
 
     // Get input values from each of the form elements
     var id = Math.random().toFixed(10).substring(2,12);
-    var delivery_time = $("input[name='delivery-time']:checked").val();
     var your_instagram = $("#your-instagram").val();
 
+    // Get weekday and hour in LA
+    var day_of_week = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getDay();
+    var hour_of_day = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getHours();
+    var minute_of_hour = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getMinutes();    
+
     // Binary variable indicating whether Friday deliveries still need to be sent
-    if (delivery_time == "now" | recipient_type == "camp") {
+    if (recipient_type == "camp") {
+      var ready = 1;
       var sent = 1;
-    } else {
+    } else if (recipient_type == "person") {
+      
+      // Create buffer zone between deadline and sending
+      if (day_of_week == 5 & hour_of_day == 13 & minute_of_hour < 15) {
+        var ready = 0;
+      } else {
+        var ready = 1;
+      }
       var sent = 0;
     }
 
@@ -145,14 +167,15 @@ var submitForm = function () {
       delivery_method: delivery_method,
       recipient_email: recipient_email,
       recipient_phone: recipient_phone,
-      delivery_time: delivery_time,
+      ready: ready,
       sent: sent,
       your_instagram: your_instagram,
       camp: camp
     });
 
     // Push image to Firebase
-    storageRef.child('images/' + id).put(dataURItoBlob(lc.getImage().toDataURL()));
+    storageRef.child('images/' + id).put(dataURItoBlob(
+      lc.getImage({rect: {x:0, y:0, width:canvas_width, height:canvas_height}}).toDataURL()));
 
     // Hide everything before post-submit
     $("#intro").hide();
@@ -162,13 +185,15 @@ var submitForm = function () {
     var post_submit = document.getElementById('post-submit');
     post_submit.style.display = "block";
     
-    // Show message based on delivery time and recipient type
-    if (recipient_type == "person") {
-      $('#confirm-' + delivery_time).show();
-    } else if (recipient_type == "camp") {
-      $('#confirm-camp').show();
+    // Show message based on recipient type
+    $('#confirm-' + recipient_type).show();
+
+    // Next Friday if deadline has passed
+    if (day_of_week == 5 & hour_of_day >= 13) {
+      $(".next").show();
+      $(".on").hide();
     }
-    
+
     // Check if user entered camp name
     if (camp != "") {
 
@@ -218,6 +243,23 @@ function deliveryMethod(method) {
   }
 }
 
+function increasing(elt, idx, ar) { 
+  var prev = ar[idx - 1];
+  return !idx || elt === prev + 1;
+}
+
+function increasing(e, i, a) {
+  if (e >= 0) {
+    if (i) {
+      return e > a[i-1];
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+}
+
 // Handle autocomplete functionality for camp input
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
@@ -240,7 +282,7 @@ function autocomplete(inp, arr) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item contains all words in the text field value:*/
-        if (words.every(function(w) { return arr[i].toLowerCase().includes(w); })) {
+        if (words.map(function(w) { return arr[i].toLowerCase().indexOf(w); }).every(increasing)) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           var prev_index = 0;
@@ -334,6 +376,8 @@ function toggleCamp(type) {
     // Show person inputs
     $("#person-intro").show();
     $("#person-toggle").show();
+    $("#person-timing").show();
+    $(".shape").show();
     $("#recipient-name-input").show();
     $("#delivery-method-input").show();
     $("#recipient-contact-input").show();
@@ -342,8 +386,22 @@ function toggleCamp(type) {
     // Hide camp text
     $("#camp-intro").hide();
     $("#camp-toggle").hide();
+    $("#camp-timing").hide();
     $("#your-instagram-input").hide();
     $("#camp-required").hide();
+
+    changeImg(canvas_shape);
+
+    // Show all tools on mobile
+    if ($('#gram-form').width() < 500) {
+      $("[title=Polygon]").show();
+      $("[title=Pan]").show();
+      $("[title=Eyedropper]").show();
+      $(".lc-zoom-out").show();
+      $(".lc-zoom-in").show();
+      $(".lc-clear").show();
+    }
+
   } else if (type == 'camp') {
 
     // Change recipient type for storage
@@ -352,6 +410,8 @@ function toggleCamp(type) {
     // Hide person inputs
     $("#person-intro").hide();
     $("#person-toggle").hide();
+    $("#person-timing").hide();
+    $(".shape").attr('style','display:none !important');
     $("#recipient-name-input").hide();
     $("#delivery-method-input").hide();
     $("#recipient-contact-input").hide();
@@ -360,29 +420,61 @@ function toggleCamp(type) {
     // Show camp text
     $("#camp-intro").show();
     $("#camp-toggle").show();
+    $("#camp-timing").show();
     $("#your-instagram-input").show();
     $("#camp-required").show();
+
+    changeImg('camp');
+
+    // Hide tools to avoid overlapping
+    if ($('#gram-form').width() < 500) {
+      $("[title=Polygon]").hide();
+      $("[title=Pan]").hide();
+      $("[title=Eyedropper]").hide();
+      $(".lc-zoom-out").hide();
+      $(".lc-zoom-in").hide();
+      $(".lc-clear").hide();
+    }
   }
 }
 
 // Function to adjust gram display when shape is changed
 function changeImg(shp) {
 
-  // Set shape as percentage of form width
-  if ($('#gram-form').width() < 500) {
-    
-    $(".my-drawing").width($('#gram-form').width());
-    $(".my-drawing").height(1.4 * $('.my-drawing').width());
+  var gram_form_w = $('#gram-form').width();
 
-  } else if (shp == 'vertical') {
-    
-    $(".my-drawing").width(0.6 * $('#gram-form').width());
-    $(".my-drawing").height(0.66 * $('#gram-form').width());
+  // For Instagram posts, shape should be square
+  if (shp == "camp") {
 
-  } else if (shp == 'horizontal') {
+    // Set shape as percentage of form width
+    if ($('#gram-form').width() < 500) {
+      $(".my-drawing").width(gram_form_w);
+      $(".my-drawing").height(gram_form_w - 30);
+    } else {
+      $(".my-drawing").width(0.64 * gram_form_w);
+      $(".my-drawing").height(0.64 * gram_form_w - 30);
+    }
+  } else {
 
-    $(".my-drawing").width(0.73 * $('#gram-form').width());
-    $(".my-drawing").height(0.55 * $('#gram-form').width());
+    // Store canvas shape in case of recipient type change
+    canvas_shape = shp;
+
+    // Set shape as percentage of form width
+    if ($('#gram-form').width() < 500) {
+      
+      $(".my-drawing").width(gram_form_w);
+      $(".my-drawing").height(1.4 * gram_form_w);
+
+    } else if (shp == 'vertical') {
+      
+      $(".my-drawing").width(0.6 * gram_form_w);
+      $(".my-drawing").height(0.66 * gram_form_w);
+
+    } else if (shp == 'horizontal') {
+
+      $(".my-drawing").width(0.73 * gram_form_w);
+      $(".my-drawing").height(0.55 * gram_form_w);
+    }
   }
 
   // Change canvas shape
@@ -391,7 +483,7 @@ function changeImg(shp) {
   lc.respondToSizeChange();
 
   // Get canvas dimensions
-  canvasDims()  
+  canvasDims()
 }
 
 // Function to upload image and display it on client side
@@ -437,24 +529,6 @@ function canvasDims() {
   canvas_height = $(".lc-drawing").height()
 }
 
-//Function to adjust delivery time radio based on day of week
-function deliveryTime() {
-
-  // Get weekday and hour in LA
-  var day_of_week = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getDay();
-  var hour_of_day = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getHours();
-
-  // Check if Friday/Saturday after weekly delivery
-  if ((day_of_week == 5 & hour_of_day >= 13) | (day_of_week == 6)) {
-
-    // Change radio labels and order
-    $("#now-label").text(" Now");
-    $("#friday-label").text(" Next Friday before Shabbat (4:00 p.m. ET)");
-    $("#now-container").insertBefore("#friday-container");
-    $("#now").prop("checked", true);
-  }
-}
-
 // When the window is fully loaded, call this function.
 $(window).load(function () {
 
@@ -478,8 +552,6 @@ $(window).load(function () {
 
   // Initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values
   autocomplete(document.getElementById("camp"), camps);
-
-  deliveryTime();
 });
 
 // Listen for click outside of canvas

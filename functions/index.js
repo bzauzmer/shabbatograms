@@ -20,25 +20,74 @@ const emailHost = functions.config().email.host;
 const emailAddress = functions.config().email.address;
 const emailPassword = functions.config().email.password;
 
+// Transporter defines email account
+const transporter = nodemailer.createTransport({
+  pool: true,
+  host: emailHost,
+  port: 587,
+  secure: false,
+  auth: {
+    user: emailAddress,
+    pass: emailPassword
+  },
+  tls: {rejectUnauthorized: false}
+});
+
 // Validate E164 format
 function validE164(num) {
     return /^\+?[1-9]\d{1,14}$/.test(num)
 }
 
 // Function to send email
-var goMail = function (cd) {
+var goNotify = function (cd) {
 
-  // Transporter defines email account
-  const transporter = nodemailer.createTransport({
-    host: emailHost,
-    port: 587,
-    secure: false,
-    auth: {
-      user: emailAddress,
-      pass: emailPassword
-    },
-    tls: {rejectUnauthorized: false}
-  });
+  // Set up email data
+  const mailOptions = {
+      from: "Shabbat-o-Grams <" + emailAddress + ">",
+      to: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
+      subject: 'Someone has sent a Shabbat-o-Gram!',
+      text: 'Gram<br>' +
+        'URL: https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] + '\r\n' +
+        'Recipient Type: ' + cd["recipient_type"] + '\r\n' +
+        'Delivery Method: ' + cd["delivery_method"] + '\r\n' +
+        'Camp: ' + cd["camp"] + '\r\n\r\n' +
+        'Sender\r\n' +
+        'Name: ' + cd["your_name"] + '\r\n' +
+        'Email: ' + cd["your_email"] + '\r\n' +
+        'Instagram: ' + cd["your_instagram"] + '\r\n\r\n' +
+        'Recipient\r\n' +
+        'Name: ' + cd["recipient_name"] + '\r\n' +
+        'Email: ' + cd["recipient_email"] + '\r\n' +
+        'Phone Number: ' + cd["recipient_phone"] + '\r\n',
+      html: '<u>Gram</u><br>' +
+        '<b>URL:</b> <a href=\"https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] + '\">https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] +'</a><br>' +
+        '<b>Recipient Type:</b> ' + cd["recipient_type"] + '<br>' +
+        '<b>Delivery Method:</b> ' + cd["delivery_method"] + '<br>' +
+        '<b>Camp:</b> ' + cd["camp"] + '<br><br>' +
+        '<u>Sender</u><br>' +
+        '<b>Name:</b> ' + cd["your_name"] + '<br>' +
+        '<b>Email:</b> ' + cd["your_email"] + '<br>' +
+        '<b>Instagram:</b> ' + cd["your_instagram"] + '<br><br>' +
+        '<u>Recipient</u><br>' +
+        '<b>Name:</b> ' + cd["recipient_name"] + '<br>' +
+        '<b>Email:</b> ' + cd["recipient_email"] + '<br>' +
+        '<b>Phone Number:</b> ' + cd["recipient_phone"] + '<br>'
+  };
+
+  // Error handling function
+  const getDeliveryStatus = function (error, info) {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+  };
+
+  // Call function to send mail and return delivery status
+  transporter.sendMail(mailOptions, getDeliveryStatus);
+};
+
+// Function to send email
+var goMail = function (cd) {
 
   // Set up email data
   const mailOptions = {
@@ -46,11 +95,11 @@ var goMail = function (cd) {
       to: cd["recipient_email"].split(",").map(el => el.trim()),
       bcc: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"], 
       subject: 'You\'ve received a Shabbat-o-Gram!',
-      text: "Dear " + cd["recipient_name"] + ",\r\n\r\n" + cd["your_name"] +
-        " has sent you a Shabbat-o-Gram! Copy and paste the following link to view it: https://shabbatograms.web.app/gram.html?id=" + cd["id"] +
+      text: "Hi " + cd["recipient_name"] + ",\r\n\r\n" + cd["your_name"] +
+        " has sent you a Shabbat-o-Gram! Copy and paste the following link to view it: https://www.shabbat-o-grams.com/gram.html?id=" + cd["id"] +
         "\r\n\r\nShabbat shalom,\r\nThe Shabbat-o-Gram Team\r\n",
-      html: 'Dear ' + cd["recipient_name"] + ',<br><br>' + cd["your_name"] +
-        ' has sent you a Shabbat-o-Gram! <a href=\"https://shabbatograms.web.app/gram.html?id=' + cd["id"] + '\">Click here</a> to view it.' + 
+      html: 'Hi ' + cd["recipient_name"] + ',<br><br>' + cd["your_name"] +
+        ' has sent you a Shabbat-o-Gram! <a href=\"https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] + '\">Click here</a> to view it.' + 
         '<br><br>Shabbat shalom,<br>The Shabbat-o-Gram Team<br>'
   };
 
@@ -68,18 +117,6 @@ var goMail = function (cd) {
 
 // Function to send email
 var goContact = function (cd) {
-
-  // Transporter defines email account
-  const transporter = nodemailer.createTransport({
-    host: emailHost,
-    port: 587,
-    secure: false,
-    auth: {
-      user: emailAddress,
-      pass: emailPassword
-    },
-    tls: {rejectUnauthorized: false}
-  });
 
   // Set up email data
   const mailOptions = {
@@ -107,89 +144,135 @@ var goContact = function (cd) {
 var goText = function(cd) {
 
   // Loop through phone numbers
-  cd["recipient_phone"].split(",").map(el => el.trim()).forEach(function(phone) {
+  cd["recipient_phone"].split(",").map(el => el.trim()).forEach(function(phone, i) {
 
-    // Confirm phone number is valid
-    if (!validE164(phone)) {
-      throw new Error('number must be E164 format!');
-    }
+    setTimeout(() => {
+      // Confirm phone number is valid
+      if (!validE164(phone)) {
+        console.log(phone + ' is invalid');
+      } else {
 
-    // Build text message
-    const textMessage = {
-      from: twilioNumber,
-      to: phone,
-      body: `Hi ${cd["recipient_name"]} -- ${cd["your_name"]} has sent you a Shabbat-o-Gram! Click here to view it: https://shabbatograms.web.app/gram.html?id=${cd["id"]}`
-    };
+        // Build text message
+        const textMessage = {
+          from: twilioNumber,
+          to: phone,
+          body: `Hi ${cd["recipient_name"]} -- ${cd["your_name"]} has sent you a Shabbat-o-Gram! Click here to view it: https://shabbatograms.web.app/gram.html?id=${cd["id"]}`
+        };
 
-    // Send text message
-    client.messages.create(textMessage);
+        // Send text message
+        client.messages.create(textMessage);
+      }
+    }, i * 5000);
   });  
 };
+
+var goStats = function(d, ts) {
+
+  // Set up email data
+  const mailOptions = {
+    from: "Shabbat-o-Grams <" + emailAddress + ">",
+    to: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
+    subject: 'Weekly Shabbat-o-Gram Stats',
+    text: 'All-Time\r\n' +
+      'Total: ' + Object.keys(d).length + '\r\n' +
+      'Email: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
+      'Text: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
+      'Instagram: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '\r\n\r\n' +
+      'This Week\r\n' +
+      'Total: ' + ts.length + '\r\n' +
+      'Email: ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
+      'Text: ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
+      'Instagram: ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '\r\n',
+    html: '<u>All-Time</u><br>' +
+      '<b>Total:</b> ' + Object.keys(d).length + '<br>' +
+      '<b>Email:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
+      '<b>Text:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
+      '<b>Instagram:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '<br><br>' +
+      '<u>This Week</u><br>' +
+      '<b>Total:</b> ' + ts.length + '<br>' +
+      '<b>Email:</b> ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
+      '<b>Text:</b> ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
+      '<b>Instagram:</b> ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '<br>'
+  };
+
+  // Error handling function
+  const getDeliveryStatus = function (error, info) {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+  };
+
+  // Call function to send mail and return delivery status
+  transporter.sendMail(mailOptions, getDeliveryStatus);  
+}
 
 // Watch for change in database
 exports.onDataAdded = functions.database.ref("/shabbatograms/{sessionId}").onCreate(function (snap, context) {
 
-    // Get new data added to database
-    const createdData = snap.val();
+  // Get new data added to database
+  const createdData = snap.val();
 
-    // Check if user wants to send email now
-    if (createdData["delivery_time"] == "now" & createdData["recipient_type"] == "person") {
-
-      if (createdData["delivery_method"] == "email") {
-
-        // Run function to send mail based on newly added data
-        goMail(createdData);
-
-      } else if (createdData["delivery_method"] == "text") {
-
-        // Run function to send text based on newly added data
-        goText(createdData)
-      }
-    }
+  // Run function to send mail based on newly added data
+  goNotify(createdData);
 });
 
 // Watch for change in contact database
 exports.onContactAdded = functions.database.ref("/contacts/{sessionId}").onCreate(function (snap, context) {
 
-    // Get new data added to database
-    const createdData = snap.val();
+  // Get new data added to database
+  const createdData = snap.val();
 
-    // Run function to send mail based on newly added data
-    goContact(createdData);
+  // Run function to send mail based on newly added data
+  goContact(createdData);
 });
 
 // Scheduled function for pre-Shabbat deliveries
-exports.scheduledFunction = functions.pubsub.schedule('0 13 * * 5').timeZone('America/Los_Angeles').onRun((context) => {
-    
-    // Pull data from Firebase
-    admin.database().ref("shabbatograms").on("value", function(snapshot) {
+exports.scheduledFunction = functions.pubsub.schedule('15 13 * * 5').timeZone('America/Los_Angeles').onRun((context) => {
+  
+  // Pull data from Firebase
+  admin.database().ref("shabbatograms").once('value').then(function(snapshot) {
 
-        // Store data
-        var data = snapshot.val();
+    // Store data
+    var data = snapshot.val();
 
-        // Loop through keys
-        Object.keys(data).forEach(function(key) {
+    // New grams to send out
+    var to_send = Object.keys(data).filter(key => data[key]["sent"] == 0);
 
-            // Find unsent entries 
-            if (data[key]["sent"] == 0) {
+    // Send out stats for the week
+    goStats(data, to_send);
 
-              if (data[key]["delivery_method"] == "email") {
+    // Loop through keys
+    to_send.forEach((key, i) => {
 
-                // Send email
-                goMail(data[key]);
+      setTimeout(() => {
+        if (data[key]["ready"] == 0) {
 
-              } else if (data[key]["delivery_method"] == "text") {
+          // Update ready field in entry
+          var updates = {ready: 1};
 
-                // Send text
-                goText(data[key]);
-              }
+          // Push update to Firebase
+          admin.database().ref("/shabbatograms/" + key).update(updates);
+        } else {
 
-              // Update sent field in entry
-              var updates = {sent: 1};
+          if (data[key]["delivery_method"] == "email") {
 
-              // Push update to Firebase
-              admin.database().ref("/shabbatograms/" + key).update(updates);
-            }
-        });
+            // Send email
+            goMail(data[key]);
+
+          } else if (data[key]["delivery_method"] == "text") {
+
+            // Send text
+            goText(data[key]);
+          }
+
+          // Update sent field in entry
+          var updates = {sent: 1};
+
+          // Push update to Firebase
+          admin.database().ref("/shabbatograms/" + key).update(updates);
+        }
+      }, i * 5000);
     });
+  });
 });

@@ -76,17 +76,21 @@
 
     <!-- Intro paragraphs and camp toggles -->
     <div id="intro" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-      <p id="person-intro">Celebrating Shabbat at camp is so special to us all. Even when we can't be together, you can bring the spirit of a camp Shabbat to your friends, counselors, and campers by sending them a Shabbat-o-Gram. Start designing here!</p>
+      <p id="person-intro">Celebrating Shabbat at camp is so special to us all. Even when we can't be together, you can bring the spirit of a camp Shabbat to your friends, counselors, and campers by sending them a Shabbat-o-Gram, which we will deliver on Friday afternoon before Shabbat. Start designing here!</p>
       
       <a id="person-toggle" href="#" onclick="toggleCamp('camp')">
-        <p>... Or design a Shabbat-o-Gram for your whole camp that will be posted on Instagram on Friday afternoon before Shabbat!</p>
+        <p>... Or design a Shabbat-o-Gram for your whole camp that will be posted on Instagram!</p>
       </a>
+
+      <p id="person-timing"><strong>**Shabbat-o-Grams must be submitted before 4:00 p.m. ET/1:00 p.m. PT on Friday in order to be delivered this week.**</strong></p>
 
       <p id="camp-intro">Celebrating Shabbat at camp is so special to us all. Even when we can't be together, you can keep up the spirit of a camp Shabbat by sending a Shabbat-o-Gram to your whole camp community. It will be posted on <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">Instagram</a> on Friday afternoon before Shabbat. Start designing here!</p>
       
       <a id="camp-toggle" href="#" onclick="toggleCamp('person')">
         <p>... Or send a personalized Shabbat-o-Gram to your friends, counselors, and campers!</p>
       </a>
+
+      <p id="camp-timing"><strong>**Shabbat-o-Grams must be submitted before 4:00 p.m. ET/1:00 p.m. PT on Friday in order to be posted this week.**</strong></p>
     </div><br>
 
     <!-- Begin form -->
@@ -164,19 +168,6 @@
         </div>
       </div>
 
-      <div id="delivery-time-input" class="form-group">
-        <label for="delivery-time"><b>Delivery Time <span class="red">*</span></b></label><br>
-        <div id="friday-container" class="radio">
-          <input type="radio" id="friday" name="delivery-time" value="friday" checked>
-          <label id="friday-label"> Friday before Shabbat (4:00 p.m. ET)</label>
-        </div>
-        <div id="now-container" class="radio">
-          <input type="radio" id="now" name="delivery-time" value="now">
-          <label id="now-label"> Now ... if you can't wait!</label>
-        </div>
-        <br>
-      </div>
-
       <div id="your-instagram-input" class="form-group">
         <label for="your-instagram"><b>Your Instagram Username</b></label>
         <input type="text" id="your-instagram" name="your-instagram" class="form-control" placeholder="Your Instagram">
@@ -190,6 +181,10 @@
         </div>
       </div><br>
       
+      <p id="terms">
+        By clicking the Send button, I agree to the Shabbat-o-Grams <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Use.</a>
+      </p>
+
       <!-- Submit button to upload data and change page display to confirmation box -->
       <div id="submit-container">
         <button id="form-submit" type="button" class="btn btn-primary btn-lg col-xs-12 col-sm-12 col-md-5 col-lg-5" onclick="submitForm(); return false;">
@@ -200,11 +195,13 @@
 
     <!-- Div to show after submission -->
     <div id="post-submit" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-      <p id="confirm-now">Success! Your Shabbat-o-Gram has been delivered!</p>
-      
-      <p id="confirm-friday">Success! Your Shabbat-o-Gram will be delivered on Friday at 4:00 p.m. ET.</p>
+      <p id="confirm-person">
+        Success! Your Shabbat-o-Gram will be delivered <span class="on">on</span><span class="next">next</span> Friday before Shabbat.
+      </p>
 
-      <p id="confirm-camp">Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram on Friday before Shabbat.</p>
+      <p id="confirm-camp">
+        Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram <span class="on">on</span><span class="next">next</span> Friday before Shabbat. Follow us and your camp to see it!
+      </p>
       
       <p><a href="index.html">Click here to send another Shabbat-o-Gram!</a></p>
       
@@ -232,7 +229,94 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Copyright -->
+    <div id="copyright" class="text-right">
+      <small>&copy; Rabbi Shayna Golkow and Ben Zauzmer 2020</small>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="termsModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Shabbat-o-Grams Terms of Use</h4>
+            <button type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+        
+          <div class="modal-body">
+            <p>Shabbat-o-Grams seeks to provide a safe environment for users to share friendly Shabbat greetings (“grams”) with one another, and on Instagram as explained below. There is no charge for using Shabbat-o-Grams, but we do require each user to make the following commitments:
+
+            <p><strong>1. Who can use Shabbat-o-Grams</strong></p>
+
+            <p>Shabbat-o-Grams are available to everyone, but you cannot use Shabbat-o-Grams if:</p>
+            <ul>
+              <li>You are a convicted sex offender.</li>
+              <li>We've previously banned your email address and/or IP address for violations of these Terms.</li>
+              <li>You are prohibited from using our website under applicable laws.</li>
+            </ul>
+
+            <p><strong>2. Restrictions on the use of Shabbat-o-Grams</strong></p>
+
+            <p>Shabbat-o-Grams are to be used to spread positive messages to others in their camp communities, but never at the expense of the safety or well-being of other users. Users must respect the dignity of others and not harass or degrade others. You therefore agree not to engage any conduct described below (or to facilitate or support others in doing so):</p>
+
+            <ol>
+              <li>You may not use Shabbat-o-Grams to do anything:</li>
+              <ul>
+                <li>That violates these Terms.</li>
+                <li>That is unlawful, discriminatory, defamatory, fraudulent or misleading.</li>
+                <li>That infringes or violates someone else's rights, including their intellectual property rights.</li>
+                <li>That threatens, intimidates, excludes, or silences others.</li>
+                <li>That is plainly intended to cause, or could reasonably be expected to have the effect of causing, harm or offense to the recipient(s) of the gram.</li>
+              </ul>
+
+              <li>You may not upload viruses or malicious code or do anything that could disable, overburden, or impair the proper working or appearance of our website.</li>
+
+              <li>You may not access or collect data from our website, whether using automated means or otherwise, without our prior permission or attempt to access data you do not have permission to access.</li>
+
+              <li>Users may not submit on our website anything that depicts, incites, or glorifies violence; celebrates the suffering or humiliation of others; coordinates harm; publicizes crime; identifies and negatively targets victims or survivors of self-injury or suicide; sexually exploits or endangers children; depicts, threatens or promotes sexual violence, sexual assault, or sexual exploitation; displays, advocates for, or coordinates sexual acts with non-consenting parties or commercial sexual services, such as prostitution and escort services; makes threats or unwanted malicious contact; includes personal or confidential information about others without first getting their consent; is hate speech; displays nudity; targets victims of serious physical or emotional harm; or is spam.</li>
+            </ol>
+
+            <p>We reserve the right to remove or restrict access to any user or content that is in violation of these provisions, whether by name, email address, IP address, or any other means of identification. We reserve the right to review all grams before allowing them to pass to the recipient(s) via our website and/or Instagram, and we retain the right to remove content at our sole discretion.</p>
+
+            <p>If we remove content that you have shared in violation of these Terms, we reserve the right in our sole discretion to prevent past, present, or future grams associated with your email address and/or IP from being displayed on our site or Instagram account again. In less severe cases, differentiated at our sole discretion, we also reserve the right to inform users that their behavior violates these Terms, and instruct them on how to remedy the situation in the future to avoid being banned.</p>
+
+            <p>To help support our mission and fellow users, we encourage you to report content or conduct that you believe violates your rights or these Terms. We have provided a Contact Us button at the bottom of each page, as well as a Report Inappropriate Shabbat-o-Gram link underneath each received gram, for the purpose of collecting such reports.</p>
+
+            <p><strong>3. Permissions you give Shabbat-o-Grams</strong></p>
+
+            <p>When you upload or create a gram, you grant us a non-exclusive, transferable, sub-licensable, royalty-free, and worldwide license to host, use, and distribute it, including sending it to the recipient(s) and/or posting it to Instagram.</p>
+
+            <p>Shabbat-o-Grams highly values the security of all user data, including names, email addresses, phone numbers, Instagram accounts, uploaded photos, and the grams themselves. As such, Shabbat-o-Grams stores all user data that is necessary to collect for the purpose of generating and distributing Shabbat-o-Grams on Google’s Firebase service. The Terms of Service for Firebase can be found here: https://firebase.google.com/terms.  We do not control and therefore are not responsible for the security measures used by Firebase, as those security measures may change from time to time without notice.  We disclaim any and all liability in connection with the collection, use or disclosure of the information furnished by you or otherwise collected by Shabbat-o-Grams.</p>
+
+            <p><strong>4. Limits on using our intellectual property</strong></p>
+            
+            <p>If you use content covered by intellectual property rights that we have and make available on our website (for example, our header logo, favicon, or introductory text), we retain all rights to that content (but not the original content that you created, except as specified in these Terms). We reserve all copyrights, trademark rights and other intellectual property rights associated with – and nothing in this website shall be construed as granting any license or right to use – any image, content, logo, software or any other material contained in our website. You may not modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, transfer, or sell any information, software, products, or services obtained from our website without our written permission.  You must obtain our written permission (or permission under an open source license) to modify or create derivative works from, to decompile or otherwise attempt to extract or access our source code.</p>
+
+            <p><strong>5. Updating our Terms</strong></p>
+
+            <p>We reserve the right to update these Terms from time to time. If so, we will change the Terms listed on the website, and every time users send a gram they will have the opportunity to review the latest Terms before sending the gram.</p>
+
+            <p><strong>6. Limits on liability</strong></p>
+
+            <p>Our website is provided “as is” and “as available,” and we make no guarantees that it will always be safe, secure, or error-free, or that it will function without disruptions, delays, or imperfections. To the extent permitted by law, we also DISCLAIM ALL REPRESENTATIONS AND WARRANTIES, WHETHER EXPRESS OR IMPLIED, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. We do not control or direct what people and others do or say, and we are not responsible for their actions or conduct (whether online or offline) or any content they share (including offensive, inappropriate, obscene, unlawful, and other objectionable content). We cannot predict when issues might arise with our website. Accordingly, our liability shall be limited to the fullest extent permitted by applicable law, and under no circumstance will we be liable to you for any lost profits, revenues, information, or data, personal injury, death, damage to property, or any consequential, special, indirect, special, exemplary, punitive or incidental damages arising out of or related to these Terms, even if we have been advised of the possibility of such damages.  We assume no responsibility, and shall not be liable, for any damages to, or viruses that may infect, your computer equipment or other property on account of your access to, use of, or your downloading of any materials, data, text, images, video, or audio to or from this website.</p>
+
+            <p><strong>7. General Terms</strong></p>
+
+            <p>These Terms make up the entire agreement between you and Shabbat-o-Grams regarding your use of our site. There are no prior or contemporaneous agreements relating to Shabbat-o-Grams or anything in these Terms that have not been superseded by these Terms.</p>
+
+            <p>If any portion of these Terms is found to be unenforceable, the remaining portion will remain in full force and effect, and the unenforceable portion will be enforced to the fullest extent permitted under applicable law. If we fail to enforce any of these Terms, it will not be considered a waiver.  Any amendment to or waiver of these Terms must be made in writing and signed by us.</p>
+
+            <p>You will not transfer any of your rights or obligations under these Terms to anyone else without our consent. These Terms do not confer any third-party beneficiary rights.</p>
+
+            <p>We reserve all rights not expressly granted to you.  All of our rights and obligations under these Terms are freely assignable.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Modal -->
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
 

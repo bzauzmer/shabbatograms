@@ -5182,7 +5182,7 @@ createToolButton = function(tool) {
   var displayName, imageName;
   displayName = tool.name;
   if (displayName == 'Text') {
-    displayName = 'Change your computer\'s input language to type\nin another alphabet (such as Hebrew).';
+    displayName = 'Text (Change your computer\'s input language to\ntype in another alphabet, such as Hebrew)';
   }
   imageName = tool.iconName;
   return React.createFactory(React.createClass({

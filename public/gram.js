@@ -68,20 +68,25 @@ function load() {
             var height = $('#image').height();
 
             // Keep image dimensions ratio
-            if (width > height || $('#message').width() < 500) {
+            if ($('#message').width() < 500) {
               $('#image').width("100%");
-              $('#image').height($('#image').width() * height / width);
+            } else if (width > height) {
+              $('#image').width("80%");
             } else {
               $('#image').width("60%");
-              $('#image').height($('#image').width() * height / width);
             }
+
+            $('#image').height($('#image').width() * height / width);
           });
         });
 
         // If user chose camp, put donation link on page
-        if (selections["camp"] != "") {
+        if (camps.includes(selections["camp"])) {
           var donation = document.getElementById('donation');
-          donation.innerHTML = "<a href='" + camp_dict[selections["camp"]] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-gram in honor of " + selections["camp"] + ". Click here if you'd like to make a donation.</a>";
+          donation.innerHTML = "<a href='" + camp_dict[selections["camp"]] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["camp"] + ". Click here if you'd like to make a donation.</a>";
+        } else if (selections["camp"] != "") {
+          var donation = document.getElementById('donation');
+          donation.innerHTML = selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["camp"] + ". Please consider visiting their website to make a donation in this difficult time.";
         }
       }
     });
