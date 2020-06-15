@@ -1,0 +1,49 @@
+/* Page-wide formatting */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 22px;
+  font-family: 'Itim';
+  background-color: aliceblue;
+  margin: 30px;
+}
+
+a {
+  text-decoration: underline;
+}
+
+img {
+  width: 100%;
+}
+
+figcaption {
+  text-align: center;
+}
+
+/* Contact form */
+#instagram {
+  max-width: 30%;
+}
+
+.modal-header {
+  padding-bottom: 0px;
+}
+
+#contact {
+  text-align: center;
+}
+
+#contact-button {
+  background-color: #3fbab3;
+  border: none;
+}
+
+#btnContactUs {
+  background-color: #3fbab3;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, .9);
+}
