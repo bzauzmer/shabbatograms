@@ -156,7 +156,7 @@ var goText = function(cd) {
         const textMessage = {
           from: twilioNumber,
           to: phone,
-          body: `Hi ${cd["recipient_name"]} -- ${cd["your_name"]} has sent you a Shabbat-o-Gram! Click here to view it: https://shabbatograms.web.app/gram.html?id=${cd["id"]}`
+          body: `Hi ${cd["recipient_name"]} -- ${cd["your_name"]} has sent you a Shabbat-o-Gram! Click here to view it: http://www.shabbat-o-grams.com/gram.html?id=${cd["id"]}`
         };
 
         // Send text message
@@ -171,6 +171,8 @@ var goStats = function(d, ts) {
   // Initialize recipient counts
   var recipients_all = 0;
   var recipients_week = 0;
+  var camp_counts_all = {};
+  var camp_counts_week = {};
 
   // Loop through grams
   Object.keys(d).forEach(function(key) {
@@ -194,6 +196,46 @@ var goStats = function(d, ts) {
         recipients_week += d[key]["recipient_phone"].split(",").length;
       }
     }
+
+    // Check if user included camp
+    if (d[key]["camp"] != "") {
+
+      // Initialize or increment camp counts
+      if (camp_counts_all.hasOwnProperty(d[key]["camp"])) {
+        camp_counts_all[d[key]["camp"]] += 1;
+      } else {
+        camp_counts_all[d[key]["camp"]] = 1;
+      }
+
+      // Only include camps that are sending this week
+      if (ts.includes(key)) {
+        if (camp_counts_week.hasOwnProperty(d[key]["camp"])) {
+          camp_counts_week[d[key]["camp"]] += 1;
+        } else {
+          camp_counts_week[d[key]["camp"]] = 1;
+        }
+      }
+    }
+  });
+
+  // Convert camp dicts to arrays
+  var sorted_camps_all = [];
+  for (var camp in camp_counts_all) {
+    sorted_camps_all.push([camp, camp_counts_all[camp]]);
+  }
+
+  var sorted_camps_week = [];
+  for (var camp in camp_counts_week) {
+    sorted_camps_week.push([camp, camp_counts_week[camp]]);
+  }
+
+  // Sort camps arrays
+  sorted_camps_all.sort(function(a, b) {
+    return b[1] - a[1];
+  });
+
+  sorted_camps_week.sort(function(a, b) {
+    return b[1] - a[1];
   });
 
   // Set up email data
@@ -207,24 +249,28 @@ var goStats = function(d, ts) {
       'Email: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
       'Text: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
       'Instagram: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '\r\n\r\n' +
+      sorted_camps_all.map(c => c[0] + ': ' + c[1]).join('\r\n') + '\r\n\r\n' +
       'This Week\r\n' +
       'Recipients: ' + recipients_week + '\r\n' +
       'Senders: ' + ts.length + '\r\n' +
       'Email: ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
       'Text: ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
-      'Instagram: ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '\r\n',
+      'Instagram: ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '\r\n\r\n' +
+      sorted_camps_week.map(c => c[0] + ': ' + c[1]).join('\r\n') + '\r\n',
     html: '<u>All-Time</u><br>' +
       '<b>Recipients:</b> ' + recipients_all + '<br>' +
       '<b>Senders:</b> ' + Object.keys(d).length + '<br>' +
       '<b>Email:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
       '<b>Text:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
       '<b>Instagram:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '<br><br>' +
+      sorted_camps_all.map(c => '<b>' + c[0] + ':</b> ' + c[1]).join('<br>') + '<br><br>' +
       '<u>This Week</u><br>' +
       '<b>Recipients:</b> ' + recipients_week + '<br>' +
       '<b>Senders:</b> ' + ts.length + '<br>' +
       '<b>Email:</b> ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
       '<b>Text:</b> ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
-      '<b>Instagram:</b> ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '<br>'
+      '<b>Instagram:</b> ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '<br><br>' +
+      sorted_camps_week.map(c => '<b>' + c[0] + ':</b> ' + c[1]).join('<br>') + '<br>'
   };
 
   // Error handling function
