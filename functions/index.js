@@ -249,7 +249,7 @@ var goStats = function(d, ts) {
       'Email: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
       'Text: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
       'Instagram: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '\r\n\r\n' +
-      sorted_camps_all.map(c => c[0] + ': ' + c[1]).join('\r\n') + '\r\n\r\n' +
+      sorted_camps_all.slice(0, 10).map(c => c[0] + ': ' + c[1]).join('\r\n') + '\r\n\r\n' +
       'This Week\r\n' +
       'Recipients: ' + recipients_week + '\r\n' +
       'Senders: ' + ts.length + '\r\n' +
@@ -263,7 +263,7 @@ var goStats = function(d, ts) {
       '<b>Email:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
       '<b>Text:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
       '<b>Instagram:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '<br><br>' +
-      sorted_camps_all.map(c => '<b>' + c[0] + ':</b> ' + c[1]).join('<br>') + '<br><br>' +
+      sorted_camps_all.slice(0, 10).map(c => '<b>' + c[0] + ':</b> ' + c[1]).join('<br>') + '<br><br>' +
       '<u>This Week</u><br>' +
       '<b>Recipients:</b> ' + recipients_week + '<br>' +
       '<b>Senders:</b> ' + ts.length + '<br>' +
