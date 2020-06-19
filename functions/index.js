@@ -168,28 +168,60 @@ var goText = function(cd) {
 
 var goStats = function(d, ts) {
 
+  // Initialize recipient counts
+  var recipients_all = 0;
+  var recipients_week = 0;
+
+  // Loop through grams
+  Object.keys(d).forEach(function(key) {
+
+    // One recipient per camp
+    if (d[key]["recipient_type"] == "camp") {
+      recipients_all += 1;
+      if (ts.includes(key)) {
+        recipients_week += 1;
+      }
+    // Count recipients from emails
+    } else if (d[key]["delivery_method"] == "email") {
+      recipients_all += d[key]["recipient_email"].split(",").length;
+      if (ts.includes(key)) {
+        recipients_week += d[key]["recipient_email"].split(",").length;
+      }
+    // Count recipients from texts
+    } else if (d[key]["delivery_method"] == "text") {
+      recipients_all += d[key]["recipient_phone"].split(",").length;
+      if (ts.includes(key)) {
+        recipients_week += d[key]["recipient_phone"].split(",").length;
+      }
+    }
+  });
+
   // Set up email data
   const mailOptions = {
     from: "Shabbat-o-Grams <" + emailAddress + ">",
     to: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
     subject: 'Weekly Shabbat-o-Gram Stats',
     text: 'All-Time\r\n' +
-      'Total: ' + Object.keys(d).length + '\r\n' +
+      'Recipients: ' + recipients_all + '\r\n' +
+      'Senders: ' + Object.keys(d).length + '\r\n' +
       'Email: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
       'Text: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
       'Instagram: ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '\r\n\r\n' +
       'This Week\r\n' +
-      'Total: ' + ts.length + '\r\n' +
+      'Recipients: ' + recipients_week + '\r\n' +
+      'Senders: ' + ts.length + '\r\n' +
       'Email: ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '\r\n' +
       'Text: ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '\r\n' +
       'Instagram: ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '\r\n',
     html: '<u>All-Time</u><br>' +
-      '<b>Total:</b> ' + Object.keys(d).length + '<br>' +
+      '<b>Recipients:</b> ' + recipients_all + '<br>' +
+      '<b>Senders:</b> ' + Object.keys(d).length + '<br>' +
       '<b>Email:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
       '<b>Text:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
       '<b>Instagram:</b> ' + Object.keys(d).filter(key => d[key]["recipient_type"] == "camp").length + '<br><br>' +
       '<u>This Week</u><br>' +
-      '<b>Total:</b> ' + ts.length + '<br>' +
+      '<b>Recipients:</b> ' + recipients_week + '<br>' +
+      '<b>Senders:</b> ' + ts.length + '<br>' +
       '<b>Email:</b> ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "email").length + '<br>' +
       '<b>Text:</b> ' + ts.filter(key => d[key]["recipient_type"] == "person" && d[key]["delivery_method"] == "text").length + '<br>' +
       '<b>Instagram:</b> ' + ts.filter(key => d[key]["recipient_type"] == "camp").length + '<br>'
