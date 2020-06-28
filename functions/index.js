@@ -354,3 +354,8 @@ exports.scheduledFunction = functions.pubsub.schedule('15 13 * * 5').timeZone('A
     });
   });
 });
+
+// Log to Firebase Console
+exports.consoleLog = functions.https.onCall((data, context) => {
+  console.log(data);
+});

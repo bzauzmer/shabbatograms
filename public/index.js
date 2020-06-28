@@ -1,12 +1,10 @@
 'use strict';
 
-// Initialize Firebase app
-firebase.initializeApp(config);
-
 // Reference to the shabbatograms objects in Firebase database
 var grams = firebase.database().ref("shabbatograms");
 var contacts = firebase.database().ref("contacts");
 var storageRef = firebase.storage().ref();
+var consoleLog = firebase.functions().httpsCallable('consoleLog');
 
 // Global variable to store canvas
 var lc, canvas_left, canvas_top, canvas_width, canvas_height, image_loaded;
@@ -174,8 +172,17 @@ var submitForm = function () {
     });
 
     // Push image to Firebase
-    storageRef.child('images/' + id).put(dataURItoBlob(
+    var uploadTask = storageRef.child('images/' + id).put(dataURItoBlob(
       lc.getImage({rect: {x:0, y:0, width:canvas_width, height:canvas_height}}).toDataURL()));
+
+    // Monitor upload task
+    uploadTask.on('state_changed', function(snapshot) {
+      return null;
+    }, function(error) {
+      consoleLog('Error: ' + error + ' ' + id);
+    }, function() {
+      consoleLog('Success: ' + id);
+    });
 
     // Hide everything before post-submit
     $("#intro").hide();
