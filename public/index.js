@@ -118,7 +118,7 @@ var submitForm = function () {
     }
   } else if (recipient_type == "camp") {
 
-    if (!camps.includes(camp)) {
+    if (camp == "") {
       $("#camp-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
       alert("Please select a camp from the dropdown.")
       form_ready = false;
@@ -201,13 +201,13 @@ var submitForm = function () {
       $(".on").hide();
     }
 
-    // Check if user entered camp name
-    if (camp != "") {
+    // Check if camp has donation URL
+    if (camps.includes(camp) & camp_dict[camp] != "") {
 
       // Show donation paragraph
       var donation = document.getElementById('donation');
       donation.style.display = "inline";
-      
+    
       // Input camp name
       var camp_name = document.getElementById('camp-name');
       camp_name.innerHTML = camp;

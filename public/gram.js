@@ -81,7 +81,7 @@ function load() {
         });
 
         // If user chose camp, put donation link on page
-        if (camps.includes(selections["camp"])) {
+        if (camps.includes(selections["camp"]) & camp_dict[selections["camp"]] != "") {
           var donation = document.getElementById('donation');
           donation.innerHTML = "<a href='" + camp_dict[selections["camp"]] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["camp"] + ". Click here if you'd like to make a donation.</a>";
         } else if (selections["camp"] != "") {
