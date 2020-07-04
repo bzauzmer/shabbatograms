@@ -6193,7 +6193,9 @@ module.exports = Text = (function(superClass) {
         text: this.text,
         color: this.color,
         font: this.font,
-        v: 1
+        v: 1,
+        // Added in this line to not let textarea go off edge of canvas
+        forcedWidth: canvas_width - x - 15
       });
       this.dragAction = 'place';
       this.currentShapeState = 'selected';
