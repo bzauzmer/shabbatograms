@@ -2,6 +2,7 @@
 
 // Reference to the shabbatograms objects in Firebase database
 var grams = firebase.database().ref("shabbatograms");
+var secure = firebase.database().ref("shabbatograms-secure");
 var contacts = firebase.database().ref("contacts");
 var storageRef = firebase.storage().ref();
 var consoleLog = firebase.functions().httpsCallable('consoleLog');
@@ -143,7 +144,7 @@ var submitForm = function () {
     // Binary variable indicating whether Friday deliveries still need to be sent
     if (recipient_type == "camp") {
       var ready = 1;
-      var sent = 1;
+      var sent = 0;
     } else if (recipient_type == "person") {
       
       // Create buffer zone between deadline and sending
@@ -160,15 +161,19 @@ var submitForm = function () {
       id: id,
       recipient_type: recipient_type,
       your_name: your_name,
-      your_email: your_email,
       recipient_name: recipient_name,
       delivery_method: delivery_method,
-      recipient_email: recipient_email,
-      recipient_phone: recipient_phone,
       ready: ready,
       sent: sent,
-      your_instagram: your_instagram,
       camp: camp
+    });
+
+    secure.push().set({
+      id: id,
+      your_email: your_email,
+      recipient_email: recipient_email,
+      recipient_phone: recipient_phone,
+      your_instagram: your_instagram
     });
 
     // Push image to Firebase

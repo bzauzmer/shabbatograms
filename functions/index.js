@@ -20,6 +20,9 @@ const emailHost = functions.config().email.host;
 const emailAddress = functions.config().email.address;
 const emailPassword = functions.config().email.password;
 
+// Read queue credentials from config file
+const queuePwd = functions.config().queue.password;
+
 // Transporter defines email account
 const transporter = nodemailer.createTransport({
   pool: true,
@@ -87,13 +90,54 @@ var goNotify = function (cd) {
 };
 
 // Function to send email
+var imageError = function (cd) {
+
+  // Set up email data
+  const mailOptions = {
+      from: "Shabbat-o-Grams <" + emailAddress + ">",
+      to: cd["your_email"],
+      bcc: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
+      subject: 'Shabbat-o-Grams Error',
+      text: 'Hi ' + cd["your_name"] + ',\r\n\r\n' +
+        'Thanks so much for using Shabbat-o-Grams! Unfortunately, there was an error uploading your Shabbat-o-Gram to ' + cd["recipient_name"] + '. ' +
+        'This sometimes happens due to a firewall or internet connection issue. ' +
+        'We\'d recommend trying to resubmit from another device, such as a cell phone or a different laptop. ' +
+        'If the problem persists, we\'ll reach out to help figure out another way to send your Shabbat-o-Gram.\r\n\r\n' +
+        'We sincerely apologize for the technical difficulties. ' +
+        'Please feel free to reply if you have any questions, and we\'ll get back to your shortly.\r\n\r\n' +
+        'Thank you very much,\r\n\r\n' +
+        'The Shabbat-o-Grams Team',
+      html: 'Hi ' + cd["your_name"] + ',<br><br>' +
+        'Thanks so much for using Shabbat-o-Grams! Unfortunately, there was an error uploading your Shabbat-o-Gram to ' + cd["recipient_name"] + '. ' +
+        'This sometimes happens due to a firewall or internet connection issue. ' +
+        'We\'d recommend trying to resubmit from another device, such as a cell phone or a different laptop. ' +
+        'If the problem persists, we\'ll reach out to help figure out another way to send your Shabbat-o-Gram.<br><br>' +
+        'We sincerely apologize for the technical difficulties. ' +
+        'Please feel free to reply if you have any questions, and we\'ll get back to your shortly.<br><br>' +
+        'Thank you very much,<br><br>' +
+        'The Shabbat-o-Grams Team'
+  };
+
+  // Error handling function
+  const getDeliveryStatus = function (error, info) {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);
+  };
+
+  // Call function to send mail and return delivery status
+  transporter.sendMail(mailOptions, getDeliveryStatus);
+};
+
+// Function to send email
 var goMail = function (cd) {
 
   // Set up email data
   const mailOptions = {
       from: "Shabbat-o-Grams <" + emailAddress + ">",
       to: cd["recipient_email"].split(",").map(el => el.trim()),
-      bcc: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"], 
+      bcc: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
       subject: 'You\'ve received a Shabbat-o-Gram!',
       text: "Hi " + cd["recipient_name"] + ",\r\n\r\n" + cd["your_name"] +
         " has sent you a Shabbat-o-Gram! Copy and paste the following link to view it: https://www.shabbat-o-grams.com/gram.html?id=" + cd["id"] +
@@ -282,17 +326,42 @@ var goStats = function(d, ts) {
   };
 
   // Call function to send mail and return delivery status
-  transporter.sendMail(mailOptions, getDeliveryStatus);  
+  transporter.sendMail(mailOptions, getDeliveryStatus);
 }
 
 // Watch for change in database
 exports.onDataAdded = functions.database.ref("/shabbatograms/{sessionId}").onCreate(function (snap, context) {
 
   // Get new data added to database
-  const createdData = snap.val();
+  const data = snap.val();
+  var id = data["id"];
 
-  // Run function to send mail based on newly added data
-  goNotify(createdData);
+  // Pull secure data from Firebase
+  admin.database().ref("shabbatograms-secure").once('value').then(function(snapshot_secure) {
+
+    // Store data
+    var data_secure = snapshot_secure.val();
+
+    // Merge secure and readable data
+    Object.keys(data_secure).map(key_secure => {
+      if (id == data_secure[key_secure]["id"]) {
+        data["your_email"] = data_secure[key_secure]["your_email"];
+        data["recipient_email"] = data_secure[key_secure]["recipient_email"];
+        data["recipient_phone"] = data_secure[key_secure]["recipient_phone"];
+        data["your_instagram"] = data_secure[key_secure]["your_instagram"];
+      }
+    });
+
+    // Run function to send mail based on newly added data
+    goNotify(data);
+
+    // Email user if image upload error
+    admin.storage().bucket().file('images/' + id).exists().then(function(exist) {
+      if (!exist[0]) {
+        imageError(data);        
+      }
+    });
+  });
 });
 
 // Watch for change in contact database
@@ -314,43 +383,61 @@ exports.scheduledFunction = functions.pubsub.schedule('15 13 * * 5').timeZone('A
     // Store data
     var data = snapshot.val();
 
-    // New grams to send out
-    var to_send = Object.keys(data).filter(key => data[key]["sent"] == 0);
+    // Pull secure data from Firebase
+    admin.database().ref("shabbatograms-secure").once('value').then(function(snapshot_secure) {
 
-    // Send out stats for the week
-    goStats(data, to_send);
+      // Store data
+      var data_secure = snapshot_secure.val();
 
-    // Loop through keys
-    to_send.forEach((key, i) => {
-
-      setTimeout(() => {
-        if (data[key]["ready"] == 0) {
-
-          // Update ready field in entry
-          var updates = {ready: 1};
-
-          // Push update to Firebase
-          admin.database().ref("/shabbatograms/" + key).update(updates);
-        } else {
-
-          if (data[key]["delivery_method"] == "email") {
-
-            // Send email
-            goMail(data[key]);
-
-          } else if (data[key]["delivery_method"] == "text") {
-
-            // Send text
-            goText(data[key]);
+      Object.keys(data).map(key => {
+        Object.keys(data_secure).map(key_secure => {
+          if (data[key]["id"] == data_secure[key_secure]["id"]) {
+            data[key]["your_email"] = data_secure[key_secure]["your_email"];
+            data[key]["recipient_email"] = data_secure[key_secure]["recipient_email"];
+            data[key]["recipient_phone"] = data_secure[key_secure]["recipient_phone"];
+            data[key]["your_instagram"] = data_secure[key_secure]["your_instagram"];
           }
+        });
+      });
 
-          // Update sent field in entry
-          var updates = {sent: 1};
+      // New grams to send out
+      var to_send = Object.keys(data).filter(key => data[key]["sent"] == 0);
 
-          // Push update to Firebase
-          admin.database().ref("/shabbatograms/" + key).update(updates);
-        }
-      }, i * 5000);
+      // Send out stats for the week
+      goStats(data, to_send);
+
+      // Loop through keys
+      to_send.forEach((key, i) => {
+
+        setTimeout(() => {
+          if (data[key]["ready"] == 0) {
+
+            // Update ready field in entry
+            var updates = {ready: 1};
+
+            // Push update to Firebase
+            admin.database().ref("/shabbatograms/" + key).update(updates);
+          } else {
+
+            if (data[key]["delivery_method"] == "email") {
+
+              // Send email
+              goMail(data[key]);
+
+            } else if (data[key]["delivery_method"] == "text") {
+
+              // Send text
+              goText(data[key]);
+            }
+
+            // Update sent field in entry
+            var updates = {sent: 1};
+
+            // Push update to Firebase
+            admin.database().ref("/shabbatograms/" + key).update(updates);
+          }
+        }, i * 5000);
+      });
     });
   });
 });
@@ -358,4 +445,9 @@ exports.scheduledFunction = functions.pubsub.schedule('15 13 * * 5').timeZone('A
 // Log to Firebase Console
 exports.consoleLog = functions.https.onCall((data, context) => {
   console.log(data);
+});
+
+// Return queue password
+exports.queuePassword = functions.https.onCall((data, context) => {
+  return(queuePwd);
 });

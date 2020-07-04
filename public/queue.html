@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Load the Firebase library before loading the body. -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
+    <!-- Load the jQuery library, which we'll use to manipulate HTML elements with Javascript. -->
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Load Bootstrap stylesheet, which will is CSS that makes everything prettier and also responsive -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Google font -->
+    <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
+    
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="queue.css">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
+    <link rel="mask-icon" href="images/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <meta name="msapplication-TileColor" content="#f0f8ff">
+    <meta name="msapplication-config" content="images/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+  </head>
+  
+  <body>
+
+    <!-- Firebase and camp dict constants -->
+    <script src="globals.js"></script>
+
+    <!-- Page-specific Javascript -->
+    <script src="queue.js"></script>
+
+    <!-- Header and sub-header -->
+    <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 p-0">
+      <div class="row">
+        <a href="index.html">
+          <img src="images/header.png" class="img-fluid" />
+        </a>
+      </div>
+    </div><br><br><br>
+    
+    <!-- Password form -->
+    <form id="password-form" autocomplete="off" method="post" action="" class="container col-xs-12 col-sm-12 col-md-4 col-lg-4 p-0">
+
+      <!-- Password entry -->
+      <div class="form-group">
+        <div>
+          <input type="text" id="password" name="password" class="form-control" placeholder="Password">
+        </div>
+        <br>
+      </div>
+
+      <!-- Submit button to display images -->
+      <div id="submit-container">
+        <button id="form-submit" type="button" class="btn btn-primary btn-lg col-xs-12 col-sm-12 col-md-4 col-lg-4" onclick="submitPassword(); return false;">
+          Submit
+        </button>
+      </div>
+    </form>
+
+  </body>
+</html>
