@@ -18,6 +18,10 @@ p {
   margin-top: 1rem;
 }
 
+.no-camp {
+  display: none;
+}
+
 /* Header radio buttons */
 #camp-intro {
   display: none;

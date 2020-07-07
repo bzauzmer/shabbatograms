@@ -6,20 +6,6 @@ var grams = firebase.database().ref("shabbatograms");
 var contacts = firebase.database().ref("contacts");
 var storageRef = firebase.storage().ref();
 
-// Function to extract parameters from URL
-function getParams(url) {
-  var params = {};
-  var parser = document.createElement('a');
-  parser.href = url;
-  var query = parser.search.substring(1);
-  var vars = query.split('&');
-  for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split('=');
-    params[pair[0]] = decodeURIComponent(pair[1]);
-  }
-  return params;
-};
-
 // Save a new contact submission to the database, using the input in the form
 var contactForm = function () {
 
@@ -53,6 +39,12 @@ function load() {
     Object.keys(data).forEach(function(key) {
       if (data[key]["id"] == id) {
         var selections = data[key];
+
+        if (selections["show_camp"] == 0) {
+          $("#return-link").attr("href", "index.html?camp=0");
+          $("#header-link").attr("href", "index.html?camp=0");
+          $("#header-image").attr("src", "images/header-nocamp.png");
+        }
 
         // Pull image from Firebase
         storageRef.child('images/' + id).getDownloadURL().then(function(url) {

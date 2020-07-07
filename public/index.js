@@ -16,6 +16,9 @@ var canvas_shape = 'vertical';
 // Global variable for recipient type
 var recipient_type = 'person';
 
+// Global variable for whether or not camp is shown
+var show_camp;
+
 // Convert data URI to blob
 function dataURItoBlob(dataURI) {
   // convert base64 to raw binary data held in a string
@@ -165,7 +168,8 @@ var submitForm = function () {
       delivery_method: delivery_method,
       ready: ready,
       sent: sent,
-      camp: camp
+      camp: camp,
+      show_camp: show_camp
     });
 
     secure.push().set({
@@ -543,6 +547,21 @@ function canvasDims() {
 
 // When the window is fully loaded, call this function.
 $(window).load(function () {
+
+  // Get params from URL
+  var params = getParams(window.location.href);
+
+  // Default is to show camp
+  show_camp = Object.keys(params).includes("camp") ? parseInt(params["camp"]) : 1;
+
+  // Hide camp options
+  if (show_camp == 0) {
+    $("#header-image").attr("src", "images/header-nocamp.png");
+    $(".no-camp").show();
+    $(".show-camp").hide();
+    $("#header-link").attr("href", "index.html?camp=0");
+    $("#return-link").attr("href", "index.html?camp=0");
+  }
 
   // Initiate Literally Canvas
   lc = LC.init(
