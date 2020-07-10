@@ -90,47 +90,6 @@ var goNotify = function (cd) {
 };
 
 // Function to send email
-var imageError = function (cd) {
-
-  // Set up email data
-  const mailOptions = {
-      from: "Shabbat-o-Grams <" + emailAddress + ">",
-      to: cd["your_email"],
-      bcc: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
-      subject: 'Shabbat-o-Grams Error',
-      text: 'Hi ' + cd["your_name"] + ',\r\n\r\n' +
-        'Thanks so much for using Shabbat-o-Grams! Unfortunately, there was an error uploading your Shabbat-o-Gram to ' + cd["recipient_name"] + '. ' +
-        'This sometimes happens due to a firewall or internet connection issue. ' +
-        'We\'d recommend trying to resubmit from another device, such as a cell phone or a different laptop. ' +
-        'If the problem persists, we\'ll reach out to help figure out another way to send your Shabbat-o-Gram.\r\n\r\n' +
-        'We sincerely apologize for the technical difficulties. ' +
-        'Please feel free to reply if you have any questions, and we\'ll get back to your shortly.\r\n\r\n' +
-        'Thank you very much,\r\n\r\n' +
-        'The Shabbat-o-Grams Team',
-      html: 'Hi ' + cd["your_name"] + ',<br><br>' +
-        'Thanks so much for using Shabbat-o-Grams! Unfortunately, there was an error uploading your Shabbat-o-Gram to ' + cd["recipient_name"] + '. ' +
-        'This sometimes happens due to a firewall or internet connection issue. ' +
-        'We\'d recommend trying to resubmit from another device, such as a cell phone or a different laptop. ' +
-        'If the problem persists, we\'ll reach out to help figure out another way to send your Shabbat-o-Gram.<br><br>' +
-        'We sincerely apologize for the technical difficulties. ' +
-        'Please feel free to reply if you have any questions, and we\'ll get back to your shortly.<br><br>' +
-        'Thank you very much,<br><br>' +
-        'The Shabbat-o-Grams Team'
-  };
-
-  // Error handling function
-  const getDeliveryStatus = function (error, info) {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message sent: %s', info.messageId);
-  };
-
-  // Call function to send mail and return delivery status
-  transporter.sendMail(mailOptions, getDeliveryStatus);
-};
-
-// Function to send email
 var goMail = function (cd) {
 
   // Set up email data
@@ -354,13 +313,6 @@ exports.onDataAdded = functions.database.ref("/shabbatograms/{sessionId}").onCre
 
     // Run function to send mail based on newly added data
     goNotify(data);
-
-    // Email user if image upload error
-    admin.storage().bucket().file('images/' + id).exists().then(function(exist) {
-      if (!exist[0]) {
-        imageError(data);        
-      }
-    });
   });
 });
 

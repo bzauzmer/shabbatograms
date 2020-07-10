@@ -39,7 +39,7 @@ function submitPassword() {
           // Append new image container
           $("body").append(
             "<div class='image-container container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0'>" +
-              "<p><b>ID:</b> " + selections["id"] + "</p>" +
+              "<p><b>ID:</b> <a href='https://www.shabbat-o-grams.com/gram.html?id=" + selections["id"] + "' target='_blank'>" + selections["id"] + "</a></p>" +
               "<p><b>Sender:</b> " + selections["your_name"] + "</p>" +
               "<p><b>Recipient:</b> " + selections["recipient_name"] + "</p>" +
               "<p><b>Type:</b> " + selections["recipient_type"].charAt(0).toUpperCase() + selections["recipient_type"].slice(1) + "</p>" +
