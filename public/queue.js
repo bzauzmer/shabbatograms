@@ -9,6 +9,18 @@ queuePassword().then(function(v) {
   queuePwd = v["data"];
 });
 
+// When the window is fully loaded, call this function
+$(window).load(function () {
+
+  // Enable enter key to submit form
+  $("#password").on('keypress', function (e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      $("#form-submit").click();
+    }
+  });
+});
+
 // Function to add page elements on load
 function submitPassword() {
 
