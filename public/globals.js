@@ -112,7 +112,9 @@ var camp_dict = {"B\'Nai Brith Camp Oregon": "https://bbcamp.org/donate-now/",
   "Camp Morasha": "https://campmorasha.com/the-morasha-experience/giving-back",
   "Perlman Camp": "https://www.perlmancamp.org/donate/",
   "Camp Tel Yehudah": "https://www.telyehudah.org/give/",
-  "Camp Towanda": ""};
+  "Camp Towanda": "",
+  "Agudath Israel": "https://www.agudath.org/donate-now.html",
+  "Temple Aliyah": "https://www.templealiyah.org/donate.html"};
 
 // An array containing all the camp names
 var camps = Object.keys(camp_dict);
