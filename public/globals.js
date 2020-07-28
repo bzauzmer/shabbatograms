@@ -113,6 +113,7 @@ var camp_dict = {"B\'Nai Brith Camp Oregon": "https://bbcamp.org/donate-now/",
   "Perlman Camp": "https://www.perlmancamp.org/donate/",
   "Camp Tel Yehudah": "https://www.telyehudah.org/give/",
   "Camp Towanda": "",
+  "Birthright Israel Excel": "https://www.birthrightisraelexcel.com/#/supportus",
   "Agudath Israel": "https://www.agudath.org/donate-now.html",
   "Temple Aliyah": "https://www.templealiyah.org/donate.html"};
 
