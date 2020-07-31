@@ -100,10 +100,10 @@ var goMail = function (cd) {
       subject: 'You\'ve received a Shabbat-o-Gram!',
       text: "Hi " + cd["recipient_name"] + ",\r\n\r\n" + cd["your_name"] +
         " has sent you a Shabbat-o-Gram! Copy and paste the following link to view it: https://www.shabbat-o-grams.com/gram.html?id=" + cd["id"] +
-        "\r\n\r\nShabbat shalom,\r\nThe Shabbat-o-Gram Team\r\n",
+        "\r\n\r\nShabbat shalom,\r\nThe Shabbat-o-Grams Team\r\n",
       html: 'Hi ' + cd["recipient_name"] + ',<br><br>' + cd["your_name"] +
         ' has sent you a Shabbat-o-Gram! <a href=\"https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] + '\">Click here</a> to view it.' + 
-        '<br><br>Shabbat shalom,<br>The Shabbat-o-Gram Team<br>'
+        '<br><br>Shabbat shalom,<br>The Shabbat-o-Grams Team<br>'
   };
 
   // Error handling function
