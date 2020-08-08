@@ -41,11 +41,11 @@ function submitPassword() {
         // Find grams that are ready to be sent but haven't been yet
         if (selections["ready"] == 1 & selections["sent"] == 0) {
 
-          // Get camp with link to donation page
-          if (camps.includes(selections["camp"]) & camp_dict[selections["camp"]] != "") {
-            var camp_link = "<a href='" + camp_dict[selections["camp"]] + "' target='_blank'>" + selections["camp"] + "</a>";
-          } else if (selections["camp"] != "") {
-            var camp_link = selections["camp"];
+          // Get org with link to donation page
+          if (orgs.includes(selections["org"]) & org_dict[selections["org"]][0] != "") {
+            var org_link = "<a href='" + org_dict[selections["org"]][0] + "' target='_blank'>" + selections["org"] + "</a>";
+          } else if (selections["org"] != "") {
+            var org_link = selections["org"];
           }
 
           // Append new image container
@@ -55,7 +55,7 @@ function submitPassword() {
               "<p><b>Sender:</b> " + selections["your_name"] + "</p>" +
               "<p><b>Recipient:</b> " + selections["recipient_name"] + "</p>" +
               "<p><b>Type:</b> " + selections["recipient_type"].charAt(0).toUpperCase() + selections["recipient_type"].slice(1) + "</p>" +
-              "<p><b>Camp:</b> " + camp_link + "</p><br>" +
+              "<p><b>Organization:</b> " + org_link + "</p><br>" +
               "<img id='image-" + selections["id"] + "'>" +
             "</div><br>");
 

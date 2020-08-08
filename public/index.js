@@ -16,9 +16,6 @@ var canvas_shape = 'vertical';
 // Global variable for recipient type
 var recipient_type = 'person';
 
-// Global variable for whether or not camp is shown
-var show_camp;
-
 // Convert data URI to blob
 function dataURItoBlob(dataURI) {
   // convert base64 to raw binary data held in a string
@@ -70,7 +67,7 @@ var submitForm = function () {
   $("#recipient-name-input > div").css({"border-width":"0px"});
   $("#recipient-email-input > div").css({"border-width":"0px"});
   $("#recipient-phone-input > div").css({"border-width":"0px"});
-  $("#camp-input").css({"border-width":"0px"});
+  $("#org-input").css({"border-width":"0px"});
 
   // Validate form
   var form_ready = true;
@@ -80,7 +77,7 @@ var submitForm = function () {
   var delivery_method = $("input[name='delivery-method']:checked").val();
   var recipient_email = $("#recipient-email").val();
   var recipient_phone = $("#recipient-phone").val();
-  var camp = $("#camp").val();
+  var org = $("#org").val();
 
   if ($(".lc-undo").hasClass("disabled")) {
     $(".my-drawing").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
@@ -120,11 +117,11 @@ var submitForm = function () {
         form_ready = false;
       }
     }
-  } else if (recipient_type == "camp") {
+  } else if (recipient_type == "org") {
 
-    if (camp == "") {
-      $("#camp-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
-      alert("Please select a camp from the dropdown.")
+    if (org == "") {
+      $("#org-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
+      alert("Please select an organization from the dropdown.")
       form_ready = false;
     }
   }
@@ -145,7 +142,7 @@ var submitForm = function () {
     var minute_of_hour = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})).getMinutes();    
 
     // Binary variable indicating whether Friday deliveries still need to be sent
-    if (recipient_type == "camp") {
+    if (recipient_type == "org") {
       var ready = 1;
       var sent = 0;
     } else if (recipient_type == "person") {
@@ -168,8 +165,7 @@ var submitForm = function () {
       delivery_method: delivery_method,
       ready: ready,
       sent: sent,
-      camp: camp,
-      show_camp: show_camp
+      org: org
     });
 
     secure.push().set({
@@ -210,20 +206,20 @@ var submitForm = function () {
       $(".on").hide();
     }
 
-    // Check if camp has donation URL
-    if (camps.includes(camp) & camp_dict[camp] != "") {
+    // Check if org has donation URL
+    if (orgs.includes(org) & org_dict[org][0] != "") {
 
       // Show donation paragraph
       var donation = document.getElementById('donation');
       donation.style.display = "inline";
     
-      // Input camp name
-      var camp_name = document.getElementById('camp-name');
-      camp_name.innerHTML = camp;
+      // Input org name
+      var org_name = document.getElementById('org-name');
+      org_name.innerHTML = org;
       
-      // Input camp donation link
-      var camp_link = document.getElementById('camp-link');
-      camp_link.href = camp_dict[camp];
+      // Input org donation link
+      var org_link = document.getElementById('org-link');
+      org_link.href = org_dict[org][0];
     }
   }
 };
@@ -276,7 +272,7 @@ function increasing(e, i, a) {
   }
 }
 
-// Handle autocomplete functionality for camp input
+// Handle autocomplete functionality for org input
 function autocomplete(inp, arr) {
   /*the autocomplete function takes two arguments,
   the text field element and an array of possible autocompleted values:*/
@@ -319,6 +315,7 @@ function autocomplete(inp, arr) {
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               closeAllLists();
+              showLogo(inp.value);
           });
           a.appendChild(b);
         }
@@ -381,8 +378,28 @@ function autocomplete(inp, arr) {
   });
 }
 
-// Function to toggle whether person or camp page is shown
-function toggleCamp(type) {
+// Display organization logo
+function showLogo(current_org) {
+
+  // Clear current logo
+  $("#logo-container").hide();
+  
+  // Check if org is valid
+  if (orgs.includes(current_org)) {
+
+    // Check if org has logo
+    if (org_dict[current_org][1] != "") {
+
+      // Add link and logo to page
+      $("#logo-container").show();
+      $("#logo-link").attr("href", org_dict[current_org][0]);
+      $("#logo").attr("src", "images/logos/" + org_dict[current_org][1]);
+    }
+  }
+}
+
+// Function to toggle whether person or org page is shown
+function toggleOrg(type) {
   
   if (type == 'person') {
 
@@ -399,12 +416,12 @@ function toggleCamp(type) {
     $("#recipient-contact-input").show();
     $("#delivery-time-input").show();
 
-    // Hide camp text
-    $("#camp-intro").hide();
-    $("#camp-toggle").hide();
-    $("#camp-timing").hide();
+    // Hide org text
+    $("#org-intro").hide();
+    $("#org-toggle").hide();
+    $("#org-timing").hide();
     $("#your-instagram-input").hide();
-    $("#camp-required").hide();
+    $("#org-required").hide();
 
     changeImg(canvas_shape);
 
@@ -418,10 +435,10 @@ function toggleCamp(type) {
       $(".lc-clear").show();
     }
 
-  } else if (type == 'camp') {
+  } else if (type == 'org') {
 
     // Change recipient type for storage
-    recipient_type = 'camp';
+    recipient_type = 'org';
 
     // Hide person inputs
     $("#person-intro").hide();
@@ -433,14 +450,14 @@ function toggleCamp(type) {
     $("#recipient-contact-input").hide();
     $("#delivery-time-input").hide();
 
-    // Show camp text
-    $("#camp-intro").show();
-    $("#camp-toggle").show();
-    $("#camp-timing").show();
+    // Show org text
+    $("#org-intro").show();
+    $("#org-toggle").show();
+    $("#org-timing").show();
     $("#your-instagram-input").show();
-    $("#camp-required").show();
+    $("#org-required").show();
 
-    changeImg('camp');
+    changeImg('org');
 
     // Hide tools to avoid overlapping
     if ($('#gram-form').width() < 500) {
@@ -460,7 +477,7 @@ function changeImg(shp) {
   var gram_form_w = $('#gram-form').width();
 
   // For Instagram posts, shape should be square
-  if (shp == "camp") {
+  if (shp == "org") {
 
     // Set shape as percentage of form width
     if ($('#gram-form').width() < 500) {
@@ -548,21 +565,6 @@ function canvasDims() {
 // When the window is fully loaded, call this function.
 $(window).load(function () {
 
-  // Get params from URL
-  var params = getParams(window.location.href);
-
-  // Default is to show camp
-  show_camp = Object.keys(params).includes("camp") ? parseInt(params["camp"]) : 1;
-
-  // Hide camp options
-  if (show_camp == 0) {
-    $("#header-image").attr("src", "images/header-nocamp.png");
-    $(".no-camp").show();
-    $(".show-camp").hide();
-    $("#header-link").attr("href", "index.html?camp=0");
-    $("#return-link").attr("href", "index.html?camp=0");
-  }
-
   // Initiate Literally Canvas
   lc = LC.init(
     document.getElementsByClassName('my-drawing')[0],
@@ -581,8 +583,17 @@ $(window).load(function () {
   // Find the HTML element with the id gram-form, and when the submit event is triggered on that element, call submitForm.
   $("#gram-form").submit(submitForm);
 
-  // Initiate the autocomplete function on the "camp" element, and pass along the camps array as possible autocomplete values
-  autocomplete(document.getElementById("camp"), camps);
+  // Initiate the autocomplete function on the "org" element, and pass along the orgs array as possible autocomplete values
+  autocomplete(document.getElementById("org"), orgs);
+
+  // Display font names in their font
+  $(".lc-pick-tool[title^='Text']").on("click", function() {
+    setTimeout(function() {
+      $(".lc-font-settings select:nth-child(2) option").each(function(ix) {
+        $(this).css("font-family", $(this).attr("value"));
+      });
+    }, 1000);
+  });
 });
 
 // Listen for click outside of canvas

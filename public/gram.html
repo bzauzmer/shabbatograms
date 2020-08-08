@@ -43,7 +43,7 @@
   
   <body onload="load()">
 
-    <!-- Firebase and camp dict constants -->
+    <!-- Firebase and org dict constants -->
     <script src="globals.js"></script>
 
     <!-- Page-specific Javascript -->
@@ -53,7 +53,7 @@
     <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 p-0">
       <div class="row">
         <a id="header-link" href="index.html">
-          <img id="header-image" src="images/header.png" class="img-fluid" />
+          <img id="header-image" src="images/header-nocamp.png" class="img-fluid" />
         </a>
       </div>
     </div><br><br><br>
@@ -71,11 +71,23 @@
         <!-- Paragraph to return to index -->
         <p><a id="return-link" href="index.html">Click here to send your own Shabbat-o-Gram!</a></p>
         
-        <!-- Empty paragraph to be filled with donation information if camp was selected -->
+        <!-- Empty paragraph to be filled with donation information if org was selected -->
         <p id='donation'></p>
     </div>
 
-    <br><br><br>
+    <br><br>
+
+    <div id="logo-container" class="container-fluid">
+      <div class="row">
+        <div class="offset-xs-1 col-xs-10 offset-md-4 col-md-4 mx-auto text-center">
+          <a id="logo-link" target="_blank">
+            <img id="logo" class="img-fluid" />
+          </a>
+        </div>
+      </div>
+      <br>
+    </div>
+
     <hr />
     <br>
 

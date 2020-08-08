@@ -40,12 +40,6 @@ function load() {
       if (data[key]["id"] == id) {
         var selections = data[key];
 
-        if (selections["show_camp"] == 0) {
-          $("#return-link").attr("href", "index.html?camp=0");
-          $("#header-link").attr("href", "index.html?camp=0");
-          $("#header-image").attr("src", "images/header-nocamp.png");
-        }
-
         // Pull image from Firebase
         storageRef.child('images/' + id).getDownloadURL().then(function(url) {
 
@@ -72,13 +66,20 @@ function load() {
           });
         });
 
-        // If user chose camp, put donation link on page
-        if (camps.includes(selections["camp"]) & camp_dict[selections["camp"]] != "") {
+        // If user chose org, put donation link on page
+        if (orgs.includes(selections["org"]) & org_dict[selections["org"]][0] != "") {
           var donation = document.getElementById('donation');
-          donation.innerHTML = "<a href='" + camp_dict[selections["camp"]] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["camp"] + ". Click here if you'd like to make a donation.</a>";
-        } else if (selections["camp"] != "") {
+          donation.innerHTML = "<a href='" + org_dict[selections["org"]][0] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["org"] + ". Click here if you'd like to make a donation.</a>";
+
+          // Show logo
+          if (org_dict[selections["org"]][1] != "") {
+            $("#logo-container").show();
+            $("#logo-link").attr("href", org_dict[selections["org"]][0]);
+            $("#logo").attr("src", "images/logos/" + org_dict[selections["org"]][1]);
+          }
+        } else if (selections["org"] != "") {
           var donation = document.getElementById('donation');
-          donation.innerHTML = selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["camp"] + ". Please consider visiting their website to make a donation in this difficult time.";
+          donation.innerHTML = selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["org"] + ". Please consider visiting their website to make a donation in this difficult time.";
         }
       }
     });

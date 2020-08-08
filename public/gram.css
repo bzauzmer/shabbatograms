@@ -23,6 +23,10 @@ p {
 	text-align: center;
 }
 
+#logo-container {
+  display: none;
+}
+
 /* Div below image */
 #message {
   background-color: #bff1a6;

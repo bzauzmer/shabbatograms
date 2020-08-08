@@ -55,18 +55,18 @@
     <meta name="theme-color" content="#ffffff">
 
     <title>Shabbat-o-Grams</title>
-    <meta name="description" content="Design your own Shabbat-o-Grams to send to campers, parents, staff, and alumni! Shabbat-o-Grams will be delivered each Friday before Shabbat."/>
+    <meta name="description" content="Design your own Shabbat-o-Grams to send to friends and family! Shabbat-o-Grams will be delivered each Friday before Shabbat."/>
 
     <!-- Facebook sharing -->
     <meta property="og:url" content="http://shabbat-o-grams.com" />
     <meta property="og:title" content="Shabbat-o-Grams" />
-    <meta property="og:description" content="Design your own Shabbat-o-Grams to send to campers, parents, staff, and alumni! Shabbat-o-Grams will be delivered each Friday before Shabbat." />
+    <meta property="og:description" content="Design your own Shabbat-o-Grams to send to friends and family! Shabbat-o-Grams will be delivered each Friday before Shabbat." />
     <meta property="og:image" content="http://shabbat-o-grams.com/images/android-chrome-256x256.png" />
   </head>
   
   <body>
 
-    <!-- Firebase and camp dict constants -->
+    <!-- Firebase and org dict constants -->
     <script src="globals.js"></script>
 
     <!-- Page-specific Javascript -->
@@ -76,28 +76,28 @@
     <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 p-0">
       <div class="row">
         <a id="header-link" href="index.html">
-          <img id="header-image" src="images/header.png" class="img-fluid" />
+          <img id="header-image" src="images/header-nocamp.png" class="img-fluid" />
         </a>
       </div>
     </div>  
 
-    <!-- Intro paragraphs and camp toggles -->
+    <!-- Intro paragraphs and org toggles -->
     <div id="intro" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-      <p id="person-intro">Celebrating Shabbat <span class="show-camp">at camp </span>is so special to us all. Even when we can't be together, you can bring the spirit of <span class="show-camp">a camp </span>Shabbat to your friends<span class="show-camp">, counselors, and campers</span><span class="no-camp"> and family</span> by sending them a Shabbat-o-Gram, which we will deliver on Friday afternoon before Shabbat. Start designing here!</p>
+      <p id="person-intro">Celebrating Shabbat is so special to us all. Even when we can't be together, you can bring the spirit of Shabbat to your friends and family by sending them a Shabbat-o-Gram, which we will deliver on Friday afternoon before Shabbat. Start designing here!</p>
       
-      <a id="person-toggle" href="#" onclick="toggleCamp('camp')" class="show-camp">
-        <p>... Or design a Shabbat-o-Gram for your whole camp that will be posted on Instagram!</p>
+      <a id="person-toggle" href="#" onclick="toggleOrg('org')">
+        <p>... Or design a Shabbat-o-Gram for your whole organization that will be posted on Instagram!</p>
       </a>
 
       <p id="person-timing"><strong>**Shabbat-o-Grams must be submitted before 4:00 p.m. ET/1:00 p.m. PT on Friday in order to be delivered this week.**</strong></p>
 
-      <p id="camp-intro">Celebrating Shabbat at camp is so special to us all. Even when we can't be together, you can keep up the spirit of a camp Shabbat by sending a Shabbat-o-Gram to your whole camp community. It will be posted on <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">Instagram</a> on Friday afternoon before Shabbat. Start designing here!</p>
+      <p id="org-intro">Celebrating Shabbat is so special to us all. Even when we can't be together, you can keep up the spirit of a community Shabbat by sending a Shabbat-o-Gram to your whole camp, synagogue, or Hillel. It will be posted on <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">Instagram</a> on Friday afternoon before Shabbat. Start designing here!</p>
       
-      <a id="camp-toggle" href="#" onclick="toggleCamp('person')">
-        <p>... Or send a personalized Shabbat-o-Gram to your friends, counselors, and campers!</p>
+      <a id="org-toggle" href="#" onclick="toggleOrg('person')">
+        <p>... Or send a personalized Shabbat-o-Gram to your friends and family!</p>
       </a>
 
-      <p id="camp-timing"><strong>**Shabbat-o-Grams must be submitted before 4:00 p.m. ET/1:00 p.m. PT on Friday in order to be posted this week.**</strong></p>
+      <p id="org-timing"><strong>**Shabbat-o-Grams must be submitted before 4:00 p.m. ET/1:00 p.m. PT on Friday in order to be posted this week.**</strong></p>
     </div><br>
 
     <!-- Begin form -->
@@ -181,10 +181,22 @@
         <br>
       </div>
 
-      <div id="camp-input" class="form-group show-camp">
-        <label for="camp"><b>Your Camp<span id="camp-required" class="red"> *</span></b></label><br>
+      <div id="org-input" class="form-group show-org">
+        <label for="org"><b>Your Organization<span id="org-required" class="red"> *</span></b></label><br>
         <div class="autocomplete">
-          <input id="camp" type="text" name="camp" class="form-control" placeholder="Your Camp">
+          <input id="org" type="text" name="org" class="form-control" placeholder="Your Organization">
+        </div>
+        <a href="#" data-toggle="modal" data-target="#myModal">Add an organization</a>
+        <br><br>
+      </div>
+
+      <div id="logo-container" class="container-fluid">
+        <div class="row">
+          <div class="offset-xs-1 col-xs-10 offset-md-4 col-md-4 mx-auto text-center">
+            <a id="logo-link" target="_blank">
+              <img id="logo" class="img-fluid" />
+            </a>
+          </div>
         </div>
         <br>
       </div>
@@ -207,16 +219,16 @@
         Success! Your Shabbat-o-Gram will be delivered <span class="on">on</span><span class="next">next</span> Friday before Shabbat.
       </p>
 
-      <p id="confirm-camp">
-        Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram <span class="on">on</span><span class="next">next</span> Friday before Shabbat. Follow us and your camp to see it!
+      <p id="confirm-org">
+        Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram <span class="on">on</span><span class="next">next</span> Friday before Shabbat. Follow us and your organization to see it!
       </p>
       
       <p><a id="return-link" href="index.html">Click here to send another Shabbat-o-Gram!</a></p>
       
-      <p id="donation"><a id="camp-link" target="_blank">Click here if you'd like to make a donation to
-        <span id="camp-name"></span> during this difficult time.</a></p>
+      <p id="donation"><a id="org-link" target="_blank">Click here if you'd like to make a donation to
+        <span id="org-name"></span> during this difficult time.</a></p>
       
-      <p>Even though we can’t be together <span class="show-camp">at camp</span><span class="no-camp">in person</span>, thank you for keeping the Shabbat-o-Gram spirit alive.</p>
+      <p>Even though we can’t be together in person, thank you for keeping the Shabbat-o-Gram spirit alive.</p>
     </div>
 
     <br><br><br>

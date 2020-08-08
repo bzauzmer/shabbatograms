@@ -18,20 +18,16 @@ p {
   margin-top: 1rem;
 }
 
-.no-camp {
-  display: none;
-}
-
 /* Header radio buttons */
-#camp-intro {
+#org-intro {
   display: none;
 }
 
-#camp-toggle {
+#org-toggle {
   display: none;
 }
 
-#camp-timing {
+#org-timing {
   display: none;
 }
 
@@ -39,7 +35,7 @@ p {
   display: none;
 }
 
-#camp-required {
+#org-required {
   display: none;
 }
 
@@ -80,7 +76,11 @@ input[type="file"] {
   text-align: center;
 }
 
-#confirm-camp {
+#confirm-org {
+  display: none;
+}
+
+#logo-container {
   display: none;
 }
 
@@ -113,7 +113,7 @@ input[type="file"] {
   color: red;
 }
 
-/* Camp autofill input formatting */
+/* Org autofill input formatting */
 .autocomplete-items {
   border: 1px solid #d4d4d4;
   border-bottom: none;
