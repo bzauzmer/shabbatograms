@@ -42,8 +42,10 @@ function submitPassword() {
         if (selections["ready"] == 1 & selections["sent"] == 0) {
 
           // Get org with link to donation page
-          if (orgs.includes(selections["org"]) & org_dict[selections["org"]][0] != "") {
-            var org_link = "<a href='" + org_dict[selections["org"]][0] + "' target='_blank'>" + selections["org"] + "</a>";
+          if (orgs.includes(selections["org"])) {
+            if (org_dict[selections["org"]][0] != "") {
+              var org_link = "<a href='" + org_dict[selections["org"]][0] + "' target='_blank'>" + selections["org"] + "</a>";
+            }
           } else if (selections["org"] != "") {
             var org_link = selections["org"];
           }

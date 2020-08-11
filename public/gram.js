@@ -67,15 +67,17 @@ function load() {
         });
 
         // If user chose org, put donation link on page
-        if (orgs.includes(selections["org"]) & org_dict[selections["org"]][0] != "") {
-          var donation = document.getElementById('donation');
-          donation.innerHTML = "<a href='" + org_dict[selections["org"]][0] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["org"] + ". Click here if you'd like to make a donation.</a>";
+        if (orgs.includes(selections["org"])) {
+          if (org_dict[selections["org"]][0] != "") {
+            var donation = document.getElementById('donation');
+            donation.innerHTML = "<a href='" + org_dict[selections["org"]][0] + "' target='_blank'>" + selections["your_name"] + " sent you this Shabbat-o-Gram in honor of " + selections["org"] + ". Click here if you'd like to make a donation.</a>";
 
-          // Show logo
-          if (org_dict[selections["org"]][1] != "") {
-            $("#logo-container").show();
-            $("#logo-link").attr("href", org_dict[selections["org"]][0]);
-            $("#logo").attr("src", "images/logos/" + org_dict[selections["org"]][1]);
+            // Show logo
+            if (org_dict[selections["org"]][1] != "") {
+              $("#logo-container").show();
+              $("#logo-link").attr("href", org_dict[selections["org"]][0]);
+              $("#logo").attr("src", "images/logos/" + org_dict[selections["org"]][1]);
+            }
           }
         } else if (selections["org"] != "") {
           var donation = document.getElementById('donation');

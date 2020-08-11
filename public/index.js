@@ -207,19 +207,21 @@ var submitForm = function () {
     }
 
     // Check if org has donation URL
-    if (orgs.includes(org) & org_dict[org][0] != "") {
+    if (orgs.includes(org)) {
+      if (org_dict[org][0] != "") {
 
-      // Show donation paragraph
-      var donation = document.getElementById('donation');
-      donation.style.display = "inline";
-    
-      // Input org name
-      var org_name = document.getElementById('org-name');
-      org_name.innerHTML = org;
+        // Show donation paragraph
+        var donation = document.getElementById('donation');
+        donation.style.display = "inline";
       
-      // Input org donation link
-      var org_link = document.getElementById('org-link');
-      org_link.href = org_dict[org][0];
+        // Input org name
+        var org_name = document.getElementById('org-name');
+        org_name.innerHTML = org;
+        
+        // Input org donation link
+        var org_link = document.getElementById('org-link');
+        org_link.href = org_dict[org][0];
+      }
     }
   }
 };
