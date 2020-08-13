@@ -57,7 +57,7 @@ function submitPassword() {
               "<p><b>Sender:</b> " + selections["your_name"] + "</p>" +
               "<p><b>Recipient:</b> " + selections["recipient_name"] + "</p>" +
               "<p><b>Type:</b> " + selections["recipient_type"].charAt(0).toUpperCase() + selections["recipient_type"].slice(1) + "</p>" +
-              "<p><b>Organization:</b> " + org_link + "</p><br>" +
+              "<p><b>Community:</b> " + org_link + "</p><br>" +
               "<img id='image-" + selections["id"] + "'>" +
             "</div><br>");
 

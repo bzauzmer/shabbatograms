@@ -121,7 +121,7 @@ var submitForm = function () {
 
     if (org == "") {
       $("#org-input").css({"border-color": "red", "border-width":"1px", "border-style":"solid"});
-      alert("Please select an organization from the dropdown.")
+      alert("Please select a community from the dropdown.")
       form_ready = false;
     }
   }
@@ -232,12 +232,16 @@ var contactForm = function () {
   // Get input values from each of the form elements
   var contact_name = $("#contact-name").val();
   var contact_email = $("#contact-email").val();
+  var contact_org = $("#contact-org").val();
+  var contact_website = $("#contact-website").val();
   var contact_message = $("#contact-message").val();
 
   // Push a new form to the database using those values
   contacts.push().set({
     contact_name: contact_name,
     contact_email: contact_email,
+    contact_org: contact_org,
+    contact_website: contact_website,
     contact_message: contact_message
   });
 
@@ -398,6 +402,9 @@ function showLogo(current_org) {
       $("#logo").attr("src", "images/logos/" + org_dict[current_org][1]);
     }
   }
+
+  // Change text of org confirmation
+  $("#org-follow").text(current_org);
 }
 
 // Function to toggle whether person or org page is shown
@@ -595,6 +602,19 @@ $(window).load(function () {
         $(this).css("font-family", $(this).attr("value"));
       });
     }, 1000);
+  });
+
+  // Toggle modal for for contacts vs adding an organization
+  $("#contact-button").on("click", function() {
+    $(".add-org").hide();
+    $("#contact-form").show();
+    $("#success-message").hide();
+  });
+
+  $("#add-org-button").on("click", function() {
+    $(".add-org").show();
+    $("#contact-form").show();
+    $("#success-message").hide();
   });
 });
 

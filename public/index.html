@@ -86,7 +86,7 @@
       <p id="person-intro">Celebrating Shabbat is so special to us all. Even when we can't be together, you can bring the spirit of Shabbat to your friends and family by sending them a Shabbat-o-Gram, which we will deliver on Friday afternoon before Shabbat. Start designing here!</p>
       
       <a id="person-toggle" href="#" onclick="toggleOrg('org')">
-        <p>... Or design a Shabbat-o-Gram for your whole organization that will be posted on Instagram!</p>
+        <p>... Or design a Shabbat-o-Gram for your whole community that will be posted on Instagram!</p>
       </a>
 
       <p id="person-timing"><strong>**Shabbat-o-Grams must be submitted before 4:00 p.m. ET/1:00 p.m. PT on Friday in order to be delivered this week.**</strong></p>
@@ -182,11 +182,11 @@
       </div>
 
       <div id="org-input" class="form-group show-org">
-        <label for="org"><b>Your Organization<span id="org-required" class="red"> *</span></b></label><br>
+        <label for="org"><b>Your Community<span id="org-required" class="red"> *</span></b></label><br>
         <div class="autocomplete">
-          <input id="org" type="text" name="org" class="form-control" placeholder="Your Organization">
+          <input id="org" type="text" name="org" class="form-control" placeholder="Your Community">
         </div>
-        <a href="#" data-toggle="modal" data-target="#myModal">Add an organization</a>
+        <a href="#" id="add-org-button" data-toggle="modal" data-target="#myModal">Add a community</a>
         <br><br>
       </div>
 
@@ -220,7 +220,7 @@
       </p>
 
       <p id="confirm-org">
-        Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram <span class="on">on</span><span class="next">next</span> Friday before Shabbat. Follow us and your organization to see it!
+        Success! Your Shabbat-o-Gram will be posted by <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@Shabbat-o-Grams</a> on Instagram <span class="on">on</span><span class="next">next</span> Friday before Shabbat. Follow us and <span id="org-follow"></span> to see it posted!
       </p>
       
       <p><a id="return-link" href="index.html">Click here to send another Shabbat-o-Gram!</a></p>
@@ -356,17 +356,29 @@
 
               <div class="form-group">
                 <label for="contact-name">Name:</label>
-                <input type="text" class="form-control" id="contact-name" name="contact-name" required maxlength="50">
+                <input type="text" class="form-control" id="contact-name" name="contact-name" placeholder="Name" required maxlength="50">
               </div>
 
               <div class="form-group">
                 <label for="contact-email">Email:</label>
-                <input type="email" class="form-control" id="contact-email" name="contact-email" required maxlength="50">
+                <input type="email" class="form-control" id="contact-email" name="contact-email" placeholder="Email" required maxlength="50">
+              </div>
+
+              <div class="add-org">
+                <div class="form-group">
+                  <label for="contact-org">Community Name:</label>
+                  <input type="text" class="form-control" id="contact-org" name="contact-org" placeholder="Community Name" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-website">Community Website:</label>
+                  <input type="text" class="form-control" id="contact-website" name="contact-website" placeholder="Community Website" maxlength="200">
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="contact-message">Message:</label>
-                <textarea class="form-control" type="textarea" name="contact-message" id="contact-message" placeholder="Your Message Here" maxlength="6000" rows="7" required></textarea>
+                <label for="contact-message">Message<span class="add-org"> (Optional)</span>:</label>
+                <textarea class="form-control" type="textarea" name="contact-message" id="contact-message" placeholder="Your Message Here" maxlength="6000" rows="7"></textarea>
               </div>
 
               <button type="button" class="btn btn-lg btn-success btn-block" id="btnContactUs" onclick="contactForm(); return false;">Submit</button>

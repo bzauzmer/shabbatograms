@@ -118,6 +118,8 @@ var org_dict = {"B\'Nai Brith Camp Oregon": ["https://bbcamp.org/donate-now/", "
   "Bet Haverim": ["https://www.bethaverim.org/donate/", "Bet Haverim.png"],
   "Temple Aliyah": ["https://www.templealiyah.org/donate.html", "Temple Aliyah.png"],
   "Temple Judea of Manhasset": ["https://www.temple-judea.com/donation-opportunities/", "Temple Judea of Manhasset.png"],
+  "Temple Sinai - Dresher, PA": ["https://www.tsinai.com/annual-campaign", "Temple Sinai - Dresher, PA.png"],
+  "Arizona State Hillel": ["https://www.hillelasu.org/support-us.html", "Arizona State Hillel.png"],
   "West Chester University Hillel": ["https://fs9.formsite.com/phillyhillel/WCUHillel/index.html", "West Chester University Hillel.png"]};
 
 // An array containing all the org names

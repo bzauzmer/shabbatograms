@@ -53,7 +53,7 @@ var goNotify = function (cd) {
         'URL: https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] + '\r\n' +
         'Recipient Type: ' + cd["recipient_type"] + '\r\n' +
         'Delivery Method: ' + cd["delivery_method"] + '\r\n' +
-        'Organization: ' + cd["org"] + '\r\n\r\n' +
+        'Community: ' + cd["org"] + '\r\n\r\n' +
         'Sender\r\n' +
         'Name: ' + cd["your_name"] + '\r\n' +
         'Email: ' + cd["your_email"] + '\r\n' +
@@ -66,7 +66,7 @@ var goNotify = function (cd) {
         '<b>URL:</b> <a href=\"https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] + '\">https://www.shabbat-o-grams.com/gram.html?id=' + cd["id"] +'</a><br>' +
         '<b>Recipient Type:</b> ' + cd["recipient_type"] + '<br>' +
         '<b>Delivery Method:</b> ' + cd["delivery_method"] + '<br>' +
-        '<b>Organization:</b> ' + cd["org"] + '<br><br>' +
+        '<b>Community:</b> ' + cd["org"] + '<br><br>' +
         '<u>Sender</u><br>' +
         '<b>Name:</b> ' + cd["your_name"] + '<br>' +
         '<b>Email:</b> ' + cd["your_email"] + '<br>' +
@@ -127,9 +127,15 @@ var goContact = function (cd) {
       to: ["bzauzmer@gmail.com","shaynagolkow@gmail.com"],
       subject: 'Shabbat-o-Grams Contact Submission',
       text: 'You have a new Shabbat-o-Grams contact submission from ' + cd["contact_name"] + ' (' +
-        cd["contact_email"] + '):\r\n\r\n' + cd["contact_message"] + '\r\n',
+        cd["contact_email"] + '):\r\n\r\n' +
+        'Community: ' + cd["contact_org"] + '\r\n' +
+        'Website: ' + cd["contact_website"] + '\r\n' +
+        'Message: ' + cd["contact_message"] + '\r\n',
       html: 'You have a new Shabbat-o-Grams contact submission from ' + cd["contact_name"] + ' (<a href=\"mailto:' +
-        cd["contact_email"] + '\">' + cd["contact_email"] + '</a>):<br><br>' + cd["contact_message"] + '<br>'
+        cd["contact_email"] + '\">' + cd["contact_email"] + '</a>):<br><br>' +
+        '<b>Community:</b> ' + cd["contact_org"] + '<br>' +
+        '<b>Website:</b> <a href=\"' + cd["contact_website"] + '\">' + cd["contact_website"] + '</a><br>' +
+        '<b>Message:</b> ' + cd["contact_message"] + '<br>'
   };
 
   // Error handling function
