@@ -103,7 +103,7 @@ var org_dict = {"B\'Nai Brith Camp Oregon": ["https://bbcamp.org/donate-now/", "
   "URJ Camp Kalsman": ["https://campkalsman.org/give/", ""],
   "URJ Camp Newman": ["https://campnewman.org/support-newman/donate/", ""],
   "URJ Crane Lake Camp": ["https://donate.reformjudaism.org/campaign/hineini-2020/c285490", ""],
-  "URJ Eisner Camp": ["https://donate.reformjudaism.org/campaign/hineini-2020/c285490", ""],
+  "URJ Eisner Camp": ["https://donate.reformjudaism.org/campaign/hineini-2020/c285490", "URJ Eisner Camp.png"],
   "URJ Greene Family Camp": ["https://greene.org/support-greene/", ""],
   "URJ Camp George": ["https://campgeorge.org/give/", ""],
   "URJ Goldman Union Camp Institute (GUCI)": ["https://guci.org/give/", ""],
