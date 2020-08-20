@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.14.6/firebase-app.js"></script>
-    <script src="/__/firebase/7.14.6/firebase-analytics.js"></script>
+    <!-- Load the Firebase library before loading the body. -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-functions.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
-
-    <!-- Load the Firebase library before loading the body. -->
-    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase.js"></script>
 
     <!-- Load the jQuery library, which we'll use to manipulate HTML elements with Javascript. -->
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -27,7 +27,7 @@
     <link href='https://fonts.googleapis.com/css?family=Itim' rel='stylesheet'>
     
     <!-- Page-specific CSS -->
-    <link rel="stylesheet" href="gram.css">
+    <link rel="stylesheet" href="stats.css">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -41,53 +41,45 @@
     <meta name="theme-color" content="#ffffff">
   </head>
   
-  <body onload="load()">
+  <body>
 
     <!-- Firebase and org dict constants -->
     <script src="globals.js"></script>
 
     <!-- Page-specific Javascript -->
-    <script src="gram.js"></script>
+    <script src="stats.js"></script>
 
     <!-- Header and sub-header -->
     <div class="container col-xs-12 col-sm-12 col-md-10 col-lg-10 p-0">
       <div class="row">
-        <a id="header-link" href="index.html">
-          <img id="header-image" src="images/header-nocamp.png" class="img-fluid" />
+        <a href="index.html">
+          <img src="images/header-nocamp.png" class="img-fluid" />
         </a>
       </div>
-    </div><br><br><br>
+    </div><br><br>
     
-    <!-- User-uploaded image -->
-    <div id="image-container" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-      <img id="image">
-      <p>If you post this to your Instagram story, tag <a href="https://www.instagram.com/shabbat.o.grams/" target="_blank">@shabbat.o.grams</a>!</p>
-      <a href="#" data-toggle="modal" data-target="#myModal"><p>Report inappropriate Shabbat-o-Gram</p></a>
-    </div><br><br><br>
+    <!-- Ranking table -->
+    <div class="col-xs-11 col-md-8 offset-md-2 p-0">
+      <table id="standings" class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col" class="align-center">Rank</th>
+            <th scope="col" colspan="2">Community</th>
+            <th scope="col" class="align-center">Grams Sent</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <br>
 
-    <!-- Div to show after image -->
-    <div id="message" class="container col-xs-12 col-sm-12 col-md-8 col-lg-8 p-0">
-
-        <!-- Paragraph to return to index -->
-        <p><a id="return-link" href="index.html">Click here to send your own Shabbat-o-Gram!</a></p>
-        
-        <!-- Empty paragraph to be filled with donation information if org was selected -->
-        <p id='donation'></p>
+    <!-- Return to homepage -->
+    <div class="row justify-content-center">
+      <p><a href="index.html">Click here to return to the homepage</a></p>
     </div>
 
     <br><br>
-
-    <div id="logo-container" class="container-fluid">
-      <div class="row">
-        <div class="offset-xs-1 col-xs-10 offset-md-4 col-md-4 mx-auto text-center">
-          <a id="logo-link" target="_blank">
-            <img id="logo" class="img-fluid" />
-          </a>
-        </div>
-      </div>
-      <br>
-    </div>
-
     <hr />
     <br>
 
@@ -106,20 +98,14 @@
           <button type="button" id="contact-button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Contact Us</button>
         </div>
       </div>
-      <br>
-      <div class="row">
-        <div class="col align-self-center">
-          <a href="stats.html">Who's sending Shabbat-o-Grams?</a>
-        </div>
-      </div>
     </div>
 
     <!-- Copyright -->
     <div id="copyright" class="text-right">
-      <small>&copy; Rabbi Shayna Golkow and Ben Zauzmer 2020</small>
+      <small style="font-size: 15px">&copy; Rabbi Shayna Golkow and Ben Zauzmer 2020</small>
     </div>
 
-    <!-- Modal -->
+    <!-- Contact Modal -->
     <div id="myModal" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
