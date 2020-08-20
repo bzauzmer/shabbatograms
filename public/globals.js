@@ -114,7 +114,7 @@ var org_dict = {"B\'Nai Brith Camp Oregon": ["https://bbcamp.org/donate-now/", "
   "Camp Tel Yehudah": ["https://www.telyehudah.org/give/", "Camp Tel Yehudah.png"],
   "Camp Towanda": ["", ""],
   "Birthright Israel Excel": ["https://www.birthrightisraelexcel.com/#/supportus", "Birthright Israel Excel.png"],
-  "Agudath Israel": ["https://www.agudath.org/donate-now.html", "Agudath Israel.png"],
+  "Congregation Agudath Israel": ["https://www.agudath.org/donate-now.html", "Congregation Agudath Israel.png"],
   "Bet Haverim": ["https://www.bethaverim.org/donate/", "Bet Haverim.png"],
   "Temple Aliyah": ["https://www.templealiyah.org/donate.html", "Temple Aliyah.png"],
   "Temple Judea of Manhasset": ["https://www.temple-judea.com/donation-opportunities/", "Temple Judea of Manhasset.png"],
