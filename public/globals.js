@@ -116,6 +116,7 @@ var org_dict = {"B\'Nai Brith Camp Oregon": ["https://bbcamp.org/donate-now/", "
   "Birthright Israel Excel": ["https://www.birthrightisraelexcel.com/#/supportus", "Birthright Israel Excel.png"],
   "Congregation Agudath Israel": ["https://www.agudath.org/donate-now.html", "Congregation Agudath Israel.png"],
   "Bet Haverim": ["https://www.bethaverim.org/donate/", "Bet Haverim.png"],
+  "Congregation B\'nai Shalom - Putnam, CT": ["http://www.congregationbnaishalom.org/?page_id=18", "Bnai Shalom - Putnam, CT.png"],
   "Temple Aliyah": ["https://www.templealiyah.org/donate.html", "Temple Aliyah.png"],
   "Temple Judea of Manhasset": ["https://www.temple-judea.com/donation-opportunities/", "Temple Judea of Manhasset.png"],
   "Temple Sinai - Dresher, PA": ["https://www.tsinai.com/annual-campaign", "Temple Sinai - Dresher, PA.png"],
