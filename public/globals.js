@@ -44,6 +44,7 @@ var org_dict = {"B\'Nai Brith Camp Oregon": ["https://bbcamp.org/donate-now/", "
   "Camp Ramah in Canada": ["https://campramah.com/donate/", ""],
   "Ramah Sports Academy": ["https://46767.thankyou4caring.org/pages/rsa/donate", "Ramah Sports Academy.png"],
   "Camp Ramah in Wisconsin": ["https://give.ramahwisconsin.com/give/286404/#!/donation/checkout", ""],
+  "Camp Solelim": ["https://www.campsolelim.ca/", "Camp Solelim.png"],
   "Camp Solomon Schechter": ["https://www.campschechter.org/donate-now/", ""],
   "Camp Stone": ["https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=76LK8HJ4TSQA2&source=url", ""],
   "Camp Tel Noar": ["https://secure.qgiv.com/for/telnoar/", ""],
