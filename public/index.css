@@ -151,6 +151,10 @@ input[type="file"] {
 }
 
 /* Contact form */
+#sending {
+  text-align: center;
+}
+
 #instagram {
   max-width: 30%;
 }
@@ -159,7 +163,7 @@ input[type="file"] {
   padding-bottom: 0px;
 }
 
-#contact {
+.contact {
   text-align: center;
 }
 
