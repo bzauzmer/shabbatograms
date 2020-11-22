@@ -126,7 +126,8 @@ var org_dict = {"B\'Nai Brith Camp Oregon": ["https://bbcamp.org/donate-now/", "
   "Temple Sinai - Dresher, PA": ["https://www.tsinai.com/annual-campaign", "Temple Sinai - Dresher, PA.png"],
   "Temple Sinai - Las Vegas, NV": ["https://templesinailv.org/donate/", "Temple Sinai - Las Vegas, NV.png"],
   "Arizona State Hillel": ["https://www.hillelasu.org/support-us.html", "Arizona State Hillel.png"],
-  "West Chester University Hillel": ["https://fs9.formsite.com/phillyhillel/WCUHillel/index.html", "West Chester University Hillel.png"]};
+  "West Chester University Hillel": ["https://fs9.formsite.com/phillyhillel/WCUHillel/index.html", "West Chester University Hillel.png"],
+  "Merkaz - Bridgeport, CT": ["https://www.merkazct.org/giving/donate-online/", "Merkaz - Bridgeport, CT.png"]};
 
 // An array containing all the org names
 var orgs = Object.keys(org_dict);
