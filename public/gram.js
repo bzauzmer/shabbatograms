@@ -15,21 +15,31 @@ var contactForm = function () {
   var contact_org = $("#contact-org").val();
   var contact_website = "";
   var contact_message = "";
+  var contact_spam = $("#contact-spam").val();
 
-  // Push a new form to the database using those values
-  contacts.push().set({
-    contact_name: contact_name,
-    contact_email: contact_email,
-    contact_org: contact_org,
-    contact_website: contact_website,
-    contact_message: contact_message
-  });
+  // Detect spam
+  if (contact_spam.toLowerCase() == "friday") {
 
-  // Show post-submit message
+    // Push a new form to the database using those values
+    contacts.push().set({
+      contact_name: contact_name,
+      contact_email: contact_email,
+      contact_org: contact_org,
+      contact_website: contact_website,
+      contact_message: contact_message
+    });
+
+    // Show post-submit message
+    $("#success-message").show();
+  } else {
+
+    // Show post-submit message
+    $("#failure-message").show();
+  }
+
+  // Hide contact form
   $("#contact-form").hide();
-  $("#success-message").show();
 };
-
 
 // Function to add page elements on load based on ID
 function load() {
